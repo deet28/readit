@@ -1,0 +1,216 @@
+
+.Nav-Header {
+  /*background-color: #282c34;*/
+  min-height: 7vh;
+  max-height:7vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  /*color: white;*/
+}
+
+.Nav-Icon{
+  max-height:2rem;
+  max-width:2rem;
+  padding:0.3rem;
+  /*background-color: white;*/
+  background-color: rgb(252, 169, 121);
+  border-radius: 30px;
+  margin-right:1rem;
+  margin-left:1.5rem;
+
+}
+.Nav-Title{
+  font-size:1.5rem;
+  margin-right:2rem;
+}
+
+.Nav-Search-Form{
+  display:flex;
+  flex-direction: row;
+  background-color: white;
+  justify-content: left;
+  align-items: center;
+  border-radius:5px;
+  margin-left:2rem;
+  margin-right:0.5rem;
+  height:2.3rem;
+  width:55vw;
+  background-color: rgb(240, 236, 236);
+}
+
+.Nav-Search-Image{
+  max-height:1.3rem;
+  max-width:1.3rem;
+  margin-right:1rem !important;
+  margin-left:1rem;
+}
+.Nav-Search{
+  height:1.9rem;
+  width:100%;
+  border-radius:5px;
+  font-size:0.9rem;
+  border:transparent;
+  outline:none;
+  background-color:rgb(240, 236, 236)
+}
+.Nav-Button{
+  background-color: rgb(91, 91, 173);
+  color:white;
+  font-size:0.9rem;
+  font-weight: bold;
+  height:32px;
+  width:10%;
+  border-radius:20px;
+ 
+}
+
+.Button-One{
+  background-color: white;
+  border: 2px solid rgb(91, 91, 173);
+  color:rgb(91, 91, 173);
+  
+  
+}
+.Button-Two{
+  background-color: rgb(91, 91, 173);
+  border:transparent;
+  color:white;
+  margin-left:0.4rem;
+
+}
+
+.Nav-Button:hover{
+  cursor:pointer
+}
+
+.Button-One:hover{
+  background-color: rgb(246, 249, 252);
+}
+.Button-Two:hover{
+  background-color: rgb(110, 110, 207);
+}
+
+.Nav-Drop-Down-Form{
+  display: flex;
+  flex-direction: row;
+  margin-left:0.6rem;
+  margin-right:0.5rem;
+  padding:0.5rem;
+  border:1px solid transparent
+}
+
+.Nav-Icon-Drop-Down{
+  max-height:1.3rem;
+  max-width:1.5rem;
+}
+
+.Nav-Drop-Down-Form:hover{
+  cursor: pointer;
+  border:1px solid lightgray
+}
+
+.Nav-Drop-Down-Menu{
+  min-height:10rem;
+  min-width:13rem;
+  border:1px solid lightgray;
+  position:absolute;
+  top:2.8rem;
+  right:0rem;
+  display: flex;
+  flex-direction: column;
+}
+.Nav-Drop-Down-Header{
+  font-size:0.8rem;
+  align-self: flex-start;
+  justify-self: flex-start;
+  margin-top:0.8rem;
+  margin-bottom:0;
+  color:gray
+}
+
+.Nav-Menu-Form{
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content: center;
+  text-align: center;
+}
+
+.Nav-Drop-Down-Image{
+  height:1.2rem;
+  width:1.2rem;
+  margin-right:0.5rem;
+}
+
+.Nav-Drop-Down-Button{
+  font-size:0.9rem;
+  margin-right:3rem;
+  margin-top:0.5rem;
+  background-color: inherit;
+  color:inherit;
+  border:transparent;
+  font-weight: bolder;
+}
+
+.Nav-Menu-Form:hover{
+  background-color:rgb(91, 91, 173);
+  color:white;
+  cursor: pointer;
+}
+
+.Nav-Menu-Form button:hover{
+  cursor:pointer;
+}
+
+
+
+
+@media(min-width:1100px){
+  .Nav-Drop-Down-Form{
+    position:absolute;
+    right:0.5rem;
+  }
+  
+}
+
+@media(max-width:800px){
+  .Nav-Title{
+    display:none;
+  }
+  .Nav-Search-Form{
+    width:38vw;
+  }
+  .Nav-Button{
+    width:12%;
+  }
+}
+@media(max-width:799px){
+  .Nav-Title{
+    display:none;
+  }
+  .Nav-Search-Form{
+    width:50vw;
+  }
+  .Nav-Button{
+    width:12%;
+  }
+}
+
+
+@media(max-width:613px){
+  .Nav-Button{
+    display:none;
+  }
+  .Nav-Search-Form{
+    width:70vw;
+  }
+}
+
+
+/* 
+.Nav-Icon-Drop-Down:hover{
+  filter: invert(42%) sepia(93%) saturate(135%) hue-rotate(87deg) brightness(119%) contrast(119%);
+}
+*/
