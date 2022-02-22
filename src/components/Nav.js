@@ -6,6 +6,15 @@ import downArrow from '../media/down-arrow.png'
 import moon from '../media/moon.png'
 
 export default function Nav() {
+
+  function showMenu(){
+    const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
+    if(navMenu.classList.contains("Hidden")===true){
+      navMenu.classList.remove("Hidden")
+    } else {
+      navMenu.classList.add("Hidden")
+    }
+  }
   return (
     <div className = "Nav-Header">
       <img className = "Nav-Icon"src = {Icon}></img>
@@ -16,7 +25,7 @@ export default function Nav() {
       </form>
       <button className = "Nav-Button Button-One">Log In</button>
       <button className = "Nav-Button Button-Two">Sign Up</button>
-      <form className = "Nav-Drop-Down-Form">
+      <form className = "Nav-Drop-Down-Form" onClick = {showMenu}>
         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>
       </form>
