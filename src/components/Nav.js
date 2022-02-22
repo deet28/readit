@@ -34,6 +34,11 @@ export default function Nav() {
         <form className = "Nav-Menu-Form">
           <img className = "Nav-Drop-Down-Image" src = {moon}></img>
           <button className = "Nav-Drop-Down-Button">Dark Mode</button>
+          <label class = "Dark-Mode-Switch">
+            <input type = "checkbox" className = "Slider-Input"></input>
+            <span class = "Dark-Mode-Slider"></span>
+          </label>
+          
         </form>
         
       </div>
