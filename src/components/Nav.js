@@ -4,6 +4,7 @@ import magGlass from '../media/mag-glass.png'
 import dropDown from '../media/drop-down.png'
 import downArrow from '../media/down-arrow.png'
 import moon from '../media/moon.png'
+import logIn from '../media/log-in.png'
 
 export default function Nav() {
 
@@ -32,17 +33,19 @@ export default function Nav() {
       <div className = "Nav-Drop-Down-Menu">
         <h3 className = "Nav-Drop-Down-Header">View Options</h3>
         <form className = "Nav-Menu-Form">
-          <img className = "Nav-Drop-Down-Image" src = {moon}></img>
+          <img className = "Nav-Drop-Down-Moon" src = {moon}></img>
           <button className = "Nav-Drop-Down-Button">Dark Mode</button>
           <label class = "Dark-Mode-Switch">
             <input type = "checkbox" className = "Slider-Input"></input>
-            <span class = "Dark-Mode-Slider"></span>
-          </label>
-          
+              <span class = "Dark-Mode-Slider"></span>
+            </label>
+          </form>
+          <form className = "Nav-Menu-Form-Empty"></form>
+        <form className = "Nav-Menu-Form">
+          <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
+          <button className = "Nav-Drop-Down-Button Log-In-Button">Log In / Sign Up</button>
         </form>
-        
+        </div>
       </div>
-      
-    </div>
-  )
-}
+    ) 
+  }

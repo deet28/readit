@@ -94,7 +94,8 @@
   margin-left:0.6rem;
   margin-right:0.5rem;
   padding:0.5rem;
-  border:1px solid transparent
+  border:1px solid lightgray;
+  padding:5px;
 }
 
 .Nav-Icon-Drop-Down{
@@ -104,13 +105,12 @@
 
 .Nav-Drop-Down-Form:hover{
   cursor: pointer;
-  border:1px solid lightgray
-}
-
+  
+} 
 
 /* Drop Down Menu */
 .Nav-Drop-Down-Menu{
-  min-height:10rem;
+  min-height:7rem;
   min-width:13rem;
   border:1px solid lightgray;
   position:absolute;
@@ -136,10 +136,17 @@
   color:gray
 }
 
-.Nav-Drop-Down-Image{
+.Nav-Drop-Down-Moon{
   height:1.1rem;
   width:1.1rem;
   margin-top:-0.1rem;
+}
+
+.Nav-Drop-Down-Login{
+  height:1.6rem;
+  width:1.5rem;
+  margin-left:-25px;
+  margin-top:3px;
 }
 
 .Nav-Drop-Down-Button{
@@ -161,6 +168,14 @@
 
 .Nav-Menu-Form button:hover{
   cursor:pointer;
+}
+
+.Log-In-Button{
+}
+
+.Nav-Menu-Form-Empty{
+  height:10px;
+  border-bottom:1px solid lightgray
 }
 
 /* Drop Down Menu */
@@ -224,7 +239,7 @@ input:checked + .Dark-Mode-Slider:before {
 @media(min-width:1100px){
   .Nav-Drop-Down-Form{
     position:absolute;
-    right:0;
+    right:-0.3rem;
   }
   .Button-One{
     margin-left:1rem;
