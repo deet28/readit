@@ -35,11 +35,66 @@
   height:1.3rem;
   width:1.3rem;
   margin-right:0.5rem;
-  margin-left:-0.3rem;
+  margin-left:-0.1rem;
   margin-bottom:-0.2rem;
-  filter:invert(40%) sepia(110%)hue-rotate(150deg) saturate(110%)brightness(110%)contrast(150%);
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+
+.Main-Header-Arrow-Icon{
+  height:1.3rem;
+  width:1.3rem;
+  margin-right:0.1rem;
+  margin-left:-0.1rem;
+  margin-bottom:-0.3rem;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(110%)brightness(100%)contrast(150%);
 }
 
 .Main-Header-Hot-Button:hover{
   cursor:pointer;
+}
+
+.Main-Header-Hot-Button-Menu{
+  position:fixed;
+  height:2.5rem;
+  width:15rem;
+  border:1px solid lightgray;
+  margin-top:2.5rem;
+  margin-left:1.4rem;
+  background-color: white;
+  border-radius:5px;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  box-shadow: 0.5px 0.5px 0.5px 1.5px lightgrey;
+}
+
+.Main-Header-Hot-Menu-Button{
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height:2.5rem;
+  background-color: white;
+  border: transparent;
+  color:rgb(91, 91, 173);
+  margin-left: 0;
+  font-size: 1rem;
+  font-weight: bolder;
+  border-radius: 2px;
+}
+
+.Hot-Menu-Header-Flame-Icon{
+  height:1.1rem;
+  width:1.1rem;
+  margin-top:-0.1rem;
+  margin-right:0.3rem;
+  margin-left:-0.1rem;
+  margin-bottom:-0.2rem;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Main-Header-Hot-Menu-Button:hover{
+  cursor: pointer;
+  background-color: rgb(220, 237, 248);
 }
