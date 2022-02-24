@@ -154,15 +154,8 @@
   cursor: pointer;
   background-color: rgb(241, 236, 236);
 }
-/*
-.Card-Div-Test{
-  height:30rem;
-  background-color: lightgrey;
-  border:1px solid black;
-  margin-top:10rem;
-  margin-right:5rem;
-}
-*/
+
+/* media queries */
 
 @media(max-width:672px){
   .Main-Header-Bar-Large{
@@ -174,7 +167,12 @@
     display:none;
   }
   @media(min-width:960px){
-    .Main-Div{
+    .Main-Div-Outer{
+      display:grid;
+      grid-template-columns: 2fr 1fr;
+    }
+    .Main-Header-Bar-Large{
+      width:55vw;
     }
   }
 }

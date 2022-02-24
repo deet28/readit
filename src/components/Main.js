@@ -1,18 +1,21 @@
 import React from 'react';
-import { useState } from 'react';
-import flame from '../media/flame.png'
-import dropDown from '../media/down-arrow.png';
-import filterNew from '../media/new.png';
-import filterTop from '../media/top.png';
 import MainNav from './MainNav';
+import RightCard from './RightCard';
 
 export default function Main() {
 
   return (
     <>
-    <div className = "Main-Div">
-      <MainNav></MainNav>
+    <div className = "Main-Div-Outer">
+      <div className = "Main-Div">
+        <MainNav></MainNav>
+      </div>
+      <div className = "Card-Div">
+        <RightCard></RightCard>
+      </div>
     </div>
+
+    
     </>
   )
 }

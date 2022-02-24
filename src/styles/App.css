@@ -1,6 +1,7 @@
 @import 'index.css';
 @import 'Nav.css';
 @import 'Main.css';
+@import 'RightCard.css';
 
 .App {
   text-align: center;
