@@ -5,17 +5,20 @@
   align-items:center;
 }
 
-.Main-Header-Bar{
+
+/* Small */ 
+.Main-Header-Bar-Small{
   margin-top:10rem;
   min-height:3.5rem;
   border-radius:3px;
   border:1px solid lightgray;
-  width:95vw;
+  width:100vw;
   display:flex;
   flex-direction: row;
   align-items: center;
   background-color: white;
 }
+
 
 .Main-Header-Hot-Button{
   width:6rem;
@@ -101,9 +104,78 @@
   filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
 }
 
-
-
 .Main-Header-Hot-Menu-Button:hover{
   cursor: pointer;
   background-color: rgb(220, 237, 248);
 }
+
+/*Large */
+
+.Main-Header-Bar-Large{
+  margin-top:10rem;
+  min-height:3.5rem;
+  border-radius:3px;
+  border:1px solid lightgray;
+  width:95vw;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+}
+.Main-Header-Large-Button{
+  width:6rem;
+  height:2.3rem;
+  margin-left:1.5rem;
+  border-radius: 30px;
+  border:transparent;
+  font-size: 1rem;
+  line-height: 1rem;
+  background-color: rgb(250, 248, 248);
+  font-weight: bolder;
+}
+
+.Main-Header-Large-Icon{
+  height:1.3rem;
+  width:1.3rem;
+  margin-right:0.5rem;
+  margin-left:-0.1rem;
+  margin-bottom:-0.2rem;
+  
+}
+
+.Large-Button-Clicked{
+  color:rgb(91, 91, 173);
+}
+.Large-Icon-Clicked{
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Main-Header-Large-Button:hover{
+  cursor: pointer;
+  background-color: rgb(241, 236, 236);
+}
+/*
+.Card-Div-Test{
+  height:30rem;
+  background-color: lightgrey;
+  border:1px solid black;
+  margin-top:10rem;
+  margin-right:5rem;
+}
+*/
+
+@media(max-width:672px){
+  .Main-Header-Bar-Large{
+    display:none;
+  }
+}
+@media(min-width:672px){
+  .Main-Header-Bar-Small{
+    display:none;
+  }
+  @media(min-width:960px){
+    .Main-Div{
+    }
+  }
+}
+
