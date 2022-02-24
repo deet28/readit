@@ -1,6 +1,8 @@
 import React from 'react'
 import flame from '../media/flame.png'
 import dropDown from '../media/down-arrow.png';
+import filterNew from '../media/new.png';
+import filterTop from '../media/top.png';
 
 export default function Main() {
   function showHotMenu(){
@@ -21,9 +23,17 @@ export default function Main() {
           <img src = {dropDown} className = "Main-Header-Arrow-Icon"></img>
         </button>
       <div className = "Main-Header-Hot-Button-Menu">
-        <button className = "Main-Header-Hot-Menu-Button _hot">
-        <img src = {flame} className = "Hot-Menu-Header-Flame-Icon"></img>
+        <button className = "Main-Header-Hot-Menu-Button Hot-Menu-Button-Clicked">
+        <img src = {flame} className = "Hot-Menu-Header-Icon Hot-Menu-Icon-Clicked"></img>
           Hot
+        </button>
+        <button className = "Main-Header-Hot-Menu-Button _hot">
+        <img src = {filterNew} className = "Hot-Menu-Header-Icon"></img>
+          New
+        </button>
+        <button className = "Main-Header-Hot-Menu-Button _hot">
+        <img src = {filterTop} className = "Hot-Menu-Header-Icon"></img>
+          Top
         </button>
       </div>
         

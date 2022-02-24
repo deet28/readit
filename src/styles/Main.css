@@ -57,7 +57,7 @@
 .Main-Header-Hot-Button-Menu{
   position:fixed;
   height:2.5rem;
-  width:15rem;
+  width:12rem;
   border:1px solid lightgray;
   margin-top:2.5rem;
   margin-left:1.4rem;
@@ -77,22 +77,34 @@
   height:2.5rem;
   background-color: white;
   border: transparent;
-  color:rgb(91, 91, 173);
+  /*color:rgb(91, 91, 173);*/
+  color:gray;
   margin-left: 0;
   font-size: 1rem;
   font-weight: bolder;
   border-radius: 2px;
 }
 
-.Hot-Menu-Header-Flame-Icon{
+.Hot-Menu-Header-Icon{
   height:1.1rem;
   width:1.1rem;
   margin-top:-0.1rem;
   margin-right:0.3rem;
   margin-left:-0.1rem;
   margin-bottom:-0.2rem;
+  /*filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);*/
+  filter:invert(40%) sepia(100%)saturate(40%)
+}
+
+.Hot-Menu-Button-Clicked{
+  color:rgb(91, 91, 173);
+}
+
+.Hot-Menu-Icon-Clicked{
   filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
 }
+
+
 
 .Main-Header-Hot-Menu-Button:hover{
   cursor: pointer;
