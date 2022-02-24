@@ -1,5 +1,6 @@
 @import 'index.css';
 @import 'Nav.css';
+@import 'Main.css';
 
 .App {
   text-align: center;
@@ -28,4 +29,8 @@
 
 .Hidden{
   visibility: hidden;
+}
+
+.Background{
+  z-index: -1!important;
 }

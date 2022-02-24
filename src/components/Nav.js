@@ -10,10 +10,13 @@ export default function Nav() {
 
   function showMenu(){
     const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
+    const mainBar = document.querySelector(".Main-Header-Bar")
     if(navMenu.classList.contains("Hidden")===true){
-      navMenu.classList.remove("Hidden")
+      navMenu.classList.remove("Hidden");
+      mainBar.classList.add("Background")
     } else {
       navMenu.classList.add("Hidden")
+      mainBar.classList.remove("Background");
     }
   }
   return (
@@ -30,14 +33,14 @@ export default function Nav() {
         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>
       </form>
-      <div className = "Nav-Drop-Down-Menu">
+      <div className = "Nav-Drop-Down-Menu Hidden">
         <h3 className = "Nav-Drop-Down-Header">View Options</h3>
         <form className = "Nav-Menu-Form">
           <img className = "Nav-Drop-Down-Moon" src = {moon}></img>
           <button className = "Nav-Drop-Down-Button">Dark Mode</button>
-          <label class = "Dark-Mode-Switch">
+          <label className = "Dark-Mode-Switch">
             <input type = "checkbox" className = "Slider-Input"></input>
-              <span class = "Dark-Mode-Slider"></span>
+              <span className = "Dark-Mode-Slider"></span>
             </label>
           </form>
           <form className = "Nav-Menu-Form-Empty"></form>

@@ -1,0 +1,45 @@
+.Main-Div{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+}
+
+.Main-Header-Bar{
+  margin-top:10rem;
+  min-height:3.5rem;
+  border-radius:3px;
+  border:1px solid lightgray;
+  width:95vw;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+}
+
+.Main-Header-Hot-Button{
+  width:6rem;
+  height:2.3rem;
+  margin-left:1.5rem;
+  border-radius: 30px;
+  border:transparent;
+  font-size: 1rem;
+  line-height: 1rem;
+  background-color: rgb(250, 248, 248);
+  color:rgb(91, 91, 173);
+  font-weight: bolder;
+  /*filter:invert(100%)sepia(50%)saturate(65%) hue-rotate(160deg) brightness(119%) contrast(119%);*/
+}
+
+.Main-Header-Flame-Icon{
+  height:1.3rem;
+  width:1.3rem;
+  margin-right:0.5rem;
+  margin-left:-0.3rem;
+  margin-bottom:-0.2rem;
+  filter:invert(40%) sepia(110%)hue-rotate(150deg) saturate(110%)brightness(110%)contrast(150%);
+}
+
+.Main-Header-Hot-Button:hover{
+  cursor:pointer;
+}
