@@ -67,8 +67,7 @@ export default function Main() {
           {sortButton.name}
           <img src = {dropDown} className = "Main-Header-Arrow-Icon"></img>
           </button>
-          <div className = "Main-Header-Hot-Button-Menu">
-            
+          <div className = "Main-Header-Hot-Button-Menu Hidden">
             <div className = 'Button-Div'>
               <button className = "Main-Header-Hot-Menu-Button Hot-Menu-Button-Clicked" onClick = {handleClick}> 
               <img src = {flame} className = "Hot-Menu-Header-Icon Hot-Menu-Icon-Clicked"></img>
