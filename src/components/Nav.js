@@ -35,6 +35,7 @@ export default function Nav() {
       </form>
       <div className = "Nav-Drop-Down-Menu Hidden">
         <h3 className = "Nav-Drop-Down-Header">View Options</h3>
+        
         <form className = "Nav-Menu-Form">
           <img className = "Nav-Drop-Down-Moon" src = {moon}></img>
           <button className = "Nav-Drop-Down-Button">Dark Mode</button>
@@ -43,7 +44,14 @@ export default function Nav() {
               <span className = "Dark-Mode-Slider"></span>
             </label>
           </form>
-          <form className = "Nav-Menu-Form-Empty"></form>
+          
+        <form className = "Nav-Menu-Form">
+          <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
+          <button className = "Nav-Drop-Down-Button Log-In-Button">Log In / Sign Up</button>
+        </form>
+        
+        <form className = "Nav-Menu-Form-Empty"></form>
+        
         <form className = "Nav-Menu-Form">
           <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
           <button className = "Nav-Drop-Down-Button Log-In-Button">Log In / Sign Up</button>

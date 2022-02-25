@@ -3,14 +3,17 @@
   height:0;
   width:0;
   border:1px solid gray;
+  margin-right:10rem;
 }
 .Right-Card-Div{
-  margin-top:10rem;
+  margin-top:4rem;
   width:20rem;
   height:30rem;
   border:1px solid gray;
   border-radius: 5px;
   box-shadow: 2px 2px 5px 1px lightgrey;
+  margin-left: -1rem;
+  background-color: white;
 }
 
 .Right-Card-Div h1{

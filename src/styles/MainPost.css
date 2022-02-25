@@ -1,0 +1,39 @@
+.Main-Post-Div{
+  min-height:3.5rem;
+  border-radius:3px;
+  width:100vw;
+  margin-top:5rem;
+  margin-bottom:2rem;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.Main-Post-Input{
+  height:2rem;
+  width:80%;
+  background-color: rgb(241, 238, 238);
+  border:transparent;
+  font-size: 1rem;
+  padding:0.2rem;
+  padding-left:1rem;
+  border-radius: 5px;
+}
+
+.Display{
+  display:none;
+}
+
+@media(min-width:672px){
+  .Main-Post-Div{
+    width:95vw;
+    margin-bottom:-6rem;
+  }
+}
+
+@media (min-width:960px){
+  .Main-Post-Div{
+    width:55vw;
+  }
+}

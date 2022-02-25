@@ -8,7 +8,6 @@
 
 /* Small */ 
 .Main-Header-Bar-Small{
-  margin-top:10rem;
   min-height:3.5rem;
   border-radius:3px;
   border:1px solid lightgray;
@@ -157,7 +156,7 @@
 
 /* media queries */
 
-@media(max-width:672px){
+@media(max-width:671px){
   .Main-Header-Bar-Large{
     display:none;
   }

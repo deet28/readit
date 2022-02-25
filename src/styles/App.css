@@ -1,6 +1,8 @@
 @import 'index.css';
 @import 'Nav.css';
-@import 'Main.css';
+@import 'MainPost.css';
+@import 'MainNav.css';
+@import 'MainBody.css';
 @import 'RightCard.css';
 
 .App {
@@ -34,4 +36,8 @@
 
 .Background{
   z-index: -1!important;
+}
+
+.Main-Div-Outer{
+  background-color: rgb(216, 216, 216);
 }
