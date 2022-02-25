@@ -1,5 +1,4 @@
 import React from 'react';
-import MainPost from './MainPost';
 import MainNav from './MainNav';
 import MainBody from './MainBody';
 import RightCard from './RightCard';
@@ -10,7 +9,6 @@ export default function Main() {
     <>
     <div className = "Main-Div-Outer">
       <div className = "Main-Div">
-        <MainPost></MainPost>
         <MainNav></MainNav>
         <MainBody></MainBody>
       </div>

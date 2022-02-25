@@ -4,6 +4,7 @@
 @import 'MainNav.css';
 @import 'MainBody.css';
 @import 'RightCard.css';
+@import 'Post.css';
 
 .App {
   text-align: center;

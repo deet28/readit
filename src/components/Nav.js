@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Icon from '../media/readit.png'
 import magGlass from '../media/mag-glass.png'
 import dropDown from '../media/drop-down.png'
@@ -21,7 +22,9 @@ export default function Nav() {
   }
   return (
     <div className = "Nav-Header">
-      <img className = "Nav-Icon"src = {Icon}></img>
+      <Link to = "/"> 
+        <img className = "Nav-Icon"src = {Icon}></img>
+      </Link>
       <h1 className = "Nav-Title">readit</h1>
       <form className = "Nav-Search-Form">
         <img src = {magGlass} className = "Nav-Search-Image"></img>

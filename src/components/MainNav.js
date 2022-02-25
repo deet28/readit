@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
-import flame from '../media/flame.png'
+import { Link } from 'react-router-dom';
+import flame from '../media/flame.png';
 import dropDown from '../media/down-arrow.png';
 import filterNew from '../media/new.png';
 import filterTop from '../media/top.png';
@@ -75,6 +76,12 @@ export default function MainNav() {
 
   return (
     <>
+    <Link to = "Post">
+       <div className = "Main-Post-Div">
+        <input className = "Main-Post-Input" placeholder = "Create Post"></input>
+      </div>
+    </Link>
+     
       <div className = "Main-Header-Bar-Small">
         <button className = "Main-Header-Hot-Button" onClick = {showHotMenu}>
           <img src = {sortButton.icon} className = "Main-Header-Flame-Icon"></img>

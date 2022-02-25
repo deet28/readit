@@ -1,0 +1,79 @@
+
+.Post-Main-Div{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  background-color: rgb(226, 226, 226);
+  height:100vh;
+}
+.Post-Header{
+  text-align: left;
+  margin-top:2rem;
+  margin-left:2rem;
+  border-bottom:1px solid white;
+  width:90vw;
+  
+}
+.Post-Header h3{
+  font-weight: 400;
+}
+
+.Post-Content-Section{
+  height:30rem;
+  width:95vw;
+  background-color: white;
+  margin-top:1rem;
+}
+
+.Post-Content-Button-Nav{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom:1px solid lightgray;
+}
+.Post-Content-Button-Nav :nth-child(2){
+  margin-left:-0.1rem;
+}
+
+.Post-Content-Button-Nav :nth-child(3){
+  margin-left:-0.1rem;
+  margin-right:0rem;
+  border-right:0px transparent;
+}
+
+.Post-Content-Button{
+  height:4rem;
+  line-height: 3rem;
+  font-size:0.9rem;
+  font-weight: bolder;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: inherit;
+  border:transparent;
+  border-right:0.1px solid lightgray;
+  margin-left:0;
+}
+
+.Post-Content-Button:hover{
+  cursor:pointer;
+  background-color: rgb(220, 237, 248);
+}
+.Post-Content-Button span{
+  margin-top:0.6rem;
+}
+
+.Post-Content-Icon{
+  height:1.7rem;
+  width:1.7rem;
+  margin-top:0.5rem;
+  margin-right:0.7rem;
+}
+
+.Post-Content-Button-Clicked{
+  color:rgb(91, 91, 173);
+  border-bottom:1px solid rgb(91, 91, 173);
+}
+.Post-Content-Icon-Clicked{
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
