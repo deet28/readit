@@ -25,7 +25,8 @@ export default function Nav() {
       <Link to = "/"> 
         <img className = "Nav-Icon"src = {Icon}></img>
       </Link>
-      <h1 className = "Nav-Title">readit</h1>
+      <Link to = "/" className = "Title-Link"><h1 className = "Nav-Title">readit</h1></Link>
+      
       <form className = "Nav-Search-Form">
         <img src = {magGlass} className = "Nav-Search-Image"></img>
         <input className = "Nav-Search" placeholder = "Search Readit" />

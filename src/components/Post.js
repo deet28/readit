@@ -16,6 +16,7 @@ export default function Post() {
       } else if (e.target.textContent.length > 1){
       name = e.target.textContent;
     }
+    console.log(name);
      return name; 
   }
 
@@ -31,8 +32,28 @@ export default function Post() {
         postContentButtons[i].classList.add('Post-Content-Button-Clicked');
         postContentIcons[i].classList.add('Post-Content-Icon-Clicked');
         }
+      changeBody(name);
+      }
+    function changeBody(name){
+      const postBody = document.querySelector('.Post-Content-Text');
+      const imageBody = document.querySelector('.Post-Content-Media');
+      const urlBody = document.querySelector('.Post-Content-Url');
+      if (name == 'Post'){
+        postBody.classList.remove('Hidden');
+        imageBody.classList.add('Hidden');
+        urlBody.classList.add('Hidden');
+      } else if (name == 'Link'){
+        urlBody.classList.remove('Hidden');
+        postBody.classList.add('Hidden');
+        imageBody.classList.add('Hidden')
+      } else {
+        imageBody.classList.remove('Hidden');
+        postBody.classList.add('Hidden');
+        urlBody.classList.add('Hidden');
       }
     }
+  
+  }
   return (
     <>
   <div className = "Post-Main-Div">
@@ -69,6 +90,10 @@ export default function Post() {
         
         <div className = "Post-Content-Text-Parent">
           <textarea className = "Post-Content-Text" placeholder = "Text(Optional)"></textarea>
+          <div className = "Post-Content-Media Hidden">
+            <button className = "Upload-Button">Upload</button>
+          </div>
+          <textarea className = "Post-Content-Url Hidden" placeholder = "Url"></textarea>
         </div>    
 
         <div className = "Post-Content-Footer-Buttons">

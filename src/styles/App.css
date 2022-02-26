@@ -33,6 +33,7 @@
 
 .Hidden{
   visibility: hidden;
+  display:none;
 }
 
 .Background{
