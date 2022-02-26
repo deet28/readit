@@ -4,26 +4,28 @@
   flex-direction: column;
   align-items:center;
   background-color: rgb(226, 226, 226);
-  height:100vh;
+  min-height:100vh;
 }
 .Post-Header{
   text-align: left;
-  margin-top:2rem;
+  margin-top:1rem;
   margin-left:2rem;
   border-bottom:1px solid white;
   width:90vw;
-  
 }
 .Post-Header h3{
   font-weight: 400;
 }
 
 .Post-Content-Section{
-  height:30rem;
+  height:70vh;
   width:95vw;
   background-color: white;
   margin-top:1rem;
+  margin-bottom:5rem !important;
 }
+
+/* Button Nav */
 
 .Post-Content-Button-Nav{
   display: grid;
@@ -76,4 +78,143 @@
 }
 .Post-Content-Icon-Clicked{
   filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+/* Body */
+
+.Post-Content-Body{
+  width:95vw;
+  margin-top:0;
+  margin-bottom:1rem;
+}
+
+/* Body - Title */
+
+.Post-Content-Title{
+  display: flex;
+  font-size: 1rem;
+  height:2rem;
+  min-width:85%;
+  max-width:85%;
+  margin-left:2rem;
+  margin-top:1rem;
+  padding-left: 1rem;
+  border:1px solid lightgrey;
+  border-radius:5px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  line-height:2rem;
+  text-align: left;
+  resize:none;
+}
+
+.Post-Content-Title:focus {
+  outline:1px solid black;
+  border-radius:5px;
+}
+
+.Post-Content-Title:hover{
+  cursor:text
+}
+ 
+/* Body - Text */
+.Post-Content-Text-Parent{
+  height:15rem;
+}
+
+.Post-Content-Text{
+  display: flex;
+  font-size: 1rem;
+  min-height:15rem;
+  min-width:85%;
+  max-width:85%;
+  background-color: white;
+  margin-left:2rem;
+  margin-top:1rem;
+  padding-left: 1rem;
+  border:1px solid lightgrey;
+  border-radius:5px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  line-height:2rem;
+  text-align: left;
+  resize:none;
+  margin-bottom:2rem !important;
+}
+.Post-Content-Text:focus{
+  outline:1px solid black;
+}
+
+
+/* Body - Footer */
+
+.Post-Content-Footer-Buttons{
+  height:6rem;
+  width:93.5%;
+  border-top:1px solid lightgray;
+  margin-top:2rem;
+  margin-left:1rem;
+  margin-right:1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items:center;
+}
+
+.Footer-Button{
+  background-color: rgb(91, 91, 173);
+  color:white;
+  font-size:0.8rem;
+  font-weight: bolder;
+  height:32px;
+  width:5rem;
+  border-radius:20px;
+}
+
+.Footer-Button:hover{
+  cursor: pointer;
+}
+
+.Post-Content-Footer-Buttons :nth-child(1){
+  background-color: white;
+  border: 2px solid rgb(91, 91, 173);
+  color:rgb(91, 91, 173);
+}
+
+.Post-Content-Footer-Buttons :nth-child(1):hover{
+  background-color: rgb(246, 249, 252);
+}
+
+.Post-Content-Footer-Buttons :nth-child(2){
+  background-color: rgb(91, 91, 173);
+  border:transparent;
+  color:white;
+  margin-left:0.4rem;
+}
+
+.Post-Content-Footer-Buttons :nth-child(2):hover{
+  background-color: rgb(110, 110, 207);
+}
+
+
+/* Queries */ 
+
+@media (min-width:700px){
+  .Post-Content-Footer-Buttons{
+    width:90%;
+    margin-left:1.5rem;
+  }
+}
+@media (min-width:1000px){
+  .Post-Content-Footer-Buttons{
+    width:88%;
+    margin-left:1.5rem;
+  }
+
+@media (min-width:1400px){
+  .Post-Content-Footer-Buttons{
+      width:87%;
+      margin-left:1.5rem;
+  }
+}
 }

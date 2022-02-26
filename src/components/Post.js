@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import ContentEditable from 'react-contenteditable';
+import { useState, useRef } from 'react';
 import docIcon from '../media/document.png';
-import picIcon from '../media/picture.png'
-import linkIcon from '../media/link.png'
+import picIcon from '../media/picture.png';
+import linkIcon from '../media/link.png';
+
 
 export default function Post() {
   const imageButton = `Images & Video`
@@ -32,13 +35,16 @@ export default function Post() {
     }
   return (
     <>
-    <div className = "Post-Main-Div">
+  <div className = "Post-Main-Div">
     
     <div className = "Post-Header">
       <h3>Create a post</h3>
     </div>
-    <div className = "Post-Content-Section">
+  
+  <div className = "Post-Content-Section">
+      
       <div className = "Post-Content-Button-Nav">
+        
         <button className = "Post-Content-Button" onClick = {changeSelected}>
           <img src = {docIcon} className = "Post-Content-Icon"></img>
           <span>Post</span>
@@ -51,9 +57,27 @@ export default function Post() {
           <img src = {linkIcon} className = "Post-Content-Icon"></img>
           <span>Link</span>
         </button>
+      
+      </div>
+      
+      <div className = "Post-Content-Body">
+        
+        <div className = "Post-Content-Title-Parent">
+          <textarea className = "Post-Content-Title" maxLength = {300} placeholder = "Title">
+          </textarea>
+        </div>
+        
+        <div className = "Post-Content-Text-Parent">
+          <textarea className = "Post-Content-Text" placeholder = "Text(Optional)"></textarea>
+        </div>    
+
+        <div className = "Post-Content-Footer-Buttons">
+          <button className = "Footer-Button">Cancel</button>
+          <button className = "Footer-Button">Post</button>
+        </div>     
+      
       </div>
     </div>
-    
     </div>
   </>
   )
