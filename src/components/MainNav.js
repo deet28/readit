@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux'
+import {bindActionCreators } from 'redux'
+import { actionCreators } from '../state/index'
 import { Link } from 'react-router-dom';
 import flame from '../media/flame.png';
 import dropDown from '../media/down-arrow.png';
 import filterNew from '../media/new.png';
 import filterTop from '../media/top.png';
-
-
 
 export default function MainNav() {
   const [sortButton, setSort] = useState ({
@@ -14,7 +15,12 @@ export default function MainNav() {
     icon:flame
   }
 )
-  function showHotMenu(){
+const sort = useSelector((state)=>state.sort);
+const dispatch = useDispatch()
+
+const { sortFeed } = bindActionCreators(actionCreators,dispatch)
+
+function showHotMenu(){
     const hotMenu = document.querySelector('.Main-Header-Hot-Button-Menu');
     if (hotMenu.classList.contains('Hidden')===true){
       hotMenu.classList.remove('Hidden')
@@ -30,8 +36,8 @@ export default function MainNav() {
     if (e.target.textContent.length !== 3){
      name = e.target.nextSibling.textContent;
     } else if (e.target.textContent.length === 3){
-      console.log(true);
       name = e.target.parentNode.textContent;
+      sortFeed(name);
     }
       if (name == 'Hot'){
         icon = flame
@@ -51,7 +57,6 @@ export default function MainNav() {
     
   
   function changeSelected(name){
-    console.log(name);
     const hotMenuButtons = document.querySelectorAll('.Main-Header-Hot-Menu-Button');
     const hotMenuIcons = document.querySelectorAll('.Hot-Menu-Header-Icon');
     const largeMenuButtons = document.querySelectorAll('.Main-Header-Large-Button');

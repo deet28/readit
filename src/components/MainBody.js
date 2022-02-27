@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import { app } from '../firebase';
 import {
   getFirestore,
@@ -15,12 +16,27 @@ import downArrow from '../media/down-arrow2.png';
 
 export default function MainBody() {
 
-  const db = getFirestore(app);
 
   const [posts,setPosts] = useState([]);
-  
   let array = [];
   let sortedArray;
+
+
+  //firestore
+  const db = getFirestore(app);
+  //redux
+  const state = useSelector((state)=>state);
+
+  const sortingFeed = useSelector (state => {
+    if(state.sort == 'New'){
+        posts.sort((t1,t2)=>
+        t1.timestamp-t2.timestamp);
+    } else if (state.sort == 'Top'){
+      posts.sort((t1,t2)=>
+      t2.likes-t1.likes);
+    }
+  })
+
 
   async function upvoteButton(e){
     e.preventDefault();
@@ -90,19 +106,7 @@ export default function MainBody() {
       }
     }
 
-  //function sortingNew(){
-  //  const hotMenuButtons = document.querySelectorAll('.Main-Header-Hot-Menu-Button');
-  //  for (let i = 0; i < hotMenuButtons.length; i++){
-  //    if (hotMenuButtons[i].classList.contains('.Hot-Menu-Button-Clicked')){
-  //      if (hotMenuButtons[i].name == 'New'){
-  //        let sortedArray = array.sort((t1,t2)=>
-  //          t1.timestamp-t2.timestamp);
-  //          setPosts(sortedArray);
-  //      }
-  //    }
-  //  }
-    
-  //}
+  
   
   useEffect(() => {
     const getData = async () => {
@@ -115,7 +119,9 @@ export default function MainBody() {
           picture:post.picture,
           url:post.url,
           likes:post.likes,
-          id:post.id
+          id:post.id,
+          date:post.date,
+          timestamp:post.timestamp
         }
         array.push(result)
       })
