@@ -1,27 +1,64 @@
 import React from 'react';
-import ContentEditable from 'react-contenteditable';
-import { useState, useRef } from 'react';
+import { app } from '../firebase';
+import { storage } from '../firebase';
+import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+import { useState,useEffect } from 'react';
 import docIcon from '../media/document.png';
 import picIcon from '../media/picture.png';
 import linkIcon from '../media/link.png';
 
 
 export default function Post() {
-  const imageButton = `Images & Video`
+  
+  const imageButton = `Images & Video`;
+  const [images, setImages] = useState([
+  ]) 
+  let a;
 
-  function getName(e){
+  const uploadHandler = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    let image = file.name;
+    uploadImages(file);
+  };
+
+  const uploadImages = (file) => {
+    if (!file) return;
+    const storageRef = ref(storage,`/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef,file)
+    
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+      const progress = Math.round(
+        (snapshot.bytesTransferred/snapshot.totalBytes) * 100
+        );
+    },
+    (err) => console.log(err),
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref)
+      .then(url => {
+        a = url.toString();
+        setImages(a);
+        }
+      )
+    }
+  );
+  };
+
+  function getButtonName(e){
     let name; 
       if (e.target.textContent.length < 1){
       name = e.target.nextSibling.textContent;
       } else if (e.target.textContent.length > 1){
       name = e.target.textContent;
     }
-    console.log(name);
      return name; 
   }
 
   function changeSelected(e){
-    let name = getName(e);
+    let name = getButtonName(e);
     const postContentButtons = document.querySelectorAll('.Post-Content-Button');
     const postContentIcons = document.querySelectorAll('.Post-Content-Icon');
     for(let i = 0; i < postContentButtons.length; i++){
@@ -66,8 +103,8 @@ export default function Post() {
       
       <div className = "Post-Content-Button-Nav">
         
-        <button className = "Post-Content-Button" onClick = {changeSelected}>
-          <img src = {docIcon} className = "Post-Content-Icon"></img>
+        <button className = "Post-Content-Button Post-Content-Button-Clicked" onClick = {changeSelected}>
+          <img src = {docIcon} className = "Post-Content-Icon Post-Content-Icon-Clicked"></img>
           <span>Post</span>
         </button>
         <button className = "Post-Content-Button" onClick = {changeSelected}>
@@ -89,10 +126,18 @@ export default function Post() {
         </div>
         
         <div className = "Post-Content-Text-Parent">
-          <textarea className = "Post-Content-Text" placeholder = "Text(Optional)"></textarea>
-          <div className = "Post-Content-Media Hidden">
-            <button className = "Upload-Button">Upload</button>
-          </div>
+            <textarea className = "Post-Content-Text" placeholder = "Text(Optional)"></textarea>
+            <div className = "Post-Content-Media Hidden"> 
+            <label>
+              <input className = "Hidden" type = "file"onChange = {uploadHandler}></input>
+              <span className = "Upload-Button" >Upload</span>
+            </label>
+            <div className = "Image-Test">
+              
+              <img className = "Upload-Image-Display"src = {images}></img>
+              <button className = "Remove-Image">Remove</button>
+            </div>
+            </div>
           <textarea className = "Post-Content-Url Hidden" placeholder = "Url"></textarea>
         </div>    
 
@@ -107,3 +152,5 @@ export default function Post() {
   </>
   )
 }
+
+

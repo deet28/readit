@@ -167,6 +167,7 @@
   font-size:0.8rem;
   font-weight: bolder;
   height:32px;
+  padding:0.7rem;
   width:5rem;
   border-radius:20px;
   background-color: white;
@@ -274,4 +275,24 @@
       width:87%;
       margin-left:1.5rem;
   }
+}
+
+.Image-Test{
+  height:10rem;
+  width:10rem;
+  border:1px solid gray;
+  margin-left:-25rem !important;
+}
+
+.Remove-Image{
+  height:1.6rem;
+  width:5.4rem;
+  font-size: 1rem;
+  margin-top:0.5rem;
+  border-radius:5px;
+  border:transparent;
+}
+.Upload-Image-Display{
+  height:10rem;
+  width:10rem;
 }
