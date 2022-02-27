@@ -129,7 +129,6 @@ export default function MainBody() {
               {index.picture.length > 0 &&
                 <img className = "Main-Body-Card-Picture"src = {index.picture}></img>
               }
-              
               <p className = "Main-Body-Card-Text">{index.text}</p>
               <p className = "Main-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
             </div>

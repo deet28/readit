@@ -31,11 +31,10 @@ export default function Nav() {
         <img src = {magGlass} className = "Nav-Search-Image"></img>
         <input className = "Nav-Search" placeholder = "Search Readit" />
       </form>
-      <Link to = "Post" className = "Nav-Button Button-One">
-        <button className  = "Button-One">Log In</button>
-      </Link>
-      
-      <button className = "Nav-Button Button-Two">Sign Up</button>
+        <button className  = "Nav-Button Button-One">Log In</button>
+        <Link to = "Post" className = "Nav-Button Button-Two">
+        <button className = "Nav-Button Button-Two">Sign Up</button>
+        </Link>
       <form className = "Nav-Drop-Down-Form" onClick = {showMenu}>
         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>

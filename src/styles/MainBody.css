@@ -27,6 +27,7 @@
   width:100%;
   font-size: 1.5rem;
   text-align: left;
+  margin-left:1rem;
 }
 .Main-Body-Card-Body{
   display:flex;
@@ -49,7 +50,9 @@
   min-width:0rem;
   max-width:90%;
   margin-left:1rem;
+  margin-top:3rem;
   text-align: left;
+  color:rgb(100, 97, 97);
 }
 
 .Main-Body-Card-Url{
