@@ -30,7 +30,7 @@ export default function MainBody() {
   const sortingFeed = useSelector (state => {
     if(state.sort == 'New'){
         posts.sort((t1,t2)=>
-        t1.timestamp-t2.timestamp);
+        t2.timestamp-t1.timestamp);
     } else if (state.sort == 'Top'){
       posts.sort((t1,t2)=>
       t2.likes-t1.likes);
@@ -142,7 +142,6 @@ export default function MainBody() {
             <img className = "Main-Body-Dislike-Button" src = {downArrow} onClick = {downvoteButton}></img>
           </div>
           <div className = "Main-Body-Card">
-            
             <h2 className = "Main-Body-Card-Title">{index.title}</h2>
             <div className = "Main-Body-Card-Body">
               {index.picture.length > 0 &&

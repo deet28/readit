@@ -59,7 +59,6 @@
   min-height:0rem;
   max-height:10rem;
   min-width:0rem;
-  max-width:10rem;
   text-align: left;
   margin-left:1rem;
 }
@@ -86,7 +85,6 @@
   height:1.5rem;
   width:1.5rem;
   margin-top:1rem;
-  margin-bottom:1rem;
   border:1px solid transparent;
 }
 
@@ -97,7 +95,6 @@
 }
 
 .Main-Body-Dislike-Button{
-  margin-top:1rem;
   height:1.5rem;
   width:1.5rem;
 
