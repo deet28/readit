@@ -196,7 +196,9 @@ export default function Post() {
         </div>    
 
         <div className = "Post-Content-Footer-Buttons">
+          <Link to = "/">
           <button className = "Footer-Button">Cancel</button>
+          </Link>
           <button className = "Footer-Button" onClick = {pushToFirebase}>Post</button>
         </div>    
       </div>

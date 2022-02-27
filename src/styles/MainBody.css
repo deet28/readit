@@ -1,5 +1,57 @@
 
+.Main-Div{
+  display: flex;
+  flex-direction: column;
+  min-height:100vh !important;
+}
 .Main-Body-Div{
   margin-top:2rem;
-  height:100vh;
+  min-height:100vh;
+  width:95%;
+}
+
+.Main-Body-Card{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  border:1px solid black;
+  margin-bottom:1rem;
+  background-color: white;
+}
+
+.Main-Body-Card-Title{
+  width:100%;
+  font-size: 2rem;
+  text-align: left;
+}
+.Main-Body-Card-Body{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+}
+.Main-Body-Card-Picture{
+  min-height:20rem;
+  max-height:20rem;
+  min-width:0rem;
+  max-width:20rem;
+  border:1px solid black;
+  align-self: center;
+}
+
+.Main-Body-Card-Text{
+  min-height:0rem;
+  max-height:10rem;
+  min-width:0rem;
+  max-width:20rem;
+  text-align: left;
+}
+
+.Main-Body-Card-Url{
+  min-height:0rem;
+  max-height:10rem;
+  min-width:0rem;
+  max-width:10rem;
+  text-align: left;
 }

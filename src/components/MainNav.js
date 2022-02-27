@@ -77,7 +77,7 @@ export default function MainNav() {
   return (
     <>
     <Link to = "Post">
-       <div className = "Main-Post-Div">
+       <div className = "Main-Post-Div Hidden">
         <input className = "Main-Post-Input" placeholder = "Create Post"></input>
       </div>
     </Link>

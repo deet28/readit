@@ -16,6 +16,8 @@
   flex-direction: row;
   align-items: center;
   background-color: white;
+  margin-top:1rem;
+  margin-bottom:0rem;
 }
 
 
@@ -111,7 +113,7 @@
 /*Large */
 
 .Main-Header-Bar-Large{
-  margin-top:10rem;
+  margin-top:1rem;
   min-height:3.5rem;
   border-radius:3px;
   border:1px solid lightgray;
@@ -169,9 +171,10 @@
     .Main-Div-Outer{
       display:grid;
       grid-template-columns: 2fr 1fr;
+      grid-gap:2rem;
     }
     .Main-Header-Bar-Large{
-      width:55vw;
+      width:95%;
     }
   }
 }

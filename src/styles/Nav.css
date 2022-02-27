@@ -279,9 +279,3 @@ input:checked + .Dark-Mode-Slider:before {
 }
 
 
-/* 
-.Nav-Icon-Drop-Down:hover{
-  filter: invert(42%) sepia(93%) saturate(135%) hue-rotate(87deg) brightness(119%) contrast(119%);
-}
-*/
-
