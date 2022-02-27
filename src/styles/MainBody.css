@@ -61,8 +61,14 @@
   margin-left:1rem;
 }
 
+.Main-Body-Card-Url, :active :hover :visited{
+  color:purple;
+}
+
 .Main-Body-Likes{
   min-width:1rem;
+  min-height:2rem;
+  line-height:2rem;
   background-color: rgb(238, 236, 236);
   margin-bottom:1rem;
   border:1px solid black;
@@ -70,6 +76,7 @@
   display:flex;
   flex-direction:column;
   align-items: center;
+  font-weight: bolder;
 }
 
 .Main-Body-Like-Button{
@@ -97,6 +104,26 @@
   cursor:pointer;
   border:1px solid black;
   filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Like-Submitted{
+  pointer-events: none;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Dislike-Submitted{
+  pointer-events: none;
+  filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Liked{
+  color:rgb(22, 154, 236);
+  font-weight:bolder;
+}
+
+.Disliked{
+  color:lightcoral;
+  font-weight:bolder;
 }
 
 

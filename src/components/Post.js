@@ -25,6 +25,7 @@ export default function Post() {
     const text  = document.querySelector('.Post-Content-Text');
     const picture = images;
     const url = document.querySelector('.Post-Content-Url');
+    const likes = '0'; 
     let id = uuidv4();
     if (title.value.length < 1){
       return alert('Title required.')
@@ -34,7 +35,9 @@ export default function Post() {
       title:title.value,
       text:text.value,
       picture:picture,
-      url:url.value
+      url:url.value,
+      likes:likes,
+      id:id
     }
     await setDoc(doc(db,"Posts",id),payload).then (returnHome());
     }
