@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { app } from '../firebase';
 import { storage } from '../firebase';
+import { getFirestore,doc,setDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import docIcon from '../media/document.png';
 import picIcon from '../media/picture.png';
 import linkIcon from '../media/link.png';
@@ -15,6 +17,44 @@ export default function Post() {
   const [images, setImages] = useState([
   ]) 
   let image;
+
+  const db = getFirestore(app);
+
+  async function pushToFirebase(){
+    const title = document.querySelector('.Post-Content-Title');
+    const text  = document.querySelector('.Post-Content-Text');
+    const picture = images;
+    const url = document.querySelector('.Post-Content-Url');
+    let id = uuidv4();
+    if (title.value.length < 1){
+      return alert('Title required.')
+    } else {
+    try {
+    const payload = {
+      title:title.value,
+      text:text.value,
+      picture:picture,
+      url:url.value
+    }
+    await setDoc(doc(db,"Posts",id),payload).then (returnHome());
+    }
+      catch (error){
+        console.log('Error adding to Post database')
+      }
+    }
+  }
+
+  function returnHome(){
+    let postAlert = document.querySelector('.Post-Submitted');
+    let postContentHeader = document.querySelector('.Post-Header');
+    let postContentSection = document.querySelector('.Post-Content-Section');
+
+    postAlert.classList.remove('Hidden');
+    postContentHeader.classList.add('Hidden');
+    postContentSection.classList.add('Hidden');
+  }
+
+  //image upload
 
   const uploadHandler = (e) => {
     e.preventDefault();
@@ -46,12 +86,13 @@ export default function Post() {
     }
   );
   };
-
   function removeUpload(){
     const imageDiv = document.querySelector('.Upload-Image-Display');
     imageDiv.src = null;
     return setImages([]);
   }
+
+  //ui button changer
 
   function getButtonName(e){
     let name; 
@@ -100,6 +141,14 @@ export default function Post() {
   return (
     <>
   <div className = "Post-Main-Div">
+
+  <div className = "Post-Submitted Hidden">
+    <h2>Post Submitted Successfully!</h2> 
+    <Link to = "/">
+      <button className = "Success-Button">Home</button> 
+    </Link>
+    
+  </div> 
     
     <div className = "Post-Header">
       <h3>Create a post</h3>
@@ -148,9 +197,8 @@ export default function Post() {
 
         <div className = "Post-Content-Footer-Buttons">
           <button className = "Footer-Button">Cancel</button>
-          <button className = "Footer-Button">Post</button>
-        </div>     
-      
+          <button className = "Footer-Button" onClick = {pushToFirebase}>Post</button>
+        </div>    
       </div>
     </div>
     </div>

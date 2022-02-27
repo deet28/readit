@@ -282,6 +282,37 @@
   background-color: rgb(110, 110, 207);
 }
 
+/* Post Submitted */
+
+.Post-Submitted{
+  position:absolute;
+  height:20rem;
+  width:40rem;
+  z-index:9999;
+  box-shadow: 1px 4px 5px 1px black;
+  background-color: white;
+  margin-top:1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.Success-Button{
+  background-color: rgb(91, 91, 173);
+  color:white;
+  font-size:1.2rem;
+  font-weight: bolder;
+  height:40px;
+  width:10rem;
+  border-radius:20px;
+  border:transparent;
+  color:white;
+}
+.Success-Button:hover{
+  background-color: rgb(110, 110, 207);
+  cursor: pointer;
+}
 
 /* Queries */ 
 

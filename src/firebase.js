@@ -12,20 +12,3 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const storage = getStorage();
-
-
-//export const firestoreFieldValue = firebase.firestore.FieldValue;
-//export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-//export const auth = firebase.auth();
-//export const firestore = firebase.firestore();
-//export const storageRef = firebase.storage().ref();
-//export const storage = firebase.storage();
-//
-//export function getFirebaseConfig() {
-//  if (!config || !config.apiKey) {
-//    throw new Error('No Firebase configuration object provided.' + '\n' +
-//    'Add your web app\'s configuration object to firebase-config.js');
-//  } else {
-//    return config;
-//  }
-//}
