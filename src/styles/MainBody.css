@@ -9,20 +9,23 @@
   min-height:100vh;
   width:95%;
 }
-
+.Main-Body-Card-Outer{
+  display:grid;
+  grid-template-columns: 0.1fr 1.9fr;
+}
 .Main-Body-Card{
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
   border:1px solid black;
+  border-left:1px solid lightgray;
   margin-bottom:1rem;
   background-color: white;
 }
-
 .Main-Body-Card-Title{
   width:100%;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: left;
 }
 .Main-Body-Card-Body{
@@ -32,10 +35,10 @@
   align-items: left;
 }
 .Main-Body-Card-Picture{
-  min-height:20rem;
-  max-height:20rem;
-  min-width:0rem;
-  max-width:20rem;
+  min-height:30rem;
+  max-height:30rem;
+  min-width:75%;
+  max-width:75%;
   border:1px solid black;
   align-self: center;
 }
@@ -44,7 +47,6 @@
   min-height:0rem;
   max-height:10rem;
   min-width:0rem;
-  max-width:20rem;
   text-align: left;
 }
 
@@ -54,4 +56,48 @@
   min-width:0rem;
   max-width:10rem;
   text-align: left;
+}
+
+.Main-Body-Likes{
+  min-width:1rem;
+  background-color: rgb(238, 236, 236);
+  margin-bottom:1rem;
+  border:1px solid black;
+  border-right:transparent;
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+}
+
+.Main-Body-Like-Button{
+  height:1.5rem;
+  width:1.5rem;
+  margin-top:1rem;
+  margin-bottom:1rem;
+  border:1px solid transparent;
+}
+
+.Main-Body-Like-Button:hover{
+  cursor: pointer;
+  border:1px solid black;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Main-Body-Dislike-Button{
+  margin-top:1rem;
+  height:1.5rem;
+  width:1.5rem;
+
+}
+
+.Main-Body-Dislike-Button:hover{
+  cursor:pointer;
+  border:1px solid black;
+  filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+
+@media(min-width:672px){
+  .Main-Body-Card-Picture{
+  }
 }

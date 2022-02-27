@@ -19,6 +19,11 @@
   margin-top:0.4rem;
 
 }
+
+.Nav-Link, :hover :active :visited{
+  text-decoration: none;
+  color:white;
+}
 .Title-Link{
   text-decoration: none;
   color:black;
