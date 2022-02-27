@@ -54,7 +54,7 @@ export default function MainBody() {
               }
               
               <p className = "Main-Body-Card-Text">{index.text}</p>
-              <p className = "Main-Body-Card-Url">{index.url}</p>
+              <p className = "Main-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
             </div>
           </div>
           </div>
