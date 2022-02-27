@@ -14,7 +14,7 @@ export default function Post() {
   const imageButton = `Images & Video`;
   const [images, setImages] = useState([
   ]) 
-  let a;
+  let image;
 
   const uploadHandler = (e) => {
     e.preventDefault();
@@ -39,13 +39,19 @@ export default function Post() {
     () => {
       getDownloadURL(uploadTask.snapshot.ref)
       .then(url => {
-        a = url.toString();
-        setImages(a);
+        image = url.toString();
+        setImages(image);
         }
       )
     }
   );
   };
+
+  function removeUpload(){
+    const imageDiv = document.querySelector('.Upload-Image-Display');
+    imageDiv.src = null;
+    return setImages([]);
+  }
 
   function getButtonName(e){
     let name; 
@@ -128,15 +134,14 @@ export default function Post() {
         <div className = "Post-Content-Text-Parent">
             <textarea className = "Post-Content-Text" placeholder = "Text(Optional)"></textarea>
             <div className = "Post-Content-Media Hidden"> 
+            <div className = "Image-Test">
+              <img className = "Upload-Image-Display"src = {images}></img>
+              <button className = "Remove-Image" onClick = {removeUpload}>Remove</button>
+            </div>
             <label>
               <input className = "Hidden" type = "file"onChange = {uploadHandler}></input>
               <span className = "Upload-Button" >Upload</span>
             </label>
-            <div className = "Image-Test">
-              
-              <img className = "Upload-Image-Display"src = {images}></img>
-              <button className = "Remove-Image">Remove</button>
-            </div>
             </div>
           <textarea className = "Post-Content-Url Hidden" placeholder = "Url"></textarea>
         </div>    
