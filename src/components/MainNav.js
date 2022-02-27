@@ -6,6 +6,8 @@ import dropDown from '../media/down-arrow.png';
 import filterNew from '../media/new.png';
 import filterTop from '../media/top.png';
 
+
+
 export default function MainNav() {
   const [sortButton, setSort] = useState ({
     name:'Hot',

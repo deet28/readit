@@ -27,6 +27,8 @@ export default function Post() {
     const url = document.querySelector('.Post-Content-Url');
     const likes = '0'; 
     let id = uuidv4();
+    let timestamp = Date.now();
+    let date = getDate();
     if (title.value.length < 1){
       return alert('Title required.')
     } else {
@@ -37,7 +39,9 @@ export default function Post() {
       picture:picture,
       url:url.value,
       likes:likes,
-      id:id
+      date:date,
+      id:id,
+      timestamp:timestamp
     }
     await setDoc(doc(db,"Posts",id),payload).then (returnHome());
     }
@@ -106,6 +110,16 @@ export default function Post() {
     }
      return name; 
   }
+  
+  function getDate(){
+    let currentDate = new Date();
+    let cDay = currentDate.getDate();
+    let cMonth = currentDate.getMonth() + 1;
+    let cYear = currentDate.getFullYear();
+    let dateNow = `${cMonth}/${cDay}/${cYear}`;
+    return dateNow
+  }
+  
 
   function changeSelected(e){
     let name = getButtonName(e);
@@ -139,8 +153,8 @@ export default function Post() {
         urlBody.classList.add('Hidden');
       }
     }
-  
   }
+  
   return (
     <>
   <div className = "Post-Main-Div">

@@ -6,8 +6,6 @@ import {
   getDocs,
   query,
   where,
-  onSnapshot,
-  deleteDoc,
   doc,
   setDoc,
   collection
@@ -22,6 +20,7 @@ export default function MainBody() {
   const [posts,setPosts] = useState([]);
   
   let array = [];
+  let sortedArray;
 
   async function upvoteButton(e){
     e.preventDefault();
@@ -90,6 +89,20 @@ export default function MainBody() {
         } 
       }
     }
+
+  //function sortingNew(){
+  //  const hotMenuButtons = document.querySelectorAll('.Main-Header-Hot-Menu-Button');
+  //  for (let i = 0; i < hotMenuButtons.length; i++){
+  //    if (hotMenuButtons[i].classList.contains('.Hot-Menu-Button-Clicked')){
+  //      if (hotMenuButtons[i].name == 'New'){
+  //        let sortedArray = array.sort((t1,t2)=>
+  //          t1.timestamp-t2.timestamp);
+  //          setPosts(sortedArray);
+  //      }
+  //    }
+  //  }
+    
+  //}
   
   useEffect(() => {
     const getData = async () => {
