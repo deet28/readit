@@ -25,6 +25,9 @@ export default function Post() {
     const text  = document.querySelector('.Post-Content-Text');
     const picture = images;
     const url = document.querySelector('.Post-Content-Url');
+    const embed = document.querySelector('.Post-Content-Embed');
+
+    console.log(embed);
     const likes = '0'; 
     let id = uuidv4();
     let timestamp = Date.now();
@@ -38,6 +41,7 @@ export default function Post() {
       text:text.value,
       picture:picture,
       url:url.value,
+      embed:embed.value,
       likes:likes,
       date:date,
       id:id,
@@ -139,18 +143,22 @@ export default function Post() {
       const postBody = document.querySelector('.Post-Content-Text');
       const imageBody = document.querySelector('.Post-Content-Media');
       const urlBody = document.querySelector('.Post-Content-Url');
+      const embedBody = document.querySelector('.Post-Content-Embed');
       if (name == 'Post'){
         postBody.classList.remove('Hidden');
         imageBody.classList.add('Hidden');
         urlBody.classList.add('Hidden');
+        embedBody.classList.add('Hidden');
       } else if (name == 'Link'){
         urlBody.classList.remove('Hidden');
+        embedBody.classList.remove('Hidden');
         postBody.classList.add('Hidden');
         imageBody.classList.add('Hidden')
       } else {
         imageBody.classList.remove('Hidden');
         postBody.classList.add('Hidden');
         urlBody.classList.add('Hidden');
+        embedBody.classList.add('Hidden');
       }
     }
   }
@@ -210,6 +218,7 @@ export default function Post() {
             </label>
             </div>
           <textarea className = "Post-Content-Url Hidden" placeholder = "Url"></textarea>
+          <textarea className = "Post-Content-Embed Hidden" placeholder = "Embed Youtube"></textarea>
         </div>    
 
         <div className = "Post-Content-Footer-Buttons">

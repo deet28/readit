@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import upArrow from '../media/up-arrow.png';
 import downArrow from '../media/down-arrow2.png';
+import ReactPlayer from 'react-player/youtube';
 
 export default function MainBody() {
 
@@ -103,6 +104,7 @@ export default function MainBody() {
           text:post.text,
           picture:post.picture,
           url:post.url,
+          embed:post.embed,
           likes:post.likes,
           id:post.id,
           date:post.date,
@@ -131,6 +133,9 @@ export default function MainBody() {
             <div className = "Main-Body-Card-Body">
               {index.picture.length > 0 &&
                 <img className = "Main-Body-Card-Picture"src = {index.picture}></img>
+              }
+              {index.embed && 
+                <ReactPlayer controls = {true} className = "React-Player" url = {index.embed}></ReactPlayer>
               }
               <p className = "Main-Body-Card-Text">{index.text}</p>
               <p className = "Main-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>

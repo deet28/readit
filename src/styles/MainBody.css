@@ -40,8 +40,19 @@
   max-height:30rem;
   min-width:75%;
   max-width:75%;
-  border:1px solid black;
   align-self: center;
+}
+
+.React-Player{
+  min-height:20rem;
+  max-height:20rem;
+  min-width:90%;
+  max-width:90%;
+  align-self: left;
+  margin-left:2rem;
+  margin-right:-10rem;
+  margin-top:2rem;
+  box-shadow: 10px 5px 13px 4px gray;
 }
 
 .Main-Body-Card-Text{
@@ -126,8 +137,16 @@
   font-weight:bolder;
 }
 
-
-@media(min-width:672px){
-  .Main-Body-Card-Picture{
+/*
+@media(max-width:700px){
+  .React-Player{
+    align-self: left !important;
   }
 }
+
+@media (min-width:701px){
+  .React-Player{
+    align-self: center !important;
+  }
+}
+*/
