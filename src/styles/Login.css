@@ -14,7 +14,7 @@
 
 .Log-In-Sidebar{
   border:1px solid lightgrey;
-  background-color: mediumseagreen;
+ background-image: linear-gradient(red, yellow);
   margin-right:1rem;
 }
 
@@ -67,6 +67,24 @@ input:enabled{
 }
 
 .Log-In-Login:hover{
+  cursor: pointer;
+  background-color: rgb(110, 110, 207);
+}
+
+
+.Log-In-Signup{
+  background-color: rgb(91, 91, 173);
+  color:white;
+  font-size:0.9rem;
+  font-weight: bold;
+  height:36px;
+  width:40%;
+  border-radius:20px;
+  border:transparent;
+  margin-top:2rem;
+}
+
+.Log-In-Signup:hover{
   cursor: pointer;
   background-color: rgb(110, 110, 207);
 }

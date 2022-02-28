@@ -9,12 +9,25 @@ import logIn from '../media/log-in.png'
 
 export default function Nav() {
 
-  function logIntoAccount(){
+  function logIntoAccount(e){
     const logInModal = document.querySelector('.Log-In-Modal');
+    const modalTitle = document.querySelector('.Log-In-Title');
+    const logInButton = document.querySelector('.Log-In-Login');
+    const signUpButton = document.querySelector('.Log-In-Signup');
     const navHeader = document.querySelector('.Nav-Header');
     const smallHeader = document.querySelector(".Main-Header-Bar-Small");
     const largeHeader = document.querySelector(".Main-Header-Bar-Large");
     const mainBody = document.querySelector('.Main-Body-Div');
+
+    if (e.target.textContent == 'Sign Up'){
+      modalTitle.textContent = 'Sign Up';
+      logInButton.classList.add('Hidden');
+      signUpButton.classList.remove('Hidden')
+    } else {
+      modalTitle.textContent = 'Log In'
+      logInButton.classList.remove('Hidden');
+      signUpButton.classList.add('Hidden');
+    }
     logInModal.classList.remove('Hidden');
     navHeader.classList.add('Opaque');
     smallHeader.classList.add('Opaque');
@@ -62,6 +75,7 @@ export default function Nav() {
             <input className = "Log-In-Password" placeholder = "Password"></input>
           </div>
           <button className = "Log-In-Login">Log In</button>
+          <button className = "Log-In-Signup Hidden">Sign Up</button>
         </div>
         </div>
       <div className = "Nav-Header">
@@ -75,9 +89,7 @@ export default function Nav() {
         <input className = "Nav-Search" placeholder = "Search Readit" />
       </form>
         <button className  = "Nav-Button Button-One" onClick = {logIntoAccount}>Log In</button>
-        <Link to = "Post" className = "Nav-Button Button-Two">
-        <button className = "Nav-Button Button-Two">Sign Up</button>
-        </Link>
+        <button className = "Nav-Button Button-Two" onClick = {logIntoAccount}>Sign Up</button>
       <form className = "Nav-Drop-Down-Form" onClick = {showMenu}>
         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>
@@ -95,12 +107,12 @@ export default function Nav() {
           </form>
           
         <form className = "Nav-Menu-Form">
-          <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
-          <button className = "Nav-Drop-Down-Button Log-In-Button">Log In / Sign Up</button>
+          <Link to = "Post">
+          <img className = "Nav-Drop-Down-Login"></img>
+          <button className = "Nav-Drop-Down-Button Log-In-Button">Post</button>
+          </Link>
         </form>
-        
         <form className = "Nav-Menu-Form-Empty"></form>
-        
         <form className = "Nav-Menu-Form">
           <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
           <button className = "Nav-Drop-Down-Button Log-In-Button">Log In / Sign Up</button>
