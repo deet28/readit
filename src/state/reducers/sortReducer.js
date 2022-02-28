@@ -1,4 +1,3 @@
-
 const reducer = (state = 'Hot', action) => {
   switch (action.type){
     case "sort":

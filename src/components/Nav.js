@@ -9,6 +9,34 @@ import logIn from '../media/log-in.png'
 
 export default function Nav() {
 
+  function logIntoAccount(){
+    const logInModal = document.querySelector('.Log-In-Modal');
+    const navHeader = document.querySelector('.Nav-Header');
+    const smallHeader = document.querySelector(".Main-Header-Bar-Small");
+    const largeHeader = document.querySelector(".Main-Header-Bar-Large");
+    const mainBody = document.querySelector('.Main-Body-Div');
+    logInModal.classList.remove('Hidden');
+    navHeader.classList.add('Opaque');
+    smallHeader.classList.add('Opaque');
+    largeHeader.classList.add('Opaque');
+    mainBody.classList.add('Opaque')
+    document.body.style.overflow = 'hidden';
+  }
+
+    function closeLogIn(){
+    const logInModal = document.querySelector('.Log-In-Modal');
+    const navHeader = document.querySelector('.Nav-Header');
+    const smallHeader = document.querySelector(".Main-Header-Bar-Small");
+    const largeHeader = document.querySelector(".Main-Header-Bar-Large");
+    const mainBody = document.querySelector('.Main-Body-Div');
+    logInModal.classList.add('Hidden');
+    navHeader.classList.remove('Opaque');
+    smallHeader.classList.remove('Opaque');
+    largeHeader.classList.remove('Opaque');
+    mainBody.classList.remove('Opaque')
+    document.body.style.overflow = 'auto';
+  }
+
   function showMenu(){
     const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
     const mainBar = document.querySelector(".Main-Header-Bar")
@@ -19,9 +47,25 @@ export default function Nav() {
       navMenu.classList.add("Hidden")
       mainBar.classList.remove("Background");
     }
+  
   }
   return (
-    <div className = "Nav-Header">
+    
+      <>
+      <div className = "Log-In-Modal Hidden">
+        <div className = "Log-In-Sidebar"></div>
+        <div className = "Log-In-Main">
+          <button className = "Log-In-Close-Modal" onClick = {closeLogIn}>X</button>
+          <h3 className = "Log-In-Title">Login</h3>
+          <div className = "Log-In-Inputs">
+            <input className = "Log-In-Email" placeholder = "Email"></input>
+            <input className = "Log-In-Password" placeholder = "Password"></input>
+          </div>
+          <button className = "Log-In-Login">Log In</button>
+        </div>
+        </div>
+      <div className = "Nav-Header">
+      
       <Link to = "/"> 
         <img className = "Nav-Icon"src = {Icon}></img>
       </Link>
@@ -30,7 +74,7 @@ export default function Nav() {
         <img src = {magGlass} className = "Nav-Search-Image"></img>
         <input className = "Nav-Search" placeholder = "Search Readit" />
       </form>
-        <button className  = "Nav-Button Button-One">Log In</button>
+        <button className  = "Nav-Button Button-One" onClick = {logIntoAccount}>Log In</button>
         <Link to = "Post" className = "Nav-Button Button-Two">
         <button className = "Nav-Button Button-Two">Sign Up</button>
         </Link>
@@ -63,5 +107,7 @@ export default function Nav() {
         </form>
         </div>
       </div>
+
+      </>
     ) 
   }

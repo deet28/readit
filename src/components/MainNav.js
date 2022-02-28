@@ -28,7 +28,6 @@ function showHotMenu(){
       hotMenu.classList.add('Hidden');
     }
   }
-  
   function handleClick(e){
     const hotMenu = document.querySelector('.Main-Header-Hot-Button-Menu');
     let icon;

@@ -5,6 +5,7 @@
 @import 'MainBody.css';
 @import 'RightCard.css';
 @import 'Post.css';
+@import 'Login.css';
 
 .App {
   text-align: center;
@@ -43,4 +44,11 @@
 .Main-Div-Outer{
   background-color: rgb(224, 221, 221);
 }
+
+.Opaque{
+  opacity: 0.5;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 

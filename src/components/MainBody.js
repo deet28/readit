@@ -18,6 +18,8 @@ export default function MainBody() {
 
 
   const [posts,setPosts] = useState([]);
+
+  console.log(posts)
   let array = [];
   let sortedArray;
 
@@ -40,7 +42,7 @@ export default function MainBody() {
 
   async function upvoteButton(e){
     e.preventDefault();
-    let postID = e.target.parentNode.parentNode.id;
+    let postID = e.target.id;
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",postID))
     const snapshot = await getDocs(q);
@@ -56,7 +58,7 @@ export default function MainBody() {
 
   async function downvoteButton(e){
     e.preventDefault();
-    let postID = e.target.parentNode.parentNode.id;
+    let postID = e.target.id;
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",postID))
     const snapshot = await getDocs(q);
@@ -70,39 +72,22 @@ export default function MainBody() {
   })
   }
 
+
   function likePost(postID){
-    const postCards = document.querySelectorAll('.Main-Body-Card-Outer');
+    const postCards = document.querySelectorAll('.Main-Body-Likes');
     for(let i = 0; i < postCards.length; i++){
       if (postCards[i].id == postID){
-        //if dislike is already highlighted and disabled, remove this. (as we are now upvoting)
-        if (postCards[i].firstChild.firstChild.nextSibling.nextSibling.classList.contains('Dislike-Submitted')){
-            postCards[i].firstChild.firstChild.nextSibling.nextSibling.classList.remove('Dislike-Submitted');
-            postCards[i].firstChild.firstChild.nextSibling.classList.remove('Disliked')
-            return postCards[i].firstChild.firstChild.nextSibling.textContent++;
-        } else {
-          postCards[i].firstChild.firstChild.classList.add('Like-Submitted');
-          postCards[i].firstChild.firstChild.nextSibling.classList.add('Liked')
-          return postCards[i].firstChild.firstChild.nextSibling.textContent++;
-          }
-        } 
+        return postCards[i].firstChild.nextSibling.textContent++;
       }
+    }
   }
 
   function dislikePost(postID){
     const postCards = document.querySelectorAll('.Main-Body-Card-Outer');
     for(let i = 0; i < postCards.length; i++){
       if (postCards[i].id == postID){
-        //if like is already highlighted and disabled, remove this. (as we are now downvoting)
-        if (postCards[i].firstChild.firstChild.classList.contains('Like-Submitted')){
-            postCards[i].firstChild.firstChild.classList.remove('Like-Submitted');
-            postCards[i].firstChild.firstChild.nextSibling.classList.remove('Liked')
-            return postCards[i].firstChild.firstChild.nextSibling.textContent--;
-        } else {
-          postCards[i].firstChild.firstChild.nextSibling.nextSibling.classList.add('Dislike-Submitted');
-          postCards[i].firstChild.firstChild.nextSibling.classList.add('Disliked')
-          return postCards[i].firstChild.firstChild.nextSibling.textContent--;
-          }
-        } 
+        return postCards[i].firstChild.firstChild.nextSibling.textContent--;
+        }
       }
     }
 
@@ -128,7 +113,7 @@ export default function MainBody() {
       setPosts(array);
     }
     getData('Posts');
-  },[])
+  },[state])
 
   return (
     <>
@@ -136,10 +121,10 @@ export default function MainBody() {
       <div className = "Main-Body-Card-Div">
         {posts.map((index => (
           <div className = "Main-Body-Card-Outer" id = {index.id}>
-          <div className = "Main-Body-Likes">
-            <img className = "Main-Body-Like-Button" src = {upArrow} onClick = {upvoteButton}></img>
-            <p className = "Main-Body-Likes-Div">{index.likes}</p>
-            <img className = "Main-Body-Dislike-Button" src = {downArrow} onClick = {downvoteButton}></img>
+          <div className = "Main-Body-Likes"id = {index.id}>
+            <img className = "Main-Body-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
+            <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
+            <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downArrow} onClick = {downvoteButton}></img>
           </div>
           <div className = "Main-Body-Card">
             <h2 className = "Main-Body-Card-Title">{index.title}</h2>

@@ -1,0 +1,87 @@
+.Log-In-Modal{
+  min-height: 85vh;
+  min-width:80vw;
+  position:absolute;
+  border: 1px solid lightgrey;
+  background-color: white;
+  box-shadow: 1px 1px 10px 2px black;
+  z-index: 9999;
+  margin-top:3rem;
+  margin-left:10%;
+  display:grid;
+  grid-template-columns: 0.5fr 2.5fr;
+}
+
+.Log-In-Sidebar{
+  border:1px solid lightgrey;
+  background-color: mediumseagreen;
+  margin-right:1rem;
+}
+
+.Log-In-Main{
+  text-align: left;
+
+}
+
+.Log-In-Title{
+  margin-top:5rem;
+  font-weight: 600;
+}
+
+.Log-In-Inputs{
+  display:flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.Log-In-Email{
+  width:50%;
+  height:2rem;
+  margin-top:3rem;
+  margin-bottom:2rem;
+  border:1px solid gray;
+  font-size:1.2rem;
+}
+.Log-In-Password{
+  width:50%;
+  height:2rem;
+  border: 1px solid gray;
+  font-size:1.2rem;
+}
+
+input:enabled{
+  outline:none
+}
+
+
+.Log-In-Login{
+  background-color: rgb(91, 91, 173);
+  color:white;
+  font-size:0.9rem;
+  font-weight: bold;
+  height:36px;
+  width:40%;
+  border-radius:20px;
+  border:transparent;
+  margin-top:2rem;
+}
+
+.Log-In-Login:hover{
+  cursor: pointer;
+  background-color: rgb(110, 110, 207);
+}
+
+.Log-In-Close-Modal{
+  height:2rem;
+  width:2rem;
+  font-size: 1.5rem;
+  background-color: transparent;
+  color:black;
+  border:none;  
+  margin-left:93%;
+  margin-top:1.1rem;
+}
+
+.Log-In-Close-Modal:hover{
+  cursor: pointer;
+}
