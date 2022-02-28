@@ -14,6 +14,7 @@ export default function Nav() {
     const modalTitle = document.querySelector('.Log-In-Title');
     const logInButton = document.querySelector('.Log-In-Login');
     const signUpButton = document.querySelector('.Log-In-Signup');
+    const userName = document.querySelector('.Log-In-Username');
     const navHeader = document.querySelector('.Nav-Header');
     const smallHeader = document.querySelector(".Main-Header-Bar-Small");
     const largeHeader = document.querySelector(".Main-Header-Bar-Large");
@@ -23,10 +24,12 @@ export default function Nav() {
       modalTitle.textContent = 'Sign Up';
       logInButton.classList.add('Hidden');
       signUpButton.classList.remove('Hidden')
+      userName.classList.remove('Hidden');
     } else {
       modalTitle.textContent = 'Log In'
       logInButton.classList.remove('Hidden');
       signUpButton.classList.add('Hidden');
+      userName.classList.add('Hidden');
     }
     logInModal.classList.remove('Hidden');
     navHeader.classList.add('Opaque');
@@ -71,6 +74,7 @@ export default function Nav() {
           <button className = "Log-In-Close-Modal" onClick = {closeLogIn}>X</button>
           <h3 className = "Log-In-Title">Login</h3>
           <div className = "Log-In-Inputs">
+            <input className = "Log-In-Username Hidden" placeholder = "Username"></input>
             <input className = "Log-In-Email" placeholder = "Email"></input>
             <input className = "Log-In-Password" placeholder = "Password"></input>
           </div>
