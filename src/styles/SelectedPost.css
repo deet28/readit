@@ -9,7 +9,7 @@
   position:absolute;
   border:1px solid gray;
   background-color: white;
-  top:3rem;
+  top:3.5rem;
   left:2rem;
   margin-right:5rem;
   z-index:9999;
@@ -17,8 +17,6 @@
   display:flex;
   flex-direction: column;
   justify-content: start;
-  overflow: scroll !important;
-  overflow-y: scroll !important;
 }
 
 @media(min-width:960px){

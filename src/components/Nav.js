@@ -55,13 +55,13 @@ export default function Nav() {
 
   function showMenu(){
     const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
-    const mainBar = document.querySelector(".Main-Header-Bar")
+    //const mainBar = document.querySelector(".Main-Header-Bar");
     if(navMenu.classList.contains("Hidden")===true){
       navMenu.classList.remove("Hidden");
-      mainBar.classList.add("Background")
+      //mainBar.classList.add("Background")
     } else {
       navMenu.classList.add("Hidden")
-      mainBar.classList.remove("Background");
+     // mainBar.classList.remove("Background");
     }
   
   }

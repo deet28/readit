@@ -45,7 +45,7 @@ export default function Post() {
       likes:likes,
       date:date,
       id:id,
-      timestamp:timestamp
+      timestamp:timestamp,
     }
     await setDoc(doc(db,"Posts",id),payload).then (returnHome());
     }
