@@ -1,0 +1,27 @@
+.Select-Post{
+  text-decoration: none;
+  color:inherit;
+}
+
+.Selected-Post-Card{
+  min-height:100% !important;
+  min-width:90vw;
+  position:absolute;
+  border:1px solid gray;
+  background-color: white;
+  top:3rem;
+  left:2rem;
+  margin-right:5rem;
+  z-index:9999;
+  box-shadow: 2px 5px 10px 2px black;
+  display:flex;
+  flex-direction: column;
+  justify-content: start;
+  overflow: scroll !important;
+  overflow-y: scroll !important;
+}
+
+@media(min-width:960px){
+  .Selected-Post-Card{
+  }
+}

@@ -1,10 +1,14 @@
+.Main-Div-Outer{
+  display:grid;
+  grid-template-columns:1fr;
+}
+
 .Main-Div{
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items:center;
 }
-
 
 /* Small */ 
 .Main-Header-Bar-Small{
@@ -17,7 +21,6 @@
   align-items: center;
   background-color: white;
   margin-top:1rem;
-  margin-bottom:0rem;
 }
 
 
@@ -163,7 +166,7 @@
     display:none;
   }
 }
-@media(min-width:672px){
+@media(min-width:671px){
   .Main-Header-Bar-Small{
     display:none;
   }

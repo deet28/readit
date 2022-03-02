@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { app } from '../firebase';
 import {
   getFirestore,
@@ -9,20 +10,18 @@ import {
   where,
   doc,
   setDoc,
-  collection
+  collection,
 } from "firebase/firestore";
 import upArrow from '../media/up-arrow.png';
 import downArrow from '../media/down-arrow2.png';
 import ReactPlayer from 'react-player/youtube';
 
 export default function MainBody() {
-
-
+  
   const [posts,setPosts] = useState([]);
 
   console.log(posts)
   let array = [];
-  let sortedArray;
 
 
   //firestore
@@ -30,7 +29,7 @@ export default function MainBody() {
   //redux
   const state = useSelector((state)=>state);
 
-  const sortingFeed = useSelector (state => {
+  useSelector (state => {
     if(state.sort == 'New'){
         posts.sort((t1,t2)=>
         t2.timestamp-t1.timestamp);
@@ -92,9 +91,11 @@ export default function MainBody() {
       }
     }
 
+    function pickPost(){
+      window.scrollTo('0px');
+    }
   
-  
-  useEffect(() => {
+    useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db,'Posts'));
       querySnapshot.forEach((doc)=>{
@@ -120,9 +121,10 @@ export default function MainBody() {
   return (
     <>
     <div className = "Main-Body-Div">
-      <div className = "Main-Body-Card-Div">
+        <div className = "Main-Body-Card-Div">
         {posts.map((index => (
-          <div className = "Main-Body-Card-Outer" id = {index.id}>
+          <Link to = "Selected" className = "Select-Post" onClick = {pickPost}>
+          <div className = "Main-Body-Card-Outer" id = {index.id} >
           <div className = "Main-Body-Likes"id = {index.id}>
             <img className = "Main-Body-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
             <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
@@ -142,10 +144,12 @@ export default function MainBody() {
             </div>
           </div>
           </div>
+          </Link>
         )))}
+        
       </div>
     </div>
-
-    </>
+  </>
   )
 }
+

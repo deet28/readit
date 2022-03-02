@@ -2,12 +2,13 @@
 .Main-Div{
   display: flex;
   flex-direction: column;
-  min-height:100vh !important;
+  min-height:100vh;
 }
 .Main-Body-Div{
-  margin-top:2rem;
-  min-height:100vh;
+  margin-top:0.5rem;
+  height:100%;
   width:95%;
+  margin-bottom:2rem !important;
 }
 .Main-Body-Card-Outer{
   display:grid;
@@ -22,6 +23,10 @@
   border-left:1px solid lightgray;
   margin-bottom:1rem;
   background-color: white;
+}
+
+.Main-Body-Card:hover{
+  cursor: pointer;
 }
 .Main-Body-Card-Title{
   width:100%;

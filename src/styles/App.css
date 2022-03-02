@@ -6,6 +6,7 @@
 @import 'RightCard.css';
 @import 'Post.css';
 @import 'Login.css';
+@import 'SelectedPost.css';
 
 .App {
   text-align: center;
