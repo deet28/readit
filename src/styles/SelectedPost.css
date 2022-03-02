@@ -5,12 +5,12 @@
 
 .Selected-Post-Card{
   min-height:100% !important;
-  min-width:90vw;
+  min-width:92vw;
   position:absolute;
   border:1px solid gray;
   background-color: white;
   top:3.5rem;
-  left:2rem;
+  left:1rem;
   margin-right:5rem;
   z-index:9999;
   box-shadow: 2px 5px 10px 2px black;
@@ -19,7 +19,139 @@
   justify-content: start;
 }
 
+.Selected-Post-Main{
+  display:grid;
+  grid-template-columns: 0.1fr 9.9fr;
+  width:100%;
+}
+
+.Selected-Post-Likes{
+  display: flex;
+  flex-direction: column;
+  align-self: left; 
+  margin-right:30%;
+  margin-bottom:-1rem;
+}
+
+.Selected-Post-Like-Button{
+  height:2rem;
+  width:2rem;
+  margin-bottom:0;
+}
+
+.Selected-Post-Likes-Div{
+  height:1rem;
+  width:2rem;
+  margin-bottom:0;
+  margin-top:0;
+}
+
+.Selected-Post-Dislike-Button{
+  height:2rem;
+  width:2rem;
+  margin-top:0.2rem;
+}
+
+.Selected-Body-Card-Title{
+  margin-left:-3rem;
+}
+
+.Selected-Body-Card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.Selected-Body-Card-Body{
+  font-size: 1.2rem;
+  margin-top:1rem;
+  margin-left:-2rem;
+  text-align: left;
+} 
+
+.Selected-Body-Card-Picture{
+  height:30rem;
+  width:30rem;
+  margin-top:0.5rem;
+  margin-left:-0.5rem;
+}
+
+.Selected-Body-Card-Text{
+  
+}
+
+.Text-Div{
+  text-align: left;
+  margin-top:3rem;
+  margin-bottom:2rem;
+  width:30rem;
+  line-height:1.9rem;
+}
+
+.Selected-React-Player{
+  height:35rem;
+  max-width:30rem;
+  margin-left:-0.5rem;
+  margin-bottom:2rem;
+}
+
+.Selected-Body-Media-Footer{
+  font-size:0.8rem;
+  font-weight: bolder;
+  color:gray;
+  margin-top:0rem;
+}
+
+.Selected-Body-Comment-Parent{
+  margin-top:2rem;
+  min-height:10rem;
+  min-width:10rem;
+}
+
+.Selected-Body-Comment-Section{
+  margin-top:2rem;
+  min-height:10rem;
+  min-width:10rem;
+  margin-bottom:1rem;
+}
+
+.Selected-Body-Comments-Parent{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  margin-top:0;
+}
+
+.Selected-Body-Comments{
+  min-height:10rem;
+  width:80%;
+}
+
+.Add-Comment{
+  height:8rem;
+  width:30rem;
+  font-size: 1rem;
+  resize:none;
+}
+
+@media(min-width:800px){
+  .Selected-Body-Card-Picture{
+    height:40rem;
+    min-width:45rem;
+    margin-top:0;
+  }
+  .Selected-React-Player{
+    min-height:35rem;
+    min-width:40rem;
+    margin-top:0;
+  }
+}
+
 @media(min-width:960px){
   .Selected-Post-Card{
+  }
+  .Selected-Post-Card-Outer{
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
 import { app } from '../firebase';
 import {
   getFirestore,
@@ -159,26 +158,42 @@ console.log(selected)
   return (
     <>
     <div className = "Selected-Post-Card Hidden">
-    <button className = "Log-In-Close-Modal" onClick = {unselectPost}>X</button>
     {selected.map((index => (
           <div className = "Selected-Post-Card-Outer">
-          <div className = "Selected-Post-Likes"id = {index.id}>
-            <img className = "Main-Body-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
-            <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
-            <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downArrow} onClick = {downvoteButton}></img>
-          </div>
-         <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
-            <h2 className = "Main-Body-Card-Title" id = {index.id}>{index.title}</h2>
-            <div className = "Main-Body-Card-Body" id = {index.id}>
+            <button className = "Log-In-Close-Modal" onClick = {unselectPost}>X</button>
+            <div className = "Selected-Post-Main">
+              <div className = "Selected-Post-Likes"id = {index.id}>
+              <img className = "Selected-Post-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
+              <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
+              <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downArrow} onClick = {downvoteButton}></img>
+              </div>
+            <div className = "Selected-Body-Card"  onClick = {selectPost} id = {index.id}>
+            <h2 className = "Selected-Body-Card-Title" id = {index.id}>{index.title}</h2>
+            <div className = "Selected-Body-Card-Body" id = {index.id}>
               {index.picture.length > 0 &&
-                <img className = "Main-Body-Card-Picture" id = {index.id}src = {index.picture}></img>
+                <img className = "Selected-Body-Card-Picture" id = {index.id}src = {index.picture}></img>
               }
               {index.embed && 
-                <ReactPlayer controls = {true} className = "React-Player" url = {index.embed}></ReactPlayer>
+                <ReactPlayer controls = {true} className = "Selected-React-Player" url = {index.embed}></ReactPlayer>
               }
-              <p className = "Main-Body-Card-Text" id = {index.id}>{index.text}</p>
-              <p className = "Main-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
+              <div className = "Text-Div">
+              <p className = "Selected-Body-Card-Text" id = {index.id}>{index.text}</p>
+              <p className = "Selected-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
               </div>
+              <div className = "Selected-Body-Media-Footer">
+                <span>Comments</span>
+              </div>
+              </div>
+            </div>
+            </div>
+            <div className = "Selected-Body-Comment-Parent">
+                <div className = "Selected-Body-Comment-Section">
+                <textarea className = "Add-Comment" placeholder = "What are your thoughts?"></textarea>
+                </div>
+                <div className = "Selected-Body-Comments-Parent">
+                  <div className = "Selected-Body-Comments">
+                  </div>
+                </div>
             </div>
           </div>
         )))}
@@ -206,14 +221,10 @@ console.log(selected)
               </div>
             </div>
           </div>
-        )))}
-        
-        </div>
+          )))}
+       </div>
       </div>
+      
     </>
   )
 }
-
-
-<Link to = "Selected" className = "Select-Post">
-</Link>

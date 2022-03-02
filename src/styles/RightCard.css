@@ -36,5 +36,6 @@
   }
   .Right-Card-Div{
     display: none;
+    z-index:9999;
   }
 }
