@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import upArrow from '../media/up-arrow.png';
 import downArrow from '../media/down-arrow2.png';
+import chat from '../media/chat.png';
 import ReactPlayer from 'react-player/youtube';
 
 export default function MainBody() {
@@ -159,45 +160,69 @@ console.log(selected)
     <>
     <div className = "Selected-Post-Card Hidden">
     {selected.map((index => (
-          <div className = "Selected-Post-Card-Outer">
-            <button className = "Log-In-Close-Modal" onClick = {unselectPost}>X</button>
-            <div className = "Selected-Post-Main">
-              <div className = "Selected-Post-Likes"id = {index.id}>
-              <img className = "Selected-Post-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
-              <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
-              <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downArrow} onClick = {downvoteButton}></img>
+      <div className = "Selected-Post-Card-Outer">
+        <button className = "Selected-Card-Close-Button" onClick = {unselectPost}>X</button>
+          
+              <div className = "Selected-Post-Header">
+                  
+                  <div className = "Selected-Post-Likes"id = {index.id}>
+                    <img className = "Selected-Post-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
+                    <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
+                    <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downArrow} onClick = {downvoteButton}></img>
+                  </div>
+            
+                  <div className = "Selected-Body-Card-Title-Div"  onClick = {selectPost} id = {index.id}>
+                    <h2 className = "Selected-Body-Card-Title" id = {index.id}>{index.title}</h2>
+                  </div>
+              
               </div>
-            <div className = "Selected-Body-Card"  onClick = {selectPost} id = {index.id}>
-            <h2 className = "Selected-Body-Card-Title" id = {index.id}>{index.title}</h2>
-            <div className = "Selected-Body-Card-Body" id = {index.id}>
-              {index.picture.length > 0 &&
-                <img className = "Selected-Body-Card-Picture" id = {index.id}src = {index.picture}></img>
-              }
-              {index.embed && 
-                <ReactPlayer controls = {true} className = "Selected-React-Player" url = {index.embed}></ReactPlayer>
-              }
-              <div className = "Text-Div">
-              <p className = "Selected-Body-Card-Text" id = {index.id}>{index.text}</p>
-              <p className = "Selected-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
-              </div>
+          
+          <div className = "Selected-Post-Main">
+                
+                <div className = "Selected-Body-Card-Picture-Parent" id = {index.id}>
+                    {index.picture.length > 0 &&
+                    <img className = "Selected-Body-Card-Picture" id = {index.id}src = {index.picture}></img>
+                    }
+                </div>
+                
+                <div className = "Selected-Body-Card-Embed-Parent">
+                    {index.embed && 
+                    <ReactPlayer controls = {true} className = "Selected-React-Player" url = {index.embed}></ReactPlayer>
+                    }
+                </div>
+              
+                <div className = "Selected-Body-Card-Text-Div">
+                    {index.text.length > 0 && 
+                      <p className = "Selected-Body-Card-Text" id = {index.id}>{index.text}</p>
+                    }
+                    {index.url.length > 0 && 
+                      <p className = "Selected-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
+                    } 
+                </div>
+                
               <div className = "Selected-Body-Media-Footer">
-                <span>Comments</span>
+                <img src = {chat} className = "Selected-Body-Chat-Icon"></img>
+                <p>Comments</p>
               </div>
-              </div>
-            </div>
-            </div>
+          </div>
             <div className = "Selected-Body-Comment-Parent">
                 <div className = "Selected-Body-Comment-Section">
                 <textarea className = "Add-Comment" placeholder = "What are your thoughts?"></textarea>
-                </div>
-                <div className = "Selected-Body-Comments-Parent">
-                  <div className = "Selected-Body-Comments">
-                  </div>
-                </div>
+              </div>
+              <div className = "Selected-Body-Comments-Parent">
+              
+              <div className = "Selected-Body-Comments">
+              </div>
+            
             </div>
+          
           </div>
+        
+        </div>
         )))}
     </div>
+    
+    
     <div className = "Main-Body-Div">
         <div className = "Main-Body-Card-Div">
         {posts.map((index => (
@@ -224,7 +249,6 @@ console.log(selected)
           )))}
        </div>
       </div>
-      
     </>
   )
 }

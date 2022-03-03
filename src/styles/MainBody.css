@@ -24,15 +24,16 @@
   margin-bottom:1rem;
   background-color: white;
 }
-
 .Main-Body-Card:hover{
   cursor: pointer;
 }
 .Main-Body-Card-Title{
-  width:100%;
-  font-size: 1.5rem;
+  width:90%;
+  font-size: 1.3rem;
+  line-height:1.6rem;
   text-align: left;
   margin-left:1rem;
+  font-weight:600;
 }
 .Main-Body-Card-Body{
   display:flex;
