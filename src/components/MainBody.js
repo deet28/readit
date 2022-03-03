@@ -13,6 +13,8 @@ import {
 } from "firebase/firestore";
 import upArrow from '../media/up-arrow.png';
 import downArrow from '../media/down-arrow2.png';
+import upVoteArrow from '../media/upvote-arrow.png';
+import downVoteArrow from '../media/downvote-arrow.png'
 import chat from '../media/chat.png';
 import ReactPlayer from 'react-player/youtube';
 
@@ -82,10 +84,10 @@ export default function MainBody() {
   }
 
   function dislikePost(postID){
-    const postCards = document.querySelectorAll('.Main-Body-Card-Outer');
+    const postCards = document.querySelectorAll('.Main-Body-Likes');
     for(let i = 0; i < postCards.length; i++){
       if (postCards[i].id == postID){
-        return postCards[i].firstChild.firstChild.nextSibling.textContent--;
+        return postCards[i].firstChild.nextSibling.textContent--;
         }
       }
     }
@@ -160,15 +162,15 @@ console.log(selected)
     <>
     <div className = "Selected-Post-Card Hidden">
     {selected.map((index => (
-      <div className = "Selected-Post-Card-Outer">
-        <button className = "Selected-Card-Close-Button" onClick = {unselectPost}>X</button>
+        <div className = "Selected-Post-Card-Outer">
+          <button className = "Selected-Card-Close-Button" onClick = {unselectPost}>X</button>
           
               <div className = "Selected-Post-Header">
                   
                   <div className = "Selected-Post-Likes"id = {index.id}>
-                    <img className = "Selected-Post-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
+                    <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
                     <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
-                    <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downArrow} onClick = {downvoteButton}></img>
+                    <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
                   </div>
             
                   <div className = "Selected-Body-Card-Title-Div"  onClick = {selectPost} id = {index.id}>
@@ -204,33 +206,40 @@ console.log(selected)
                 <img src = {chat} className = "Selected-Body-Chat-Icon"></img>
                 <p>Comments</p>
               </div>
+          
           </div>
-            <div className = "Selected-Body-Comment-Parent">
-                <div className = "Selected-Body-Comment-Section">
-                <textarea className = "Add-Comment" placeholder = "What are your thoughts?"></textarea>
-              </div>
-              <div className = "Selected-Body-Comments-Parent">
+          
+          <div className = "Selected-Body-Comment-Parent">
               
-              <div className = "Selected-Body-Comments">
+              <div className = "Selected-Body-Post-Comment-Div">
+                <textarea className = "Selected-Body-Post-Comment" placeholder = "What are your thoughts?"></textarea>
+                
+                <div className = "Selected-Body-Submit-Comment-Button-Div">
+                  <button className = "Selected-Body-Submit-Comment-Button">Comment</button>
+                </div>
               </div>
-            
-            </div>
+              
+              <div className = "Selected-Body-Comment-Section-Parent">
+                <div className = "Selected-Body-Comment-Section">
+                  <p>This is an example paragraph</p>
+                </div>
+              </div>
           
           </div>
         
         </div>
         )))}
     </div>
-    
+  
     
     <div className = "Main-Body-Div">
         <div className = "Main-Body-Card-Div">
         {posts.map((index => (
           <div className = "Main-Body-Card-Outer">
           <div className = "Main-Body-Likes"id = {index.id}>
-            <img className = "Main-Body-Like-Button" id = {index.id} src = {upArrow} onClick = {upvoteButton}></img>
+            <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
             <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
-            <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downArrow} onClick = {downvoteButton}></img>
+            <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
           </div>
          <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
             <h2 className = "Main-Body-Card-Title" id = {index.id}>{index.title}</h2>

@@ -19,10 +19,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  border:1px solid black;
+  border:1px solid rgb(158, 156, 156);
   border-left:1px solid lightgray;
   margin-bottom:1rem;
   background-color: white;
+  border-radius:5px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius:0px;
+  border-left:transparent;
 }
 .Main-Body-Card:hover{
   cursor: pointer;
@@ -87,9 +91,12 @@
   min-width:1rem;
   min-height:2rem;
   line-height:2rem;
-  background-color: rgb(238, 236, 236);
+  background-color: rgb(247, 243, 243);
   margin-bottom:1rem;
-  border:1px solid black;
+  border:1px solid gray;
+  border-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius:0px;
   border-right:transparent;
   display:flex;
   flex-direction:column;
@@ -97,11 +104,17 @@
   font-weight: bolder;
 }
 
+.Main-Body-Likes-Div{
+  margin-top:0;
+  margin-bottom:0;
+}
+
 .Main-Body-Like-Button{
-  height:1.5rem;
-  width:1.5rem;
+  height:1.1rem;
+  width:1.2rem;
   margin-top:1rem;
   border:1px solid transparent;
+  filter:invert(26%)sepia(48%) saturate(265%);
 }
 
 .Main-Body-Like-Button:hover{
@@ -111,9 +124,10 @@
 }
 
 .Main-Body-Dislike-Button{
-  height:1.5rem;
-  width:1.5rem;
-
+  height:1.1rem;
+  width:1.8rem;
+  border:1px solid transparent;
+  filter:invert(45%) sepia(18%);
 }
 
 .Main-Body-Dislike-Button:hover{
