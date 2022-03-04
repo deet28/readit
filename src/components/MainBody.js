@@ -2,6 +2,11 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import { app } from '../firebase';
+import { 
+  likePost,
+  dislikePost,
+  clearComment
+} from'./Helpers'
 import {
   getFirestore,
   getDocs,
@@ -17,6 +22,7 @@ import upVoteArrow from '../media/upvote-arrow.png';
 import downVoteArrow from '../media/downvote-arrow.png'
 import chat from '../media/chat.png';
 import ReactPlayer from 'react-player/youtube';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function MainBody() {
   
@@ -30,6 +36,7 @@ export default function MainBody() {
 
   //firestore
   const db = getFirestore(app);
+  
   //redux
   const state = useSelector((state)=>state);
 
@@ -50,16 +57,13 @@ export default function MainBody() {
     const postID = selected[0].id;
     const postRef = doc(db,"Comments",postID);
     const payload = {
-      comment:commentVal
+      comment:commentVal,
+      likes:0,
+      id:uuidv4()
     }
     await updateDoc(postRef,{
-      comments:arrayUnion(commentVal)
-    }).then(clearComment());
-  }
-
-  function clearComment(){
-    const comment = document.querySelector('.Selected-Body-Post-Comment');
-    return comment.value = '';
+      comments:arrayUnion(payload)
+    }).then(displayComments(postID)).then(clearComment());
   }
 
   async function upvoteButton(e){
@@ -93,25 +97,6 @@ export default function MainBody() {
   })
   }
 
-
-  function likePost(postID){
-    const postCards = document.querySelectorAll('.Main-Body-Likes');
-    for(let i = 0; i < postCards.length; i++){
-      if (postCards[i].id == postID){
-        return postCards[i].firstChild.nextSibling.textContent++;
-      }
-    }
-  }
-
-  function dislikePost(postID){
-    const postCards = document.querySelectorAll('.Main-Body-Likes');
-    for(let i = 0; i < postCards.length; i++){
-      if (postCards[i].id == postID){
-        return postCards[i].firstChild.nextSibling.textContent--;
-        }
-      }
-    }
-
   function selectPost(e){
     const selectedPost = document.querySelector('.Selected-Post-Card');
     const mainBody = document.querySelector('.Main-Body-Div');
@@ -126,58 +111,7 @@ export default function MainBody() {
     let id = e.target.id;
     displayPost(id);
   }
-
-  async function displayPost(input){
-    const collectionRef = collection(db,"Posts");
-    const q = query(collectionRef,where("id","==",input))
-    const snapshot = await getDocs(q);
-    const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
-    results.forEach(async (result) => {
-    const payload = result;
-    setSelected([payload])
-  })
-  displayComments(input);
-}
-
-//async function displayComments(input){
-//  console.log(input);
-//  const collectionRef = collection(db,"Comments");
-//    const q = query(collectionRef,where("id","==",input))
-//    const snapshot = await getDocs(q);
-//    const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
-//    console.log(results)
-//      });
-//      console.log(payload)
-//    })
-//  }
-  async function displayComments(input){
-  let postID = input
-    const collectionRef = collection(db,"Comments");
-    const q = query(collectionRef,where("id","==",postID))
-    const snapshot = await getDocs(q);
-    const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
-    results.forEach(async (result) => {
-    const payload = result.comments;
-    setComments([...payload])
-  });
-  console.log(comments);
-}
-
-
-//async function displayComments(input){
-//  const querySnapshot = await getDocs(collection(db,'Comments'));
-//      querySnapshot.forEach((doc)=>{
-//        let post = (doc.id, "=>",doc.data())
-//        let result = {
-//          comment:post.comments
-//        }
-//        commentsArray.push(result.comment)
-//      })
-//      setComments(commentsArray)
-//      console.log(comments)
-//    }
-
-
+  
   function unselectPost(){
     const selectedPost = document.querySelector('.Selected-Post-Card');
     const mainBody = document.querySelector('.Main-Body-Div');
@@ -192,6 +126,36 @@ export default function MainBody() {
     setSelected([]);
   }
   
+  async function displayPost(input){
+    const collectionRef = collection(db,"Posts");
+    const q = query(collectionRef,where("id","==",input))
+    const snapshot = await getDocs(q);
+    const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
+    results.forEach(async (result) => {
+    const payload = result;
+    setSelected([payload])
+  })
+  displayComments(input);
+}
+
+  async function displayComments(input){
+  let postID = input
+    const collectionRef = collection(db,"Comments");
+    const q = query(collectionRef,where("id","==",postID))
+    const snapshot = await getDocs(q);
+    const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
+    results.forEach(async (result) => {
+    const payload = result.comments;
+    const commentMap = payload.map((index =>{
+      let newComment = index.comment
+      let newCommentLikes = index.likes
+      let newCommentID = index.id
+      commentsArray.push({newComment,newCommentID,newCommentLikes});
+    }))
+    setComments(commentsArray)
+  });
+}
+
     useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db,'Posts'));
@@ -279,9 +243,15 @@ export default function MainBody() {
               <div className = "Selected-Body-Comment-Section-Parent">
                 <div className = "Selected-Body-Comment-Section">
                    {comments.map((index => (
-                      <p>{index}</p>
+                    <div className = "Selected-Body-Comment-Post-Parent">
+                      <p className = "Selected-Body-Comment-Post">{index.newComment}</p>
+                      <div className = "Selected-Body-Comment-Posts-Like-Parent">
+                      <img src = {upVoteArrow} className = "Selected-Body-Comment-Posts-Like"></img>
+                      <span>{index.newCommentLikes}</span>
+                      <img src = {downVoteArrow} className = "Selected-Body-Comment-Posts-Dislike"></img>
+                      </div>
+                    </div>
                   )))}
-                  <p>This is an example paragraph</p>
                 </div>
               </div>
           
