@@ -54,7 +54,10 @@ export default function Post() {
   }
 
   async function createComments(id){
+    const comments = [];
     const payload = {
+      comments:comments,
+      id:id
     }
     await setDoc(doc(db,"Comments",id),payload)
   }

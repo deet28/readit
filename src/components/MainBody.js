@@ -42,7 +42,7 @@ export default function MainBody() {
       t2.likes-t1.likes);
     }
   })
-  
+
   async function addComment(e){
     e.preventDefault();
     const comment = document.querySelector('.Selected-Body-Post-Comment');
@@ -54,7 +54,12 @@ export default function MainBody() {
     }
     await updateDoc(postRef,{
       comments:arrayUnion(commentVal)
-    });
+    }).then(clearComment());
+  }
+
+  function clearComment(){
+    const comment = document.querySelector('.Selected-Body-Post-Comment');
+    return comment.value = '';
   }
 
   async function upvoteButton(e){
@@ -128,24 +133,50 @@ export default function MainBody() {
     const snapshot = await getDocs(q);
     const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
     results.forEach(async (result) => {
-    const docRef = doc(db,"Posts",result.id);
     const payload = result;
-    setSelected([payload]);
+    setSelected([payload])
   })
-  //.then(displayComments(input))
+  displayComments(input);
 }
 
 //async function displayComments(input){
-//  const collectionRef = collection(db,"Posts");
+//  console.log(input);
+//  const collectionRef = collection(db,"Comments");
 //    const q = query(collectionRef,where("id","==",input))
 //    const snapshot = await getDocs(q);
 //    const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
-//    results.forEach(async (result) => {
-//    const payload = result.comments;
-//      commentsArray.push(payload);
+//    console.log(results)
+//      });
+//      console.log(payload)
 //    })
-//    setComments([commentsArray]);
 //  }
+  async function displayComments(input){
+  let postID = input
+    const collectionRef = collection(db,"Comments");
+    const q = query(collectionRef,where("id","==",postID))
+    const snapshot = await getDocs(q);
+    const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
+    results.forEach(async (result) => {
+    const payload = result.comments;
+    setComments([...payload])
+  });
+  console.log(comments);
+}
+
+
+//async function displayComments(input){
+//  const querySnapshot = await getDocs(collection(db,'Comments'));
+//      querySnapshot.forEach((doc)=>{
+//        let post = (doc.id, "=>",doc.data())
+//        let result = {
+//          comment:post.comments
+//        }
+//        commentsArray.push(result.comment)
+//      })
+//      setComments(commentsArray)
+//      console.log(comments)
+//    }
+
 
   function unselectPost(){
     const selectedPost = document.querySelector('.Selected-Post-Card');
@@ -247,9 +278,9 @@ export default function MainBody() {
               
               <div className = "Selected-Body-Comment-Section-Parent">
                 <div className = "Selected-Body-Comment-Section">
-                  {index.comments && 
-                    <p>{index.comments}</p>
-                  }
+                   {comments.map((index => (
+                      <p>{index}</p>
+                  )))}
                   <p>This is an example paragraph</p>
                 </div>
               </div>
