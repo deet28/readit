@@ -26,8 +26,6 @@ export default function Post() {
     const picture = images;
     const url = document.querySelector('.Post-Content-Url');
     const embed = document.querySelector('.Post-Content-Embed');
-
-    console.log(embed);
     const likes = '0'; 
     let id = uuidv4();
     let timestamp = Date.now();
@@ -47,12 +45,18 @@ export default function Post() {
       id:id,
       timestamp:timestamp,
     }
-    await setDoc(doc(db,"Posts",id),payload).then (returnHome());
+    await setDoc(doc(db,"Posts",id),payload).then(createComments(id)).then (returnHome());
     }
       catch (error){
         console.log('Error adding to Post database')
       }
     }
+  }
+
+  async function createComments(id){
+    const payload = {
+    }
+    await setDoc(doc(db,"Comments",id),payload)
   }
 
   function returnHome(){

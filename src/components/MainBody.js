@@ -10,9 +10,9 @@ import {
   doc,
   setDoc,
   collection,
+  updateDoc,
+  arrayUnion
 } from "firebase/firestore";
-import upArrow from '../media/up-arrow.png';
-import downArrow from '../media/down-arrow2.png';
 import upVoteArrow from '../media/upvote-arrow.png';
 import downVoteArrow from '../media/downvote-arrow.png'
 import chat from '../media/chat.png';
@@ -22,7 +22,10 @@ export default function MainBody() {
   
   const [posts,setPosts] = useState([]);
   const [selected,setSelected] = useState([]);
+  const [comments,setComments] = useState([]);
+
   let array = [];
+  let commentsArray=[];
 
 
   //firestore
@@ -39,7 +42,20 @@ export default function MainBody() {
       t2.likes-t1.likes);
     }
   })
-
+  
+  async function addComment(e){
+    e.preventDefault();
+    const comment = document.querySelector('.Selected-Body-Post-Comment');
+    const commentVal = comment.value
+    const postID = selected[0].id;
+    const postRef = doc(db,"Comments",postID);
+    const payload = {
+      comment:commentVal
+    }
+    await updateDoc(postRef,{
+      comments:arrayUnion(commentVal)
+    });
+  }
 
   async function upvoteButton(e){
     e.preventDefault();
@@ -51,7 +67,6 @@ export default function MainBody() {
     results.forEach(async (result) => {
       const docRef = doc(db,"Posts",result.id);
       result.likes ++; 
-    
     const payload = result;
     await setDoc(docRef,payload).then(likePost(postID));
   })
@@ -117,9 +132,20 @@ export default function MainBody() {
     const payload = result;
     setSelected([payload]);
   })
-  
+  //.then(displayComments(input))
 }
-console.log(selected)
+
+//async function displayComments(input){
+//  const collectionRef = collection(db,"Posts");
+//    const q = query(collectionRef,where("id","==",input))
+//    const snapshot = await getDocs(q);
+//    const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
+//    results.forEach(async (result) => {
+//    const payload = result.comments;
+//      commentsArray.push(payload);
+//    })
+//    setComments([commentsArray]);
+//  }
 
   function unselectPost(){
     const selectedPost = document.querySelector('.Selected-Post-Card');
@@ -215,12 +241,15 @@ console.log(selected)
                 <textarea className = "Selected-Body-Post-Comment" placeholder = "What are your thoughts?"></textarea>
                 
                 <div className = "Selected-Body-Submit-Comment-Button-Div">
-                  <button className = "Selected-Body-Submit-Comment-Button">Comment</button>
+                  <button className = "Selected-Body-Submit-Comment-Button" onClick = {addComment}>Comment</button>
                 </div>
               </div>
               
               <div className = "Selected-Body-Comment-Section-Parent">
                 <div className = "Selected-Body-Comment-Section">
+                  {index.comments && 
+                    <p>{index.comments}</p>
+                  }
                   <p>This is an example paragraph</p>
                 </div>
               </div>
