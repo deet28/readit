@@ -239,11 +239,13 @@ export default function MainBody() {
                   <button className = "Selected-Body-Submit-Comment-Button" onClick = {addComment}>Comment</button>
                 </div>
               </div>
+            </div>
               
               <div className = "Selected-Body-Comment-Section-Parent">
                 <div className = "Selected-Body-Comment-Section">
                    {comments.map((index => (
                     <div className = "Selected-Body-Comment-Post-Parent">
+                      <span className = "Selected-Body-Comment-Post-Username">username</span>
                       <p className = "Selected-Body-Comment-Post">{index.newComment}</p>
                       <div className = "Selected-Body-Comment-Posts-Like-Parent">
                       <img src = {upVoteArrow} className = "Selected-Body-Comment-Posts-Like"></img>
@@ -252,7 +254,7 @@ export default function MainBody() {
                       </div>
                     </div>
                   )))}
-                </div>
+                
               </div>
           
           </div>
