@@ -101,9 +101,9 @@ export default function MainBody() {
   })
   }
 
-  function selectPost(e){
+  async function selectPost(e){
     let id = e.target.id;
-    displayPost(id);
+    await displayPost(id);
     const selectedPost = document.querySelector('.Selected-Post-Card');
     const mainBody = document.querySelector('.Main-Body-Div');
     const smallHeader = document.querySelector(".Main-Header-Bar-Small");
@@ -132,7 +132,6 @@ export default function MainBody() {
   }
   
   async function displayPost(input){
-    console.log(input);
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",input))
     const snapshot = await getDocs(q);
