@@ -102,6 +102,8 @@ export default function MainBody() {
   }
 
   function selectPost(e){
+    let id = e.target.id;
+    displayPost(id);
     const selectedPost = document.querySelector('.Selected-Post-Card');
     const mainBody = document.querySelector('.Main-Body-Div');
     const smallHeader = document.querySelector(".Main-Header-Bar-Small");
@@ -112,8 +114,7 @@ export default function MainBody() {
     smallHeader.classList.add('Hidden');
     largeHeader.classList.add('Hidden')
     rightCard.classList.add('Hidden');
-    let id = e.target.id;
-    displayPost(id);
+    
   }
   
   function unselectPost(){
@@ -131,6 +132,7 @@ export default function MainBody() {
   }
   
   async function displayPost(input){
+    console.log(input);
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",input))
     const snapshot = await getDocs(q);
@@ -201,7 +203,7 @@ export default function MainBody() {
                     <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
                   </div>
             
-                  <div className = "Selected-Body-Card-Title-Div"  onClick = {selectPost} id = {index.id}>
+                  <div className = "Selected-Body-Card-Title-Div"  onClick = {displayPost} id = {index.id}>
                     <h2 className = "Selected-Body-Card-Title" id = {index.id}>{index.title}</h2>
                   </div>
               
