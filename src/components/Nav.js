@@ -1,13 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useRef }from'react'
+import { signup,useAuth,login,logout } from '../firebase'
 import Icon from '../media/readit.png'
 import magGlass from '../media/mag-glass.png'
 import dropDown from '../media/drop-down.png'
 import downArrow from '../media/down-arrow.png'
 import moon from '../media/moon.png'
 import logIn from '../media/log-in.png'
+import post from '../media/post.png'
 
 export default function Nav() {
+  
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const currentUser = useAuth();
 
   function logIntoAccount(e){
     const logInModal = document.querySelector('.Log-In-Modal');
@@ -38,6 +45,40 @@ export default function Nav() {
     mainBody.classList.add('Opaque')
     document.body.style.overflow = 'hidden';
   }
+  
+  async function handleSignUp(){
+    if (passwordRef.current.value.length < 6){
+      return alert ('Password must be at least 6 characters!')
+    }
+    try {
+      await signup(emailRef.current.value,passwordRef.current.value)
+      .then(resetSignUpForm())
+    } catch { 
+      alert('error')
+    }
+  }
+  function resetSignUpForm(){
+    emailRef.current.value = '';
+    passwordRef.current.value = '';
+    closeLogIn();
+  }
+
+  async function handleLogout(){
+    try {
+      await logout()
+    } catch {
+      alert ("Error logging out!")
+    }
+  }
+
+  async function handleLogin(){
+    try {
+      await login(emailRef.current.value,passwordRef.current.value)
+      .then(resetSignUpForm())
+    } catch { 
+      alert('error')
+    }
+  }
 
     function closeLogIn(){
     const logInModal = document.querySelector('.Log-In-Modal');
@@ -61,6 +102,7 @@ export default function Nav() {
       //mainBar.classList.add("Background")
     } else {
       navMenu.classList.add("Hidden")
+
      // mainBar.classList.remove("Background");
     }
   
@@ -75,11 +117,11 @@ export default function Nav() {
           <h3 className = "Log-In-Title">Login</h3>
           <div className = "Log-In-Inputs">
             <input className = "Log-In-Username Hidden" placeholder = "Username"></input>
-            <input className = "Log-In-Email" placeholder = "Email"></input>
-            <input className = "Log-In-Password" placeholder = "Password"></input>
+            <input ref = {emailRef} className = "Log-In-Email" placeholder = "Email"></input>
+            <input ref = {passwordRef} className = "Log-In-Password" type = "password" placeholder = "Password"></input>
           </div>
-          <button className = "Log-In-Login">Log In</button>
-          <button className = "Log-In-Signup Hidden">Sign Up</button>
+          <button className = "Log-In-Login"onClick = {handleLogin}>Log In</button>
+          <button className = "Log-In-Signup Hidden" onClick = {handleSignUp}>Sign Up</button>
         </div>
         </div>
       <div className = "Nav-Header">
@@ -92,8 +134,19 @@ export default function Nav() {
         <img src = {magGlass} className = "Nav-Search-Image"></img>
         <input className = "Nav-Search" placeholder = "Search Readit" />
       </form>
-        <button className  = "Nav-Button Button-One" onClick = {logIntoAccount}>Log In</button>
-        <button className = "Nav-Button Button-Two" onClick = {logIntoAccount}>Sign Up</button>
+        {currentUser!==null &&
+        <div className = "Nav-Menu-Logged-In">
+          <span className = "Nav-Menu-Logged-In-Name">/u{currentUser?.email}</span>
+          <img className = "Nav-Menu-Logged-In-Image" src = {post}></img>
+        </div>
+        }
+        {currentUser == null && 
+          <button className  = "Nav-Button Button-One" onClick = {logIntoAccount}>Log In</button>
+        }
+        {currentUser == null && 
+          <button className = "Nav-Button Button-Two" onClick = {logIntoAccount}>Sign Up</button>
+        }
+          
       <form className = "Nav-Drop-Down-Form" onClick = {showMenu}>
         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>
@@ -109,7 +162,6 @@ export default function Nav() {
               <span className = "Dark-Mode-Slider"></span>
             </label>
           </form>
-          
         <form className = "Nav-Menu-Form">
           <Link to = "Post">
           <img className = "Nav-Drop-Down-Login"></img>
@@ -117,10 +169,19 @@ export default function Nav() {
           </Link>
         </form>
         <form className = "Nav-Menu-Form-Empty"></form>
-        <form className = "Nav-Menu-Form">
-          <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
-          <button className = "Nav-Drop-Down-Button Log-In-Button">Log In / Sign Up</button>
-        </form>
+        {currentUser!==null &&
+         <form className = "Nav-Menu-Form Logs-Out">
+            <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
+            <button onClick = {handleLogout} className = "Nav-Drop-Down-Button Log-In-Button">Log Out</button>
+          </form>
+        }
+        {currentUser==null && 
+          <form className = "Nav-Menu-Form Logs-In">
+            <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
+            <button onClick = {handleLogout} className = "Nav-Drop-Down-Button Log-In-Button">Log In/ Sign Up</button>
+          </form>
+        }
+        
         </div>
       </div>
 
