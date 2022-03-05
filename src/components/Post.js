@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { app } from '../firebase';
+import { app,useAuth } from '../firebase';
 import { storage } from '../firebase';
 import { getFirestore,doc,setDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
@@ -16,6 +16,7 @@ export default function Post() {
   const imageButton = `Images & Video`;
   const [images, setImages] = useState([
   ]) 
+  const currentUser = useAuth();
   let image;
 
   const db = getFirestore(app);

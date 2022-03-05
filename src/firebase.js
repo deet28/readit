@@ -6,7 +6,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged, 
-  signOut } from 'firebase/auth';
+  signOut 
+} from 'firebase/auth';
 
 const firebaseConfig = { 
   apiKey: "AIzaSyCrn1AYQfGg-Cavjc8JctS8DPbpyGLIJaY",

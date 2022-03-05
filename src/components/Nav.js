@@ -1,7 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useRef }from'react'
-import { signup,useAuth,login,logout } from '../firebase'
+import { useRef,useState,useEffect }from'react'
+import { app,signup,useAuth,login,logout } from '../firebase'
+import {
+  getFirestore,
+  getDocs,
+  doc,
+  setDoc,
+  collection
+} from 'firebase/firestore'
 import Icon from '../media/readit.png'
 import magGlass from '../media/mag-glass.png'
 import dropDown from '../media/drop-down.png'
@@ -9,12 +16,18 @@ import downArrow from '../media/down-arrow.png'
 import moon from '../media/moon.png'
 import logIn from '../media/log-in.png'
 import post from '../media/post.png'
+import { v4 as uuidv4} from 'uuid'
 
 export default function Nav() {
+
+  const db = getFirestore(app);
   
   const emailRef = useRef();
   const passwordRef = useRef();
+  const displayRef = useRef();
   const currentUser = useAuth();
+  const [userName, setUserName] = useState([]);
+
 
   function logIntoAccount(e){
     const logInModal = document.querySelector('.Log-In-Modal');
@@ -45,22 +58,73 @@ export default function Nav() {
     mainBody.classList.add('Opaque')
     document.body.style.overflow = 'hidden';
   }
+
+
+  async function testUsername(){
+    let userArr =[];
+    const querySnapshot = await getDocs(collection(db,'Users'));
+      querySnapshot.forEach((doc)=>{
+        let user = (doc.id, "=>",doc.data())
+        let result = user.userName;
+        userArr.push(result);
+      })
+     if (userArr.includes(displayRef.current.value)){
+        return alert('Username taken!');
+      } else {
+        handleSignUp();
+      }
+  }
   
   async function handleSignUp(){
     if (passwordRef.current.value.length < 6){
       return alert ('Password must be at least 6 characters!')
-    }
+    } else {
     try {
       await signup(emailRef.current.value,passwordRef.current.value)
+      .then(handleUsername())
       .then(resetSignUpForm())
     } catch { 
       alert('error')
     }
   }
+}
+
+  async function handleUsername(){
+    const user = displayRef.current.value;
+    let uid = uuidv4();
+    let email = emailRef.current.value
+    console.log(uid)
+    const payload = {
+      userName:user,
+      email:email,
+      id:uid
+    }
+    await setDoc(doc(db,"Users",uid),payload);
+  }
+
   function resetSignUpForm(){
     emailRef.current.value = '';
     passwordRef.current.value = '';
     closeLogIn();
+  }
+
+  async function getUsername(input){
+    let email;
+    if (emailRef.current.value == ''){
+      email = input.toLowerCase();
+    } else {
+      email = emailRef.current.value;
+    }
+    const querySnapshot = await getDocs(collection(db,'Users'));
+      querySnapshot.forEach((doc)=>{
+        let user = (doc.id, "=>",doc.data())
+        let emailName = user.email.toLowerCase();
+        let usersName = user.userName;
+        if (emailName == email){
+          console.log(usersName)
+          setUserName([usersName])
+        }
+      })
   }
 
   async function handleLogout(){
@@ -74,6 +138,7 @@ export default function Nav() {
   async function handleLogin(){
     try {
       await login(emailRef.current.value,passwordRef.current.value)
+      .then(getUsername())
       .then(resetSignUpForm())
     } catch { 
       alert('error')
@@ -107,6 +172,15 @@ export default function Nav() {
     }
   
   }
+  useEffect(() => {
+      if (currentUser==null){
+        return;
+      } else {
+        let email = currentUser.email;
+        console.log(email);
+        getUsername(email)
+      }
+  },[currentUser])
   return (
     
       <>
@@ -116,12 +190,12 @@ export default function Nav() {
           <button className = "Log-In-Close-Modal" onClick = {closeLogIn}>X</button>
           <h3 className = "Log-In-Title">Login</h3>
           <div className = "Log-In-Inputs">
-            <input className = "Log-In-Username Hidden" placeholder = "Username"></input>
+            <input ref = {displayRef} className = "Log-In-Username Hidden" placeholder = "Username"></input>
             <input ref = {emailRef} className = "Log-In-Email" placeholder = "Email"></input>
             <input ref = {passwordRef} className = "Log-In-Password" type = "password" placeholder = "Password"></input>
           </div>
           <button className = "Log-In-Login"onClick = {handleLogin}>Log In</button>
-          <button className = "Log-In-Signup Hidden" onClick = {handleSignUp}>Sign Up</button>
+          <button className = "Log-In-Signup Hidden" onClick = {testUsername}>Sign Up</button>
         </div>
         </div>
       <div className = "Nav-Header">
@@ -136,9 +210,11 @@ export default function Nav() {
       </form>
         {currentUser!==null &&
         <div className = "Nav-Menu-Logged-In">
-          <span className = "Nav-Menu-Logged-In-Name">/u{currentUser?.email}</span>
-          <img className = "Nav-Menu-Logged-In-Image" src = {post}></img>
-        </div>
+          <span className = "Nav-Menu-Logged-In-Name">/u{userName}</span>
+          <Link to = "/Post">
+            <img className = "Nav-Menu-Logged-In-Image" src = {post}></img>
+          </Link>
+          </div>
         }
         {currentUser == null && 
           <button className  = "Nav-Button Button-One" onClick = {logIntoAccount}>Log In</button>

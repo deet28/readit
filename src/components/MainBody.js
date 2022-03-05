@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
-import { app } from '../firebase';
+import { app,useAuth } from '../firebase';
 import { 
   likePost,
   dislikePost,
@@ -29,7 +29,7 @@ export default function MainBody() {
   const [posts,setPosts] = useState([]);
   const [selected,setSelected] = useState([]);
   const [comments,setComments] = useState([]);
-
+  const currentUser = useAuth();
   let array = [];
   let commentsArray=[];
 
@@ -50,17 +50,23 @@ export default function MainBody() {
     }
   })
 
+
+
   async function addComment(e){
     e.preventDefault();
     const comment = document.querySelector('.Selected-Body-Post-Comment');
+    const userNameField = document.querySelector('.Nav-Menu-Logged-In-Name');
+    const userName = userNameField.textContent.split('').slice(2,).join('');
     const commentVal = comment.value
     const postID = selected[0].id;
     const postRef = doc(db,"Comments",postID);
     const payload = {
       comment:commentVal,
       likes:0,
+      user:userName,
       id:uuidv4()
     }
+    console.log(userName);
     await updateDoc(postRef,{
       comments:arrayUnion(payload)
     }).then(displayComments(postID)).then(clearComment());
@@ -150,7 +156,8 @@ export default function MainBody() {
       let newComment = index.comment
       let newCommentLikes = index.likes
       let newCommentID = index.id
-      commentsArray.push({newComment,newCommentID,newCommentLikes});
+      let user = index.user
+      commentsArray.push({newComment,newCommentID,newCommentLikes,user});
     }))
     setComments(commentsArray)
   });
@@ -245,7 +252,7 @@ export default function MainBody() {
                 <div className = "Selected-Body-Comment-Section">
                    {comments.map((index => (
                     <div className = "Selected-Body-Comment-Post-Parent">
-                      <span className = "Selected-Body-Comment-Post-Username">username</span>
+                      <span className = "Selected-Body-Comment-Post-Username">{index.user}</span>
                       <p className = "Selected-Body-Comment-Post">{index.newComment}</p>
                       <div className = "Selected-Body-Comment-Posts-Like-Parent">
                       <img src = {upVoteArrow} className = "Selected-Body-Comment-Posts-Like"></img>
