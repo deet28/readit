@@ -197,10 +197,14 @@ export default function MainBody() {
               <div className = "Selected-Post-Header">
                   
                   <div className = "Selected-Post-Likes"id = {index.id}>
+                  {currentUser!==null && 
                     <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
+                  }
                     <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
+                  {currentUser!==null && 
                     <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
-                  </div>
+                  }
+                    </div>
             
                   <div className = "Selected-Body-Card-Title-Div"  onClick = {displayPost} id = {index.id}>
                     <h2 className = "Selected-Body-Card-Title" id = {index.id}>{index.title}</h2>
@@ -239,14 +243,14 @@ export default function MainBody() {
           </div>
           
           <div className = "Selected-Body-Comment-Parent">
-              
+              {currentUser!==null && 
               <div className = "Selected-Body-Post-Comment-Div">
                 <textarea className = "Selected-Body-Post-Comment" placeholder = "What are your thoughts?"></textarea>
-                
                 <div className = "Selected-Body-Submit-Comment-Button-Div">
                   <button className = "Selected-Body-Submit-Comment-Button" onClick = {addComment}>Comment</button>
                 </div>
               </div>
+                }
             </div>
               
               <div className = "Selected-Body-Comment-Section-Parent">
@@ -277,12 +281,16 @@ export default function MainBody() {
         {posts.map((index => (
           <div className = "Main-Body-Card-Outer">
           <div className = "Main-Body-Likes"id = {index.id}>
+          {currentUser!==null && 
             <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
+          }
             <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
+          {currentUser!==null && 
             <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
+          }
           </div>
          <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
-           <div className = "Main-Body-Card-User-Name-Div"><span className = "Main-Body-Card-User-Name">Posted by u/{index.user}</span></div>
+           <div id = {index.id} className = "Main-Body-Card-User-Name-Div"><span id = {index.id} className = "Main-Body-Card-User-Name">Posted by u/{index.user}</span></div>
             
             <h2 className = "Main-Body-Card-Title" id = {index.id}>{index.title}</h2>
             <div className = "Main-Body-Card-Body" id = {index.id}>
