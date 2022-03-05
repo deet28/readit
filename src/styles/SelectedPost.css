@@ -31,13 +31,22 @@
   border-bottom:5rem solid lightgray;
 }
 
+.Selected-Card-User-Name{
+  font-size:0.9rem;
+  text-align: left;
+  margin-left:4rem;
+  color:gray;
+  margin-top:-1rem;
+  width:60%;
+}
+
 .Selected-Card-Close-Button{
   height:2rem;
   width:2rem;
   font-size: 1.5rem;
   background-color: transparent;
+  border:1px solid transparent;
   color:black;
-  border:none;  
   margin-left:78%;
   margin-top:1.1rem;
 }

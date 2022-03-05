@@ -34,6 +34,7 @@
   text-decoration: none!important;
 }
 
+
 .Nav-Search-Form{
   display:flex;
   flex-direction: row;
@@ -161,6 +162,12 @@
   margin-top:3px;
 }
 
+.Nav-Drop-Down-Logout{
+  height:1.6rem;
+  width:1.5rem;
+  margin-left:-4.9rem;
+}
+
 .Nav-Drop-Down-Button{
   font-size:0.9rem;
   margin-left: -0.1rem;
@@ -246,12 +253,13 @@ input:checked + .Dark-Mode-Slider:before {
   transform: translateX(16px);
 }
 
-/* Slider on Drop Down Menu  */ 
+/* ^ Slider on Drop Down Menu ^ */ 
 
 .Nav-Menu-Logged-In{
   display:flex;
   flex-direction: row;
   justify-content: space-around;
+  width:30%;
 }
 .Nav-Menu-Logged-In-Name{
   font-size:1rem;
@@ -273,6 +281,11 @@ input:checked + .Dark-Mode-Slider:before {
     margin-left:1rem;
   }
   
+}
+@media(min-width:1000px){
+  .Nav-Menu-Logged-In{
+    width:20%;
+  }
 }
 
 @media(max-width:799px){

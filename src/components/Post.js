@@ -27,6 +27,8 @@ export default function Post() {
     const picture = images;
     const url = document.querySelector('.Post-Content-Url');
     const embed = document.querySelector('.Post-Content-Embed');
+    const userNameField = document.querySelector('.Nav-Menu-Logged-In-Name');
+    const userName = userNameField.textContent.split('').slice(2,).join('');
     const likes = '0'; 
     let id = uuidv4();
     let timestamp = Date.now();
@@ -42,6 +44,7 @@ export default function Post() {
       url:url.value,
       embed:embed.value,
       likes:likes,
+      user:userName,
       date:date,
       id:id,
       timestamp:timestamp,

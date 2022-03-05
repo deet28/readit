@@ -238,16 +238,10 @@ export default function Nav() {
               <span className = "Dark-Mode-Slider"></span>
             </label>
           </form>
-        <form className = "Nav-Menu-Form">
-          <Link to = "Post">
-          <img className = "Nav-Drop-Down-Login"></img>
-          <button className = "Nav-Drop-Down-Button Log-In-Button">Post</button>
-          </Link>
-        </form>
         <form className = "Nav-Menu-Form-Empty"></form>
         {currentUser!==null &&
          <form className = "Nav-Menu-Form Logs-Out">
-            <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
+            <img className = "Nav-Drop-Down-Logout" src = {logIn}></img>
             <button onClick = {handleLogout} className = "Nav-Drop-Down-Button Log-In-Button">Log Out</button>
           </form>
         }

@@ -3,10 +3,8 @@
   display: flex;
   flex-direction: column;
   min-height:100vh;
-  background-color: lightgrey;
 }
 .Main-Div-Outer{
-  background-color: lightgrey;
 }
 .Main-Body-Div{
   margin-top:0.5rem;
@@ -34,6 +32,21 @@
 }
 .Main-Body-Card:hover{
   cursor: pointer;
+}
+
+.Main-Body-Card-User-Name-Div{
+  text-align: left;
+  line-height:1rem;
+  margin-bottom:0rem;
+  margin-top:1rem;
+  width:60%;
+}
+
+.Main-Body-Card-User-Name{
+  font-size:0.9rem;
+  text-align: left;
+  margin-left:1rem;
+  color:gray;
 }
 .Main-Body-Card-Title{
   width:90%;

@@ -50,8 +50,6 @@ export default function MainBody() {
     }
   })
 
-
-
   async function addComment(e){
     e.preventDefault();
     const comment = document.querySelector('.Selected-Body-Post-Comment');
@@ -173,6 +171,7 @@ export default function MainBody() {
           text:post.text,
           picture:post.picture,
           url:post.url,
+          user:post.user,
           embed:post.embed,
           likes:post.likes,
           id:post.id,
@@ -192,6 +191,7 @@ export default function MainBody() {
     {selected.map((index => (
         <div className = "Selected-Post-Card-Outer">
           <button className = "Selected-Card-Close-Button" onClick = {unselectPost}>X</button>
+          <span className = "Selected-Card-User-Name">Posted by u/{index.user}</span>
           
               <div className = "Selected-Post-Header">
                   
@@ -281,6 +281,8 @@ export default function MainBody() {
             <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
           </div>
          <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
+           <div className = "Main-Body-Card-User-Name-Div"><span className = "Main-Body-Card-User-Name">Posted by u/{index.user}</span></div>
+            
             <h2 className = "Main-Body-Card-Title" id = {index.id}>{index.title}</h2>
             <div className = "Main-Body-Card-Body" id = {index.id}>
               {index.picture.length > 0 &&
