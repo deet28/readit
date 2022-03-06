@@ -1,24 +1,32 @@
 
 export function likePost(postID){
   const postCards = document.querySelectorAll('.Main-Body-Likes');
-  
+  let id = postID;
   for(let i = 0; i < postCards.length; i++){
-    if (postCards[i].id == postID){ 
-      likeSelectedPost(postID)
+    if (postCards[i].id == id){ 
+      postCards[i].firstChild.classList.add('Like-Submitted');
       return postCards[i].firstChild.nextSibling.textContent++;
     }
-   
   }
 } 
 
+//export function likeSelectedPost(postID){
+//  const selectedCards = document.querySelectorAll('.Selected-Post-Likes');
+//  for(let i = 0; i < selectedCards.length; i++){
+//    if (selectedCards[i].id == postID){
+//      selectedCards[i].firstChild.nextSibling.textContent++;
+//      return selectedCards[i].firstChild.classList.add('Selected-Like-Submitted') 
+//    }
+//  }
+//}
+
 export function likeSelectedPost(input){
-  const selectedCards = document.querySelectorAll('.Selected-Post-Likes');
-  for(let i = 0; i<selectedCards.length; i++){
-    if (selectedCards[i].id == input){
-      return selectedCards[i].firstChild.nextSibling.textContent++;
-    }
-  }
+  //const selectedCards = document.querySelector('.Selected-Post-Likes');
+  //if (likesArray.includes(input)==true){
+  //  selectedCards.firstChild.classList.add('Selected-Like-Submitted');
+  //}
 }
+
 
 export function dislikePost(postID){
   const postCards = document.querySelectorAll('.Main-Body-Likes');
@@ -45,6 +53,7 @@ export function clearComment(){
 }
 
 export function logIntoAccount(e){
+  window.scrollTo(0, 0);
   const logInModal = document.querySelector('.Log-In-Modal');
   const modalTitle = document.querySelector('.Log-In-Title');
   const logInButton = document.querySelector('.Log-In-Login');

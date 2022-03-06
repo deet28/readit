@@ -15,7 +15,7 @@
   top:3.5rem;
   left:1rem;
   margin-right:5rem;
-  z-index:9999;
+  z-index:9990;
   display:flex;
   flex-direction: column;
   justify-content: start;
@@ -78,11 +78,21 @@
   border:1px solid transparent;
 }
 
-.Selected-Post-Like-Button:hover{
+.Selected-Post-Dislike-Button:hover{
   cursor: pointer;
   border:1px solid black;
   filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
   
+}
+
+.Selected-Like-Submitted{
+  pointer-events: none;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Selected-Dislike-Submitted{
+  pointer-events: none;
+  filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
 }
 
 .Selected-Post-Likes-Div{
@@ -100,7 +110,7 @@
   border:1px solid transparent;
 }
 
-.Selected-Post-Dislike-Button:hover{
+.Selected-Post-Like-Button:hover{
   cursor:pointer;
   border:1px solid black;
   filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);

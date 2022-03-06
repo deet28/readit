@@ -49,12 +49,22 @@ export default function Post() {
       id:id,
       timestamp:timestamp,
     }
-    await setDoc(doc(db,"Posts",id),payload).then(createComments(id)).then (returnHome());
+    await setDoc(doc(db,"Posts",id),payload).then(createComments(id)).then(createLikes(id)).then (returnHome());
     }
       catch (error){
         console.log('Error adding to Post database')
       }
     }
+  }
+  async function createLikes(id){
+    const likes = [];
+    const dislikes = [];
+    const payload = {
+      likes:likes,
+      dislikes:dislikes,
+      id:id
+    }
+    await setDoc(doc(db,"PFeelings",id),payload)
   }
 
   async function createComments(id){

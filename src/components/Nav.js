@@ -29,7 +29,6 @@ export default function Nav() {
   const currentUser = useAuth();
   const [userName, setUserName] = useState([]);
 
-
   async function testUsername(){
     let userArr =[];
     const querySnapshot = await getDocs(collection(db,'Users'));
@@ -63,7 +62,6 @@ export default function Nav() {
     const user = displayRef.current.value;
     let uid = uuidv4();
     let email = emailRef.current.value
-    console.log(uid)
     const payload = {
       userName:user,
       email:email,
@@ -78,7 +76,7 @@ export default function Nav() {
     closeLogIn();
   }
 
-  async function getUsername(input){
+async function getUsername(input){
     let email;
     if (emailRef.current.value == ''){
       email = input.toLowerCase();
@@ -91,11 +89,10 @@ export default function Nav() {
         let emailName = user.email.toLowerCase();
         let usersName = user.userName;
         if (emailName == email){
-          console.log(usersName)
           setUserName([usersName])
-        }
-      })
-  }
+    }
+  })
+}
 
   async function handleLogout(){
     try {
@@ -133,7 +130,6 @@ export default function Nav() {
         return;
       } else {
         let email = currentUser.email;
-        console.log(email);
         getUsername(email)
       }
   },[currentUser])

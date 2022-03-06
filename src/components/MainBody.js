@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
-import { app,useAuth } from '../firebase';
+import { app,useAuth } from '../firebase'
 import { 
   likePost,
+  likeSelectedPost,
   dislikePost,
   clearComment
 } from'./Helpers'
@@ -29,14 +30,16 @@ export default function MainBody() {
   
   const [posts,setPosts] = useState([]);
   const [selected,setSelected] = useState([]);
+  const [likes,setLikes] = useState([]);
   const [comments,setComments] = useState([]);
   const currentUser = useAuth();
   let array = [];
   let commentsArray=[];
+  let likesArray = [];
 
 
   //firestore
-  const db = getFirestore(app);
+  const db = getFirestore(app)
   
   //redux
   const state = useSelector((state)=>state);
@@ -65,15 +68,24 @@ export default function MainBody() {
       user:userName,
       id:uuidv4()
     }
-    console.log(userName);
     await updateDoc(postRef,{
       comments:arrayUnion(payload)
     }).then(displayComments(postID)).then(clearComment());
   }
 
-  async function upvoteButton(e){
-    e.preventDefault();
-    let postID = e.target.id;
+  async function likePFeelings(e){
+    const user = currentUser.email;
+    const postID = e.target.id;
+    const docRef = doc(db,"PFeelings",postID);
+    const payload = user;
+    await updateDoc(docRef,{
+        likes:arrayUnion(payload)
+      }).then(upvoteButton(postID))
+    }
+  
+
+  async function upvoteButton(postID){
+    let id = postID;
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",postID))
     const snapshot = await getDocs(q);
@@ -81,10 +93,23 @@ export default function MainBody() {
     results.forEach(async (result) => {
       const docRef = doc(db,"Posts",result.id);
       result.likes ++; 
-    const payload = result;
-    await setDoc(docRef,payload).then(likePost(postID));
-  })
+      const payload = result;
+      await setDoc(docRef,payload);
+    })
+    likePost(id);
+    likeSelectedPost(id);
   }
+
+  //async function dislikePFeelings(e){
+  //  const user = currentUser.email;
+  //  const postID = e.target.id;
+  //  const docRef = doc(db,"PFeelings",postID);
+  //  const payload = user;
+  //  await updateDoc(docRef,{
+  //      likes:arrayUnion(payload)
+  //    }).then(upvoteButton(postID))
+  //  }
+
 
   async function downvoteButton(e){
     e.preventDefault();
@@ -115,7 +140,6 @@ export default function MainBody() {
     smallHeader.classList.add('Hidden');
     largeHeader.classList.add('Hidden')
     rightCard.classList.add('Hidden');
-    
   }
   
   function unselectPost(){
@@ -139,6 +163,7 @@ export default function MainBody() {
     const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
     results.forEach(async (result) => {
     const payload = result;
+    window.scroll(0,0);
     setSelected([payload])
   })
   displayComments(input);
@@ -186,6 +211,30 @@ export default function MainBody() {
     }
     getData('Posts');
   },[state])
+  
+  
+ useEffect(() => {
+    if (currentUser == null){
+      return 
+    } else {
+    let email = currentUser.email;
+    console.log(email);
+      const getList = async () => {
+      const querySnapshot = await getDocs(collection(db,'PFeelings'));
+      querySnapshot.forEach((doc)=>{
+        let user = (doc.id, "=>",doc.data())
+        let test = user.id; 
+        let result = user.likes;
+        for(let i = 0; i < result.length; i++){
+          if (result[i]==email)
+          likesArray.push(test)
+        }
+      })
+      setLikes(likesArray);
+    }
+    getList('PFeelings')
+    }
+  },[currentUser]);
 
   return (
     <>
@@ -197,15 +246,28 @@ export default function MainBody() {
           
               <div className = "Selected-Post-Header">
                   
+                  
                   <div className = "Selected-Post-Likes"id = {index.id}>
-                  {currentUser!==null && 
-                    <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
-                  }
-                    <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
-                  {currentUser!==null && 
-                    <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
-                  }
-                    </div>
+                    {currentUser!==null && likes.includes(index.id)==true &&
+                      <img className = "Selected-Post-Like-Button Selected-Like-Submitted" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
+                    }
+                    {currentUser!==null && likes.includes(index.id)==false &&
+                      <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
+                    }
+
+
+                    {currentUser==null && 
+                      <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {logIntoAccount}></img>
+                    }
+                      <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
+                    
+                    {currentUser!==null && 
+                      <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
+                    }
+                    {currentUser==null && 
+                      <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {logIntoAccount}></img>
+                    }
+                  </div>
             
                   <div className = "Selected-Body-Card-Title-Div"  onClick = {displayPost} id = {index.id}>
                     <h2 className = "Selected-Body-Card-Title" id = {index.id}>{index.title}</h2>
@@ -288,13 +350,18 @@ export default function MainBody() {
             {currentUser==null &&
               <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
             }
-            
             {currentUser==null && 
               <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {logIntoAccount}></img>
             }
-            {currentUser!==null && 
-              <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
+
+
+            {currentUser!==null &&  likes.includes(index.id)==true &&
+              <img className = "Main-Body-Like-Button Like-Submitted" id = {index.id} src = {upVoteArrow} onClick = {likePFeelings}></img>
             }
+            {currentUser!==null &&  likes.includes(index.id)==false &&
+              <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {likePFeelings}></img>
+            }
+
             {currentUser!== null &&
               <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
             }
