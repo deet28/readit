@@ -23,6 +23,7 @@ import downVoteArrow from '../media/downvote-arrow.png'
 import chat from '../media/chat.png';
 import ReactPlayer from 'react-player/youtube';
 import { v4 as uuidv4 } from 'uuid';
+import { logIntoAccount } from './Helpers'
 
 export default function MainBody() {
   
@@ -281,15 +282,27 @@ export default function MainBody() {
         {posts.map((index => (
           <div className = "Main-Body-Card-Outer">
           <div className = "Main-Body-Likes"id = {index.id}>
-          {currentUser!==null && 
-            <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
-          }
-            <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
-          {currentUser!==null && 
-            <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
-          }
+            {currentUser==null && 
+              <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {logIntoAccount}></img>
+            }
+            {currentUser==null &&
+              <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
+            }
+            
+            {currentUser==null && 
+              <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {logIntoAccount}></img>
+            }
+            {currentUser!==null && 
+              <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
+            }
+            {currentUser!== null &&
+              <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
+            }
+            {currentUser!==null && 
+              <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
+            }
           </div>
-         <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
+        <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
            <div id = {index.id} className = "Main-Body-Card-User-Name-Div"><span id = {index.id} className = "Main-Body-Card-User-Name">Posted by u/{index.user}</span></div>
             
             <h2 className = "Main-Body-Card-Title" id = {index.id}>{index.title}</h2>

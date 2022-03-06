@@ -111,3 +111,19 @@ input:enabled{
 .Log-In-Close-Modal:hover{
   cursor: pointer;
 }
+
+.Log-In-Change-Modal{
+  height:2rem;
+  border:transparent;
+  background-color: transparent;
+  font-size:1rem;
+  margin-left:0;
+  line-height:0.5rem;
+  color: rgb(91, 91, 173);
+  font-weight:bold;
+}
+
+.Log-In-Change-Modal:hover{
+  cursor: pointer;
+  color: rgb(110, 110, 207);
+}
