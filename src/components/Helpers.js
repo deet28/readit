@@ -5,7 +5,6 @@ export function likePost(postID){
   for(let i = 0; i < postCards.length; i++){
     if (postCards[i].id == id){ 
       likeSelectedPost(postID);
-      postCards[i].firstChild.classList.add('Like-Submitted');
       return postCards[i].firstChild.nextSibling.textContent++;
     }
   }

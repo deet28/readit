@@ -17,7 +17,9 @@ import {
   setDoc,
   collection,
   updateDoc,
-  arrayUnion
+  arrayUnion,
+  arrayRemove,
+  FieldValue
 } from "firebase/firestore";
 import upVoteArrow from '../media/upvote-arrow.png';
 import downVoteArrow from '../media/downvote-arrow.png'
@@ -38,6 +40,8 @@ export default function MainBody() {
   let commentsArray=[];
   let likesArray = [];
   let dislikesArray = [];
+
+  console.log(dislikes)
 
 
   //firestore
@@ -75,26 +79,62 @@ export default function MainBody() {
     }).then(displayComments(postID)).then(clearComment());
   }
 
-  async function likePFeelings(e){
+  function checkDislikes(e){
+    let postID = e.target.id;
+    if (dislikes.includes(postID)==true){
+      return removeDislikes(postID);
+    } else { 
+      likePFeelings(postID);
+    }
+  }
+
+  async function removeDislikes(postID){
+    let user = currentUser.email;
+    const docRef = doc(db,"PFeelings",postID);
+    const payload = user;
+    await updateDoc(docRef,{
+        dislikes:arrayRemove(payload)
+    }).then(upvoteButton(postID)).then(setDislikes(dislikes.filter(index => index !== postID)));
+  }
+  
+
+  async function likePFeelings(id){
     const user = currentUser.email;
-    const postID = e.target.id;
+    const postID = id
     const docRef = doc(db,"PFeelings",postID);
     const payload = user;
     await updateDoc(docRef,{
         likes:arrayUnion(payload)
-      }).then(upvoteButton(postID)).then(setLikes([...likes,postID]));
-      console.log(likes);
+    }).then(upvoteButton(postID)).then(setLikes([...likes,postID]));
+  }
+
+  function checkLikes(e){
+    let postID = e.target.id;
+    if (likes.includes(postID)==true){
+      return removeLikes(postID);
+    } else { 
+      dislikePFeelings(postID);
     }
-  
-    async function dislikePFeelings(e){
+  }
+
+  async function removeLikes(postID){
+    let user = currentUser.email;
+    const docRef = doc(db,"PFeelings",postID);
+    const payload = user;
+    await updateDoc(docRef,{
+        likes:arrayRemove(payload)
+    }).then(downvoteButton(postID)).then(setLikes(likes.filter(index => index !== postID)));
+  }
+
+  async function dislikePFeelings(id){
       const user = currentUser.email;
-      const postID = e.target.id;
+      const postID = id;
       const docRef = doc(db,"PFeelings",postID);
       const payload = user;
       await updateDoc(docRef,{
           dislikes:arrayUnion(payload)
-        }).then(downvoteButton(postID)).then(setDislikes([...likes,postID]));
-      }
+      }).then(downvoteButton(postID)).then(setDislikes([...dislikes,postID]));
+  }
 
   async function upvoteButton(postID){
     let id = postID;
@@ -111,12 +151,8 @@ export default function MainBody() {
     likePost(id);
   }
 
-
-
-
-  async function downvoteButton(e){
-    e.preventDefault();
-    let postID = e.target.id;
+  async function downvoteButton(postID){
+    let id = postID;
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",postID))
     const snapshot = await getDocs(q);
@@ -130,6 +166,8 @@ export default function MainBody() {
   })
   }
 
+  
+  
   async function selectPost(e){
     let id = e.target.id;
     await displayPost(id);
@@ -168,9 +206,9 @@ export default function MainBody() {
     const payload = result;
     window.scroll(0,0);
     setSelected([payload])
-  })
-  displayComments(input);
-}
+    })
+    displayComments(input);
+  }
 
   async function displayComments(input){
   let postID = input
@@ -186,10 +224,12 @@ export default function MainBody() {
       let newCommentID = index.id
       let user = index.user
       commentsArray.push({newComment,newCommentID,newCommentLikes,user});
-    }))
-    setComments(commentsArray)
-  });
-}
+      }))
+      setComments(commentsArray)
+    });
+  }
+
+
 
     useEffect(() => {
     const getData = async () => {
@@ -269,7 +309,7 @@ export default function MainBody() {
                       <img className = "Selected-Post-Like-Button Selected-Like-Submitted" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
                     }
                     {currentUser!==null && likes.includes(index.id)==false &&
-                      <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {likePFeelings}></img>
+                      <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {checkDislikes}></img>
                     }
 
 
@@ -278,9 +318,16 @@ export default function MainBody() {
                     }
                       <p className = "Selected-Post-Likes-Div" id = {index.id}>{index.likes}</p>
                     
-                    {currentUser!==null && 
-                      <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
+                    
+                    {currentUser!==null && dislikes.includes(index.id)==true&&
+                      <img className = "Selected-Post-Dislike-Button Selected-Dislike-Submitted" id = {index.id} src = {downVoteArrow}></img>
                     }
+
+                    {currentUser!==null && dislikes.includes(index.id)==false&&
+                      <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {checkLikes}></img>
+                    }
+
+                    
                     {currentUser==null && 
                       <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {logIntoAccount}></img>
                     }
@@ -373,19 +420,24 @@ export default function MainBody() {
 
 
             {currentUser!==null &&  likes.includes(index.id)==true &&
-              <img className = "Main-Body-Like-Button Like-Submitted" id = {index.id} src = {upVoteArrow} onClick = {likePFeelings}></img>
+              <img className = "Main-Body-Like-Button Like-Submitted" id = {index.id} src = {upVoteArrow}></img>
             }
             {currentUser!==null &&  likes.includes(index.id)==false &&
-              <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {likePFeelings}></img>
+              <img className = "Main-Body-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {checkDislikes}></img>
             }
 
             {currentUser!== null &&
               <p className = "Main-Body-Likes-Div" id = {index.id}>{index.likes}</p>
             }
-            {currentUser!==null && 
-              <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {downvoteButton}></img>
+
+            {currentUser!==null && dislikes.includes(index.id)==true&&
+              <img className = "Main-Body-Dislike-Button Dislike-Submitted" id = {index.id} src = {downVoteArrow}></img>
+            }
+            {currentUser!==null && dislikes.includes(index.id)==false&&
+              <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {checkLikes}></img>
             }
           </div>
+
         <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
            <div id = {index.id} className = "Main-Body-Card-User-Name-Div"><span id = {index.id} className = "Main-Body-Card-User-Name">Posted by u/{index.user}</span></div>
             

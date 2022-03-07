@@ -78,16 +78,31 @@
   border:1px solid transparent;
 }
 
+.Selected-Post-Like-Button:hover{
+  cursor:pointer;
+  border:1px solid black;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+
+.Selected-Like-Submitted{
+  pointer-events: none;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Selected-Post-Dislike-Button{
+  height:1.2rem;
+  width:1.5rem;
+  margin-top:0.2rem;
+  filter:invert(45%) sepia(18%);
+  border:1px solid transparent;
+}
+
 .Selected-Post-Dislike-Button:hover{
   cursor: pointer;
   border:1px solid black;
   filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
   
-}
-
-.Selected-Like-Submitted{
-  pointer-events: none;
-  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
 }
 
 .Selected-Dislike-Submitted{
@@ -100,20 +115,6 @@
   width:2rem;
   margin-bottom:0;
   margin-top:0;
-}
-
-.Selected-Post-Dislike-Button{
-  height:1.2rem;
-  width:1.5rem;
-  margin-top:0.2rem;
-  filter:invert(45%) sepia(18%);
-  border:1px solid transparent;
-}
-
-.Selected-Post-Like-Button:hover{
-  cursor:pointer;
-  border:1px solid black;
-  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
 }
 
 .Selected-Body-Card-Title-Div{
