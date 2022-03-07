@@ -345,6 +345,16 @@
   filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
 }
 
+.Selected-Body-Comment-Posts-Like-Selected{
+  pointer-events: none;
+  filter:invert(40%) sepia(170%)hue-rotate(150deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
+.Selected-Body-Comment-Posts-Dislike-Selected{
+  pointer-events: none;
+  filter:invert(40%) sepia(170%)hue-rotate(300deg) saturate(170%)brightness(100%)contrast(150%);
+}
+
 /* ^ Comment Area  ^ */
 
 /*Queries */

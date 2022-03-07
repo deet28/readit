@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import { app,useAuth } from '../firebase'
 import { 
   likePost,
-  likeSelectedPost,
   dislikePost,
   clearComment
 } from'./Helpers'
@@ -34,6 +33,10 @@ export default function MainBody() {
   const [selected,setSelected] = useState([]);
   const [likes,setLikes] = useState([]);
   const [dislikes,setDislikes] = useState([]);
+
+  const [cLikes,setcLikes] = useState([]);
+  const [cDislikes,setcDislikes] = useState([]);
+
   const [comments,setComments] = useState([]);
   const currentUser = useAuth();
   let array = [];
@@ -41,7 +44,9 @@ export default function MainBody() {
   let likesArray = [];
   let dislikesArray = [];
 
-  console.log(dislikes)
+  let cLikesArray = [];
+  let cDislikesArray = [];
+
 
 
   //firestore
@@ -62,6 +67,7 @@ export default function MainBody() {
 
   async function addComment(e){
     e.preventDefault();
+    let id = uuidv4();
     const comment = document.querySelector('.Selected-Body-Post-Comment');
     const userNameField = document.querySelector('.Nav-Menu-Logged-In-Name');
     const userName = userNameField.textContent.split('').slice(2,).join('');
@@ -72,13 +78,25 @@ export default function MainBody() {
       comment:commentVal,
       likes:0,
       user:userName,
-      id:uuidv4()
+      id:id
     }
     await updateDoc(postRef,{
       comments:arrayUnion(payload)
-    }).then(displayComments(postID)).then(clearComment());
+    }).then(createcLikes(id)).then(displayComments(postID)).then(clearComment());
   }
 
+  async function createcLikes(id){
+    const likes = [];
+    const dislikes = [];
+    const payload = {
+      likes:likes,
+      dislikes:dislikes,
+      id:id
+    }
+    await setDoc(doc(db,"CFeelings",id),payload)
+  }
+
+//Likes and Dislikes on Posts.
   function checkDislikes(e){
     let postID = e.target.id;
     if (dislikes.includes(postID)==true){
@@ -97,7 +115,6 @@ export default function MainBody() {
     }).then(upvoteButton(postID)).then(setDislikes(dislikes.filter(index => index !== postID)));
   }
   
-
   async function likePFeelings(id){
     const user = currentUser.email;
     const postID = id
@@ -166,7 +183,104 @@ export default function MainBody() {
   })
   }
 
+//Likes and Dislikes on Comments.
+function checkCDislikes(e){
+  let postID = e.target.id;
+  console.log(postID)
+  if (cDislikes.includes(postID)==true){
+    return removeCDislikes(postID);
+  } else { 
+    likeCFeelings(postID);
+  }
+}
+async function removeCDislikes(postID){
+  let user = currentUser.email;
+  const docRef = doc(db,"CFeelings",postID);
+  const payload = user;
+  await updateDoc(docRef,{
+      dislikes:arrayRemove(payload)
+  }).then(upvoteCButton(postID)).then(setcDislikes(cDislikes.filter(index => index !== postID)));
+}
+
+async function likeCFeelings(id){
+  const user = currentUser.email;
+  const postID = id
+  const docRef = doc(db,"CFeelings",postID);
+  const payload = user;
+  await updateDoc(docRef,{
+      likes:arrayUnion(payload)
+  }).then(upvoteCButton(postID)).then(setcLikes([...cLikes,postID]));
+}
+//////////////////
+///////////////////
+
+function checkCLikes(e){
+  let postID = e.target.id;
+  console.log(postID)
+  if (cLikes.includes(postID)==true){
+    return removeCLikes(postID);
+  } else { 
+    dislikeCFeelings(postID);
+  }
+}
+async function removeCLikes(postID){
+  let user = currentUser.email;
+  const docRef = doc(db,"CFeelings",postID);
+  const payload = user;
+  await updateDoc(docRef,{
+      likes:arrayRemove(payload)
+  }).then(downvoteCButton(postID)).then(setcLikes(cLikes.filter(index => index !== postID)));
+}
+
+async function dislikeCFeelings(id){
+  const user = currentUser.email;
+  const postID = id
+  const docRef = doc(db,"CFeelings",postID);
+  const payload = user;
+  await updateDoc(docRef,{
+      dislikes:arrayUnion(payload)
+  }).then(upvoteCButton(postID)).then(setcDislikes([...cDislikes,postID]));
+  }
+
+
+/////////////
+/////////////
+
+async function upvoteCButton(postID){
+    let id = postID;
+    let mainID = selected[0].id;
+    const collectionRef = collection(db,"Comments");
+    const q = query(collectionRef,where("id","==",mainID))
+    const snapshot = await getDocs(q);
+    const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
+    results.forEach(async (result) => {
+      console.log(result);
+    })
+    //const docRef = doc(db,"Comments",result.id);
+    //result.likes ++; 
+    //const payload = result;
+    //await setDoc(docRef,payload);
+  //likePost(id);
+}
+
+async function downvoteCButton(postID){
+  let id = postID;
+  let mainID = selected[0].id;
+  const collectionRef = collection(db,"Comments");
+  const q = query(collectionRef,where("id","==",mainID))
+  const snapshot = await getDocs(q);
+  const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
+  results.forEach(async (result) => {
+    console.log(result);
+  })
+  //const docRef = doc(db,"Comments",result.id);
+  //result.likes ++; 
+  //const payload = result;
+  //await setDoc(docRef,payload);
+//likePost(id);
+}
   
+//Selecting and displaying post and comment information.
   
   async function selectPost(e){
     let id = e.target.id;
@@ -229,9 +343,9 @@ export default function MainBody() {
     });
   }
 
+//Updating state when necessary
 
-
-    useEffect(() => {
+  useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db,'Posts'));
       querySnapshot.forEach((doc)=>{
@@ -254,8 +368,7 @@ export default function MainBody() {
     }
     getData('Posts');
   },[state])
-  
-  
+
  useEffect(() => {
   if (currentUser == null){
     return 
@@ -285,6 +398,35 @@ export default function MainBody() {
     }
   },[currentUser]);
 
+  useEffect(() => {
+    if (currentUser == null){
+      return 
+    } else {
+      let email = currentUser.email;
+        const getList = async () => {
+        const querySnapshot = await getDocs(collection(db,'CFeelings'));
+        querySnapshot.forEach((doc)=>{
+          let user = (doc.id, "=>",doc.data())
+          let test = user.id; 
+          let likes = user.likes;
+          let dislikes = user.dislikes;
+          for(let i = 0; i < likes.length; i++){
+            if (likes[i]==email)
+            cLikesArray.push(test)
+          }
+          for(let i = 0; i < dislikes.length;i++){
+            if(dislikes[i]==email){
+              cDislikesArray.push(test);
+            }
+          }
+        })
+        setcLikes(cLikesArray);
+        setcDislikes(cDislikesArray);
+      }
+      getList('CFeelings')
+      }
+    },[currentUser]);
+
   useEffect(()=>{
     console.log(likes);
   },[likes]);
@@ -292,6 +434,15 @@ export default function MainBody() {
   useEffect(()=>{
     console.log(dislikes);
   },[dislikes]);
+
+  useEffect(()=>{
+    console.log(cLikes);
+  },[cLikes]);
+
+  useEffect(()=>{
+    console.log(cDislikes);
+  },[cDislikes]);
+  
 
   return (
     <>
@@ -302,7 +453,6 @@ export default function MainBody() {
           <span className = "Selected-Card-User-Name">Posted by u/{index.user}</span>
           
               <div className = "Selected-Post-Header">
-                  
                   
                   <div className = "Selected-Post-Likes"id = {index.id}>
                     {currentUser!==null && likes.includes(index.id)==true &&
@@ -327,7 +477,6 @@ export default function MainBody() {
                       <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {checkLikes}></img>
                     }
 
-                    
                     {currentUser==null && 
                       <img className = "Selected-Post-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {logIntoAccount}></img>
                     }
@@ -386,19 +535,35 @@ export default function MainBody() {
                     <div className = "Selected-Body-Comment-Post-Parent">
                       <span className = "Selected-Body-Comment-Post-Username">{index.user}</span>
                       <p className = "Selected-Body-Comment-Post">{index.newComment}</p>
-                      <div className = "Selected-Body-Comment-Posts-Like-Parent">
-                      <img src = {upVoteArrow} className = "Selected-Body-Comment-Posts-Like"></img>
-                      <span>{index.newCommentLikes}</span>
-                      <img src = {downVoteArrow} className = "Selected-Body-Comment-Posts-Dislike"></img>
+                      <div className = "Selected-Body-Comment-Posts-Like-Parent" id = {index.newCommentID}>
+                        {currentUser!==null && cLikes.includes(index.newCommentID)==true&&
+                        <img src = {upVoteArrow} id = {index.newCommentID} className = "Selected-Body-Comment-Posts-Like Selected-Body-Comment-Posts-Like-Selected"></img>
+                        }
+                        {currentUser!==null && cLikes.includes(index.newCommentID)==false&&
+                        <img src = {upVoteArrow} id = {index.newCommentID}onClick = {checkCDislikes} className = "Selected-Body-Comment-Posts-Like"></img>
+                        }
+                        {currentUser==null&&
+                        <img src = {upVoteArrow} onClick = {logIntoAccount}className = "Selected-Body-Comment-Posts-Like"></img>
+                        }
+
+                          <span>{index.newCommentLikes}</span>
+
+
+                        {currentUser!==null && cDislikes.includes(index.newCommentID)==true&&
+                        <img src = {downVoteArrow} id = {index.newCommentID} className = "Selected-Body-Comment-Posts-Dislike Selected-Body-Comment-Posts-Dislike-Selected"></img>
+                        }
+                        {currentUser!==null && cDislikes.includes(index.newCommentID)==false&&
+                        <img src = {downVoteArrow} id = {index.newCommentID} onClick = {checkCLikes}className = "Selected-Body-Comment-Posts-Dislike"></img>
+                        }
+                        {currentUser==null&&
+                        <img src = {downVoteArrow} onClick = {logIntoAccount}className = "Selected-Body-Comment-Posts-Like"></img>
+                        }
                       </div>
                     </div>
                   )))}
-                
+                </div>
               </div>
-          
           </div>
-        
-        </div>
         )))}
     </div>
   
