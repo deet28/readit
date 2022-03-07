@@ -4,28 +4,22 @@ export function likePost(postID){
   let id = postID;
   for(let i = 0; i < postCards.length; i++){
     if (postCards[i].id == id){ 
+      likeSelectedPost(postID);
       postCards[i].firstChild.classList.add('Like-Submitted');
       return postCards[i].firstChild.nextSibling.textContent++;
     }
   }
 } 
 
-//export function likeSelectedPost(postID){
-//  const selectedCards = document.querySelectorAll('.Selected-Post-Likes');
-//  for(let i = 0; i < selectedCards.length; i++){
-//    if (selectedCards[i].id == postID){
-//      selectedCards[i].firstChild.nextSibling.textContent++;
-//      return selectedCards[i].firstChild.classList.add('Selected-Like-Submitted') 
-//    }
-//  }
-//}
-
-export function likeSelectedPost(input){
-  //const selectedCards = document.querySelector('.Selected-Post-Likes');
-  //if (likesArray.includes(input)==true){
-  //  selectedCards.firstChild.classList.add('Selected-Like-Submitted');
-  //}
+export function likeSelectedPost(postID){
+  const selectedCards = document.querySelectorAll('.Selected-Post-Likes');
+  for(let i = 0; i < selectedCards.length; i++){
+    if (selectedCards[i].id == postID){
+      return selectedCards[i].firstChild.nextSibling.textContent++;
+    }
+  }
 }
+
 
 
 export function dislikePost(postID){

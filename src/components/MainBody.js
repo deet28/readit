@@ -80,7 +80,8 @@ export default function MainBody() {
     const payload = user;
     await updateDoc(docRef,{
         likes:arrayUnion(payload)
-      }).then(upvoteButton(postID))
+      }).then(upvoteButton(postID)).then(setLikes([...likes,postID]));
+      console.log(likes);
     }
   
 
@@ -97,7 +98,6 @@ export default function MainBody() {
       await setDoc(docRef,payload);
     })
     likePost(id);
-    likeSelectedPost(id);
   }
 
   //async function dislikePFeelings(e){
@@ -218,7 +218,6 @@ export default function MainBody() {
       return 
     } else {
     let email = currentUser.email;
-    console.log(email);
       const getList = async () => {
       const querySnapshot = await getDocs(collection(db,'PFeelings'));
       querySnapshot.forEach((doc)=>{
@@ -236,6 +235,10 @@ export default function MainBody() {
     }
   },[currentUser]);
 
+  useEffect(()=>{
+    console.log(likes);
+  },[likes]);
+
   return (
     <>
     <div className = "Selected-Post-Card Hidden">
@@ -252,7 +255,7 @@ export default function MainBody() {
                       <img className = "Selected-Post-Like-Button Selected-Like-Submitted" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
                     }
                     {currentUser!==null && likes.includes(index.id)==false &&
-                      <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {upvoteButton}></img>
+                      <img className = "Selected-Post-Like-Button" id = {index.id} src = {upVoteArrow} onClick = {likePFeelings}></img>
                     }
 
 
