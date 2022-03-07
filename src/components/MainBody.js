@@ -31,11 +31,13 @@ export default function MainBody() {
   const [posts,setPosts] = useState([]);
   const [selected,setSelected] = useState([]);
   const [likes,setLikes] = useState([]);
+  const [dislikes,setDislikes] = useState([]);
   const [comments,setComments] = useState([]);
   const currentUser = useAuth();
   let array = [];
   let commentsArray=[];
   let likesArray = [];
+  let dislikesArray = [];
 
 
   //firestore
@@ -84,6 +86,15 @@ export default function MainBody() {
       console.log(likes);
     }
   
+    async function dislikePFeelings(e){
+      const user = currentUser.email;
+      const postID = e.target.id;
+      const docRef = doc(db,"PFeelings",postID);
+      const payload = user;
+      await updateDoc(docRef,{
+          dislikes:arrayUnion(payload)
+        }).then(downvoteButton(postID)).then(setDislikes([...likes,postID]));
+      }
 
   async function upvoteButton(postID){
     let id = postID;
@@ -100,15 +111,7 @@ export default function MainBody() {
     likePost(id);
   }
 
-  //async function dislikePFeelings(e){
-  //  const user = currentUser.email;
-  //  const postID = e.target.id;
-  //  const docRef = doc(db,"PFeelings",postID);
-  //  const payload = user;
-  //  await updateDoc(docRef,{
-  //      likes:arrayUnion(payload)
-  //    }).then(upvoteButton(postID))
-  //  }
+
 
 
   async function downvoteButton(e){
@@ -214,22 +217,29 @@ export default function MainBody() {
   
   
  useEffect(() => {
-    if (currentUser == null){
-      return 
-    } else {
+  if (currentUser == null){
+    return 
+  } else {
     let email = currentUser.email;
       const getList = async () => {
       const querySnapshot = await getDocs(collection(db,'PFeelings'));
       querySnapshot.forEach((doc)=>{
         let user = (doc.id, "=>",doc.data())
         let test = user.id; 
-        let result = user.likes;
-        for(let i = 0; i < result.length; i++){
-          if (result[i]==email)
+        let likes = user.likes;
+        let dislikes = user.dislikes;
+        for(let i = 0; i < likes.length; i++){
+          if (likes[i]==email)
           likesArray.push(test)
+        }
+        for(let i = 0; i < dislikes.length;i++){
+          if(dislikes[i]==email){
+            dislikesArray.push(test);
+          }
         }
       })
       setLikes(likesArray);
+      setDislikes(dislikesArray);
     }
     getList('PFeelings')
     }
@@ -238,6 +248,10 @@ export default function MainBody() {
   useEffect(()=>{
     console.log(likes);
   },[likes]);
+  
+  useEffect(()=>{
+    console.log(dislikes);
+  },[dislikes]);
 
   return (
     <>
