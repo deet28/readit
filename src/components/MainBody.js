@@ -12,7 +12,6 @@ import {
 import {
   getFirestore,
   getDocs,
-  addDoc,
   query,
   where,
   doc,
@@ -27,7 +26,7 @@ import downVoteArrow from '../media/downvote-arrow.png'
 import chat from '../media/chat.png';
 import ReactPlayer from 'react-player/youtube';
 import { v4 as uuidv4 } from 'uuid';
-import { logIntoAccount } from './Helpers'
+import { logIntoAccount,closeLogIn } from './Helpers'
 
 export default function MainBody() {
   
@@ -40,6 +39,7 @@ export default function MainBody() {
   const [cDislikes,setcDislikes] = useState([]);
 
   const [comments,setComments] = useState([]);
+  const [cCounter,setcCounter] = useState(0);
   const currentUser = useAuth();
   let array = [];
   let commentsArray=[];
@@ -319,20 +319,21 @@ async function downvoteCButton(id){
   }
 
   async function displayComments(input){
+  let counter = 0;
   let postID = input
     const  q = collection(db,"Comments",postID,"Comment-Nest");
-    //const collectionRef = collection(postRef,"Comment-Nest");
-    //const q = query(postRef,where("id","==",postID))
     const snapshot = await getDocs(q,"Comment-Nest");
     const results = snapshot.docs.map(doc=> ({...doc.data()}));
     results.forEach(async (result) => {
-      console.log(result)
       let newComment = result.comment
       let newCommentLikes = result.likes
       let newCommentID = result.id
       let user = result.user
+      counter++;
       commentsArray.push({newComment,newCommentID,newCommentLikes,user});
     });
+    setcCounter(counter);
+    console.log(cCounter)
     setComments(commentsArray)
   }
 
@@ -506,7 +507,7 @@ async function downvoteCButton(id){
                 
               <div className = "Selected-Body-Media-Footer">
                 <img src = {chat} className = "Selected-Body-Chat-Icon"></img>
-                <p>Comments</p>
+                <p>{cCounter} Comments</p>
               </div>
           
           </div>
@@ -549,7 +550,7 @@ async function downvoteCButton(id){
                         <img src = {downVoteArrow} id = {index.newCommentID} onClick = {checkCLikes}className = "Selected-Body-Comment-Posts-Dislike"></img>
                         }
                         {currentUser==null&&
-                        <img src = {downVoteArrow} onClick = {logIntoAccount}className = "Selected-Body-Comment-Posts-Like"></img>
+                        <img src = {downVoteArrow} onClick = {logIntoAccount}className = "Selected-Body-Comment-Posts-Dislike"></img>
                         }
                       </div>
                     </div>

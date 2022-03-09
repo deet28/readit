@@ -29,22 +29,33 @@ export default function Nav() {
   const currentUser = useAuth();
   const [userName, setUserName] = useState([]);
 
+
   async function testUsername(){
     let userArr =[];
+    let displayName = displayRef.current.value;
+    let display = displayName.toLowerCase();
+    let emailName = emailRef.current.value;
+    let email = emailName.toLowerCase();
+    console.log(display)
     const querySnapshot = await getDocs(collection(db,'Users'));
       querySnapshot.forEach((doc)=>{
         let user = (doc.id, "=>",doc.data())
-        let result = user.userName;
-        userArr.push(result);
+        let userName = user.userName.toLowerCase();
+        let userEmail = user.email.toLowerCase();
+        userArr.push(userName);
+        userArr.push(userEmail)
       })
-     if (userArr.includes(displayRef.current.value)){
+      console.log(userArr)
+     if (userArr.includes(display)){
         return alert('Username taken!');
+      } else if(userArr.includes(email)) {
+        return alert ('Email already in use.')
       } else {
         handleSignUp();
       }
-  }
+}
   
-  async function handleSignUp(){
+async function handleSignUp(){
     if (passwordRef.current.value.length < 6){
       return alert ('Password must be at least 6 characters!')
     } else {
@@ -53,12 +64,12 @@ export default function Nav() {
       .then(handleUsername())
       .then(resetSignUpForm())
     } catch { 
-      alert('error')
+      
     }
   }
 }
 
-  async function handleUsername(){
+async function handleUsername(){
     const user = displayRef.current.value;
     let uid = uuidv4();
     let email = emailRef.current.value
@@ -68,13 +79,13 @@ export default function Nav() {
       id:uid
     }
     await setDoc(doc(db,"Users",uid),payload);
-  }
+}
 
-  function resetSignUpForm(){
+function resetSignUpForm(){
     emailRef.current.value = '';
     passwordRef.current.value = '';
     closeLogIn();
-  }
+}
 
 async function getUsername(input){
     let email;
@@ -94,34 +105,31 @@ async function getUsername(input){
   })
 }
 
-  async function handleLogout(){
-    try {
-      await logout()
-    } catch {
-      alert ("Error logging out!")
-    }
+async function handleLogout(){
+  try {
+    await logout()
+  } catch {
+    alert ("Error logging out!")
   }
+}
 
-  async function handleLogin(){
+async function handleLogin(){
     try {
       await login(emailRef.current.value,passwordRef.current.value)
       .then(getUsername())
       .then(resetSignUpForm())
+
     } catch { 
       alert('error')
     }
-  }
+}
 
   function showMenu(){
     const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
-    //const mainBar = document.querySelector(".Main-Header-Bar");
     if(navMenu.classList.contains("Hidden")===true){
       navMenu.classList.remove("Hidden");
-      //mainBar.classList.add("Background")
     } else {
       navMenu.classList.add("Hidden")
-
-     // mainBar.classList.remove("Background");
     }
   
   }
@@ -143,10 +151,11 @@ async function getUsername(input){
           <h3 className = "Log-In-Title">Login</h3>
           <div className = "Log-In-Inputs">
             <input ref = {displayRef} className = "Log-In-Username Hidden" placeholder = "Username"></input>
-            <input ref = {emailRef} className = "Log-In-Email" placeholder = "Email"></input>
-            <input ref = {passwordRef} className = "Log-In-Password" type = "password" placeholder = "Password"></input>
-            <div className = "Log-In-Change-Modal-Parent"><span className = "Log-In-Change-Modal-Text">Already a user?</span><button className = "Log-In-Change-Modal"onClick = {logIntoAccount}>LOG IN</button></div>
-            
+            <input ref = {emailRef} className = "sign Log-In-Email" placeholder = "Email"></input>
+            <input ref = {passwordRef} className = "sign Log-In-Password" type = "password" placeholder = "Password"></input>
+            <div className = "Log-In-Change-Modal-Parent"><span className = "Log-In-Change-Modal-Text">Already a user?</span>
+              <button className = "Log-In-Change-Modal"onClick = {logIntoAccount}>LOG IN</button>
+            </div>
           </div>
           <button className = "Log-In-Login"onClick = {handleLogin}>Log In</button>
           <button className = "Log-In-Signup Hidden" onClick = {testUsername}>Sign Up</button>

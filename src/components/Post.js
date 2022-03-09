@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { app,useAuth } from '../firebase';
 import { storage } from '../firebase';
-import { getFirestore,doc,setDoc,addDoc } from 'firebase/firestore';
+import { getFirestore,doc,setDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import docIcon from '../media/document.png';
 import picIcon from '../media/picture.png';
 import linkIcon from '../media/link.png';
@@ -16,6 +16,7 @@ export default function Post() {
   const imageButton = `Images & Video`;
   const [images, setImages] = useState([
   ]) 
+  
   const currentUser = useAuth();
   let image;
 
@@ -143,6 +144,12 @@ export default function Post() {
     let dateNow = `${cMonth}/${cDay}/${cYear}`;
     return dateNow
   }
+
+  function checkLoggedIn(){
+    setTimeout(()=>{
+      'hello';
+    },1000)
+  }
   
 
   function changeSelected(e){
@@ -182,9 +189,38 @@ export default function Post() {
       }
     }
   }
-  
+  const [loading,setLoading] = useState(true)
+  useEffect(()=>{
+    const loadScreen = setTimeout(() => {
+      setLoading(false)
+    },500);
+      return () => clearTimeout(loadScreen)
+    },[loading]);
+ 
   return (
-    <>
+  <>
+<div>
+{checkLoggedIn()}
+  {currentUser == null && loading == true &&
+    <div className = "Stop">
+    <h1 className = "Stop-Loading"></h1>
+  </div>
+  }
+  {currentUser == null && loading == false &&
+    <div className = "Stop">
+      <h1>hey, you need to log in to post content!</h1>
+      <Link to = "/" className = "Stop-Link">
+        <h2>Go home</h2>
+      </Link>
+    </div>
+  }
+  {currentUser!==null&& loading == true &&
+    <div className = "Stop">
+      <h1></h1>
+    </div>
+  }
+  {currentUser!==null&&loading==false&&
+
   <div className = "Post-Main-Div">
 
   <div className = "Post-Submitted Hidden">
@@ -250,6 +286,9 @@ export default function Post() {
       </div>
     </div>
     </div>
+    }
+
+  </div>
   </>
   )
 }

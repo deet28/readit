@@ -75,7 +75,7 @@ export function logIntoAccount(e){
   const largeHeader = document.querySelector(".Main-Header-Bar-Large");
   const mainBody = document.querySelector('.Main-Body-Div');
   const logInChange = document.querySelector('.Log-In-Change-Modal');
-  const logInChangeText = document.querySelector('.Log-In-Change-Modal-Text')
+  const logInChangeText = document.querySelector('.Log-In-Change-Modal-Text');
 
   if (e.target.textContent == 'Sign Up' || e.target.textContent == 'SIGN UP'){
     modalTitle.textContent = 'Sign Up';
@@ -113,4 +113,6 @@ export function closeLogIn(){
   mainBody.classList.remove('Opaque')
   document.body.style.overflow = 'auto';
 }
+
+
 

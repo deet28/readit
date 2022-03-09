@@ -37,6 +37,9 @@
   visibility: hidden;
   display:none;
 }
+.disabled{
+  pointer-events:none;
+}
 
 .Background{
   z-index: -1!important;
@@ -51,5 +54,24 @@
   overflow: hidden;
   pointer-events: none;
 }
+
+.Stop{
+  background-color: white;
+  height:50rem;
+  margin-top:5vh;
+  z-index:9999;
+}
+
+.Stop-Link{
+  text-decoration: none;
+  color:black;
+}
+
+.Stop-Link:hover{
+  cursor:pointer;
+  text-decoration: underline;
+}
+
+
 
 
