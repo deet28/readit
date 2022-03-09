@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { app,useAuth } from '../firebase';
 import { storage } from '../firebase';
-import { getFirestore,doc,setDoc } from 'firebase/firestore';
+import { getFirestore,doc,setDoc,addDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
@@ -49,7 +49,7 @@ export default function Post() {
       id:id,
       timestamp:timestamp,
     }
-    await setDoc(doc(db,"Posts",id),payload).then(createComments(id)).then(createLikes(id)).then (returnHome());
+    await setDoc(doc(db,"Posts",id),payload).then(createComments(id)).then(createLikes(id)).then(returnHome());
     }
       catch (error){
         console.log('Error adding to Post database')
@@ -68,11 +68,9 @@ export default function Post() {
   }
 
   async function createComments(id){
-    const comments = [];
     const payload = {
-      comments:comments,
       id:id
-    }
+    }; 
     await setDoc(doc(db,"Comments",id),payload)
   }
 

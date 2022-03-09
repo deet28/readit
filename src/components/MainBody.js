@@ -5,11 +5,14 @@ import { app,useAuth } from '../firebase'
 import { 
   likePost,
   dislikePost,
+  likeComment,
+  dislikeComment,
   clearComment
 } from'./Helpers'
 import {
   getFirestore,
   getDocs,
+  addDoc,
   query,
   where,
   doc,
@@ -17,8 +20,7 @@ import {
   collection,
   updateDoc,
   arrayUnion,
-  arrayRemove,
-  FieldValue
+  arrayRemove
 } from "firebase/firestore";
 import upVoteArrow from '../media/upvote-arrow.png';
 import downVoteArrow from '../media/downvote-arrow.png'
@@ -47,8 +49,6 @@ export default function MainBody() {
   let cLikesArray = [];
   let cDislikesArray = [];
 
-
-
   //firestore
   const db = getFirestore(app)
   
@@ -73,16 +73,15 @@ export default function MainBody() {
     const userName = userNameField.textContent.split('').slice(2,).join('');
     const commentVal = comment.value
     const postID = selected[0].id;
-    const postRef = doc(db,"Comments",postID);
     const payload = {
       comment:commentVal,
       likes:0,
       user:userName,
       id:id
     }
-    await updateDoc(postRef,{
-      comments:arrayUnion(payload)
-    }).then(createcLikes(id)).then(displayComments(postID)).then(clearComment());
+    const postRef = doc(db,"Comments",postID);
+    const colRef = collection(postRef,"Comment-Nest");
+    await setDoc(doc(colRef,id),payload).then(displayComments(postID)).then(createcLikes(id)).then(clearComment());
   }
 
   async function createcLikes(id){
@@ -91,7 +90,8 @@ export default function MainBody() {
     const payload = {
       likes:likes,
       dislikes:dislikes,
-      id:id
+      id:id,
+      cLikes:0
     }
     await setDoc(doc(db,"CFeelings",id),payload)
   }
@@ -163,9 +163,9 @@ export default function MainBody() {
       const docRef = doc(db,"Posts",result.id);
       result.likes ++; 
       const payload = result;
-      await setDoc(docRef,payload);
+      await setDoc(docRef,payload).then(likePost(id));
     })
-    likePost(id);
+    
   }
 
   async function downvoteButton(postID){
@@ -177,109 +177,103 @@ export default function MainBody() {
     results.forEach(async (result) => {
       const docRef = doc(db,"Posts",result.id);
       result.likes --; 
-    
-    const payload = result;
-    await setDoc(docRef,payload).then(dislikePost(postID));
-  })
+      const payload = result; 
+      await setDoc(docRef,payload).then(dislikePost(postID));
+    })
   }
 
 //Likes and Dislikes on Comments.
+
 function checkCDislikes(e){
-  let postID = e.target.id;
-  console.log(postID)
-  if (cDislikes.includes(postID)==true){
-    return removeCDislikes(postID);
+  let cID = e.target.id;
+  if (cDislikes.includes(cID)==true){
+    return removeCDislikes(cID);
   } else { 
-    likeCFeelings(postID);
+    likeCFeelings(cID);
   }
 }
-async function removeCDislikes(postID){
+
+function checkCLikes(e){
+  let cID = e.target.id;
+  if (cLikes.includes(cID)==true){
+    return removeCLikes(cID);
+  } else {
+    dislikeCFeelings(cID);
+  }
+}
+
+async function removeCDislikes(cID){
   let user = currentUser.email;
-  const docRef = doc(db,"CFeelings",postID);
+  const docRef = doc(db,"CFeelings",cID);
   const payload = user;
   await updateDoc(docRef,{
       dislikes:arrayRemove(payload)
-  }).then(upvoteCButton(postID)).then(setcDislikes(cDislikes.filter(index => index !== postID)));
+  }).then(upvoteCButton(cID)).then(setcDislikes(cDislikes.filter(index => index !== cID)));
+}
+
+async function removeCLikes(cID){
+  let user = currentUser.email;
+  const docRef = doc(db,"CFeelings",cID);
+  const payload = user;
+  await updateDoc(docRef,{
+    likes:arrayRemove(payload)
+  }).then(downvoteCButton(cID)).then(setcLikes(cLikes.filter(index => index !== cID)));
 }
 
 async function likeCFeelings(id){
   const user = currentUser.email;
-  const postID = id
-  const docRef = doc(db,"CFeelings",postID);
+  const cID = id
+  const docRef = doc(db,"CFeelings",cID);
   const payload = user;
   await updateDoc(docRef,{
       likes:arrayUnion(payload)
-  }).then(upvoteCButton(postID)).then(setcLikes([...cLikes,postID]));
-}
-//////////////////
-///////////////////
-
-function checkCLikes(e){
-  let postID = e.target.id;
-  console.log(postID)
-  if (cLikes.includes(postID)==true){
-    return removeCLikes(postID);
-  } else { 
-    dislikeCFeelings(postID);
-  }
-}
-async function removeCLikes(postID){
-  let user = currentUser.email;
-  const docRef = doc(db,"CFeelings",postID);
-  const payload = user;
-  await updateDoc(docRef,{
-      likes:arrayRemove(payload)
-  }).then(downvoteCButton(postID)).then(setcLikes(cLikes.filter(index => index !== postID)));
+  }).then(upvoteCButton(cID)).then(setcLikes([...cLikes,cID]));
 }
 
 async function dislikeCFeelings(id){
   const user = currentUser.email;
-  const postID = id
-  const docRef = doc(db,"CFeelings",postID);
+  const cID = id;
+  const docRef = doc(db,"CFeelings",cID);
   const payload = user;
   await updateDoc(docRef,{
-      dislikes:arrayUnion(payload)
-  }).then(upvoteCButton(postID)).then(setcDislikes([...cDislikes,postID]));
+    dislikes:arrayUnion(payload)
+  }).then(downvoteCButton(cID)).then(setcDislikes([...cDislikes,cID]));
+}
+
+async function upvoteCButton(id){
+  const cID = id;
+  const postID = selected[0].id;
+  const  q = collection(db,"Comments",postID,"Comment-Nest");
+  const snapshot = await getDocs(q,"Comment-Nest");
+  const results = snapshot.docs.map(doc=> ({...doc.data()}));
+    results.forEach(async (result) => {
+      if (result.id == cID){
+        console.log(result.id)
+        const docRef = doc(db,"Comments",postID,"Comment-Nest",cID)
+        result.likes++;
+        const payload = result; 
+        await setDoc(docRef,payload).then(likeComment(cID))
+       };
+    });
   }
 
-
-/////////////
-/////////////
-
-async function upvoteCButton(postID){
-    let id = postID;
-    let mainID = selected[0].id;
-    const collectionRef = collection(db,"Comments");
-    const q = query(collectionRef,where("id","==",mainID))
-    const snapshot = await getDocs(q);
-    const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
+async function downvoteCButton(id){
+  const cID = id;
+  const postID = selected[0].id;
+  const  q = collection(db,"Comments",postID,"Comment-Nest");
+  const snapshot = await getDocs(q,"Comment-Nest");
+  const results = snapshot.docs.map(doc=> ({...doc.data()}));
     results.forEach(async (result) => {
-      console.log(result);
-    })
-    //const docRef = doc(db,"Comments",result.id);
-    //result.likes ++; 
-    //const payload = result;
-    //await setDoc(docRef,payload);
-  //likePost(id);
-}
+      if (result.id == cID){
+        console.log(result.id)
+        const docRef = doc(db,"Comments",postID,"Comment-Nest",cID)
+        result.likes--;
+        const payload = result; 
+        await setDoc(docRef,payload).then(dislikeComment(cID));
+      };
+    });
+  }
 
-async function downvoteCButton(postID){
-  let id = postID;
-  let mainID = selected[0].id;
-  const collectionRef = collection(db,"Comments");
-  const q = query(collectionRef,where("id","==",mainID))
-  const snapshot = await getDocs(q);
-  const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
-  results.forEach(async (result) => {
-    console.log(result);
-  })
-  //const docRef = doc(db,"Comments",result.id);
-  //result.likes ++; 
-  //const payload = result;
-  //await setDoc(docRef,payload);
-//likePost(id);
-}
-  
 //Selecting and displaying post and comment information.
   
   async function selectPost(e){
@@ -326,21 +320,20 @@ async function downvoteCButton(postID){
 
   async function displayComments(input){
   let postID = input
-    const collectionRef = collection(db,"Comments");
-    const q = query(collectionRef,where("id","==",postID))
-    const snapshot = await getDocs(q);
-    const results = snapshot.docs.map(doc=> ({...doc.data(),id:postID}));
+    const  q = collection(db,"Comments",postID,"Comment-Nest");
+    //const collectionRef = collection(postRef,"Comment-Nest");
+    //const q = query(postRef,where("id","==",postID))
+    const snapshot = await getDocs(q,"Comment-Nest");
+    const results = snapshot.docs.map(doc=> ({...doc.data()}));
     results.forEach(async (result) => {
-    const payload = result.comments;
-    const commentMap = payload.map((index =>{
-      let newComment = index.comment
-      let newCommentLikes = index.likes
-      let newCommentID = index.id
-      let user = index.user
+      console.log(result)
+      let newComment = result.comment
+      let newCommentLikes = result.likes
+      let newCommentID = result.id
+      let user = result.user
       commentsArray.push({newComment,newCommentID,newCommentLikes,user});
-      }))
-      setComments(commentsArray)
     });
+    setComments(commentsArray)
   }
 
 //Updating state when necessary
@@ -425,7 +418,7 @@ async function downvoteCButton(postID){
       }
       getList('CFeelings')
       }
-    },[currentUser]);
+  },[currentUser]);
 
   useEffect(()=>{
     console.log(likes);

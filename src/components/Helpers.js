@@ -10,7 +10,7 @@ export function likePost(postID){
   }
 } 
 
-export function likeSelectedPost(postID){
+function likeSelectedPost(postID){
   const selectedCards = document.querySelectorAll('.Selected-Post-Likes');
   for(let i = 0; i < selectedCards.length; i++){
     if (selectedCards[i].id == postID){
@@ -18,8 +18,6 @@ export function likeSelectedPost(postID){
     }
   }
 }
-
-
 
 export function dislikePost(postID){
   const postCards = document.querySelectorAll('.Main-Body-Likes');
@@ -29,16 +27,36 @@ export function dislikePost(postID){
       return postCards[i].firstChild.nextSibling.textContent--;
       }
     }
-  }
+}
 
-  export function dislikeSelectedPost(input){
+function dislikeSelectedPost(input){
     const selectedCards = document.querySelectorAll('.Selected-Post-Likes');
     for(let i = 0; i<selectedCards.length; i++){
       if (selectedCards[i].id == input){
         return selectedCards[i].firstChild.nextSibling.textContent--;
       }
     }
+}
+
+export function likeComment(id){
+  const commentDivs = document.querySelectorAll(".Selected-Body-Comment-Posts-Like-Parent");
+  let cID = id
+    for(let i = 0; i < commentDivs.length; i++){
+      if (commentDivs[i].id == id){
+        return commentDivs[i].firstChild.nextSibling.textContent++;
+      }
   }
+}
+
+export function dislikeComment(id){
+  const commentDivs = document.querySelectorAll(".Selected-Body-Comment-Posts-Like-Parent");
+  let cID = id
+    for(let i = 0; i < commentDivs.length; i++){
+      if (commentDivs[i].id == id){
+        return commentDivs[i].firstChild.nextSibling.textContent--;
+      }
+  }
+}
 
 export function clearComment(){
   const comment = document.querySelector('.Selected-Body-Post-Comment');
