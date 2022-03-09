@@ -28,8 +28,9 @@ export default function Nav() {
   const displayRef = useRef();
   const currentUser = useAuth();
   const [userName, setUserName] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-
+  
   async function testUsername(){
     let userArr =[];
     let displayName = displayRef.current.value;
@@ -64,7 +65,7 @@ async function handleSignUp(){
       .then(handleUsername())
       .then(resetSignUpForm())
     } catch { 
-      
+
     }
   }
 }
@@ -124,15 +125,41 @@ async function handleLogin(){
     }
 }
 
-  function showMenu(){
-    const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
-    if(navMenu.classList.contains("Hidden")===true){
-      navMenu.classList.remove("Hidden");
-    } else {
-      navMenu.classList.add("Hidden")
-    }
-  
+function showMenu(e){
+  const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
+  if(navMenu.classList.contains("Hidden")===true){
+    navMenu.classList.remove("Hidden");
+    console.log(e.target);
+  } else{
+    navMenu.classList.add("Hidden")
   }
+}
+
+function darkSwitch(e){
+  e.preventDefault()
+  if(e.target.previousSibling.checked){
+    e.target.previousSibling.checked = false;
+    } else {
+    e.target.previousSibling.checked = true;
+    }
+}
+
+function closeMenu(e){
+  e.preventDefault();
+  const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
+  if (e.target.classList.contains("Nav-Icon-Drop-Down")==false){
+    navMenu.classList.add("Hidden");
+  }
+}
+
+React.useEffect(() => {
+    window.addEventListener('click', closeMenu);
+   return () => {
+     window.removeEventListener('click', closeMenu);
+   };
+ }, []);
+
+
   useEffect(() => {
       if (currentUser==null){
         return;
@@ -184,8 +211,8 @@ async function handleLogin(){
         }
         {currentUser == null && 
           <button className = "Nav-Button Button-Two" onClick = {logIntoAccount}>Sign Up</button>
-        }
-          
+        }  
+      
       <form className = "Nav-Drop-Down-Form" onClick = {showMenu}>
         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>
@@ -197,8 +224,8 @@ async function handleLogin(){
           <img className = "Nav-Drop-Down-Moon" src = {moon}></img>
           <button className = "Nav-Drop-Down-Button">Dark Mode</button>
           <label className = "Dark-Mode-Switch">
-            <input type = "checkbox" className = "Slider-Input"></input>
-              <span className = "Dark-Mode-Slider"></span>
+            <input type = "checkbox"  className = "Slider-Input" ></input>
+              <span onClick = {darkSwitch} className = "Dark-Mode-Slider"></span>
             </label>
           </form>
         <form className = "Nav-Menu-Form-Empty"></form>
@@ -211,10 +238,9 @@ async function handleLogin(){
         {currentUser==null && 
           <form className = "Nav-Menu-Form Logs-In">
             <img className = "Nav-Drop-Down-Login" src = {logIn}></img>
-            <button onClick = {handleLogout} className = "Nav-Drop-Down-Button Log-In-Button">Log In/ Sign Up</button>
+            <button onClick = {logIntoAccount} className = "Nav-Drop-Down-Button Log-In-Button">Log In/ Sign Up</button>
           </form>
         }
-        
         </div>
       </div>
 
