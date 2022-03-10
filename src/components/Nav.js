@@ -126,12 +126,21 @@ async function handleLogin(){
 }
 
 function showMenu(e){
+  e.preventDefault();
   const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
   if(navMenu.classList.contains("Hidden")===true){
     navMenu.classList.remove("Hidden");
     console.log(e.target);
   } else{
     navMenu.classList.add("Hidden")
+  }
+}
+
+function closeMenu(e){
+  e.preventDefault();
+  const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
+  if (e.target.classList.contains("Nav-Icon-Drop-Down")==false){
+    navMenu.classList.add("Hidden");
   }
 }
 
@@ -142,14 +151,6 @@ function darkSwitch(e){
     } else {
     e.target.previousSibling.checked = true;
     }
-}
-
-function closeMenu(e){
-  e.preventDefault();
-  const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
-  if (e.target.classList.contains("Nav-Icon-Drop-Down")==false){
-    navMenu.classList.add("Hidden");
-  }
 }
 
 React.useEffect(() => {
@@ -188,8 +189,8 @@ React.useEffect(() => {
           <button className = "Log-In-Signup Hidden" onClick = {testUsername}>Sign Up</button>
         </div>
         </div>
-      <div className = "Nav-Header">
-      
+    
+    <div className = "Nav-Header  Nav-Bar-Test">
       <Link to = "/"> 
         <img className = "Nav-Icon"src = {Icon}></img>
       </Link>

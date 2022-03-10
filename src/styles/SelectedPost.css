@@ -7,8 +7,10 @@
 
 .Selected-Post-Card{
   max-width:80%;
-  min-height:100% !important;
-  position:absolute;
+  height:auto;
+  overflow-x:hidden;
+  overflow-y:auto;
+
   border:1px solid gray;
   border-left:0px solid transparent;
   background-color: white;
@@ -19,7 +21,9 @@
   display:flex;
   flex-direction: column;
   justify-content: start;
-  margin-left:5%;
+  margin-left:1%;
+  margin-bottom:10rem;
+  margin-top:1rem;
 }
 
 .Selected-Post-Card-Outer{
@@ -28,8 +32,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  border-bottom:5rem solid lightgray;
+  border-bottom:5rem solid transparent;
 }
+
+/* 
+.Selected-Delete-Post-Div{
+  background-color: orange;
+  min-width: 83%;
+  max-width: 83%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items:flex-end;
+}
+.Selected-Post-Card-Delete{
+  max-width:8%;
+  height:1.5rem;
+  line-height:0;
+  font-size:2rem;
+  color:red;
+}
+*/
 
 .Selected-Card-User-Name{
   font-size:0.9rem;
@@ -215,12 +238,12 @@
   margin-right:0.5rem;
 }
 
-/* ^ Main boddy of Post Card ^ */
+/* ^ Main body of Post Card ^ */
 
 /**/
 
 .Selected-Body-Comment-Parent{
-  width:80%;
+  width:90%;
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -312,27 +335,42 @@
 
 .Selected-Body-Comment-Post{
   margin-bottom:0.5rem;
-  width:80%;
+  width:100%;
 }
 
 .Selected-Body-Comment-Posts-Like-Parent{
   display:flex;
   margin-top:0.5rem;
   margin-bottom:1rem;
+  align-items: center;
 }
 
 .Selected-Body-Comment-Posts-Like{
-  height:1rem;
+  height:1.1rem;
   width:1.2rem;
   margin-right:0.6rem;
   border:1px solid transparent;
   filter:invert(26%)sepia(48%) saturate(265%);
 }
+
 .Selected-Body-Comment-Posts-Dislike{
-  height:1rem;
+  height:1.1rem;
   width:1.7rem;
   border:1px solid transparent;
   margin-left:0.5rem;
+  filter:invert(45%) sepia(18%);
+}
+
+.Selected-Body-Comment-Posts-Trash{
+  height:1.1rem;
+  width:1.2rem;
+  margin-right:0.6rem;
+  border:1px solid transparent;
+  margin-left:0.2rem;
+  margin-bottom:0.2rem;
+}
+.Selected-Body-Comment-Posts-Trash:hover{
+  cursor:pointer;
   filter:invert(45%) sepia(18%);
 }
 

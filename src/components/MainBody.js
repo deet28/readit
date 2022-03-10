@@ -18,15 +18,17 @@ import {
   setDoc,
   collection,
   updateDoc,
+  deleteDoc,
   arrayUnion,
   arrayRemove
 } from "firebase/firestore";
 import upVoteArrow from '../media/upvote-arrow.png';
-import downVoteArrow from '../media/downvote-arrow.png'
+import downVoteArrow from '../media/downvote-arrow.png';
 import chat from '../media/chat.png';
+import trash from '../media/trash.png';
 import ReactPlayer from 'react-player/youtube';
 import { v4 as uuidv4 } from 'uuid';
-import { logIntoAccount,closeLogIn } from './Helpers'
+import { logIntoAccount } from './Helpers'
 
 export default function MainBody() {
   
@@ -54,7 +56,6 @@ export default function MainBody() {
   
   //redux
   const state = useSelector((state)=>state);
-
   useSelector (state => {
     if(state.sort == 'New'){
         posts.sort((t1,t2)=>
@@ -71,13 +72,15 @@ export default function MainBody() {
     const comment = document.querySelector('.Selected-Body-Post-Comment');
     const userNameField = document.querySelector('.Nav-Menu-Logged-In-Name');
     const userName = userNameField.textContent.split('').slice(2,).join('');
+    const email = currentUser.email;
     const commentVal = comment.value
     const postID = selected[0].id;
     const payload = {
       comment:commentVal,
       likes:0,
       user:userName,
-      id:id
+      id:id,
+      email:email
     }
     const postRef = doc(db,"Comments",postID);
     const colRef = collection(postRef,"Comment-Nest");
@@ -306,6 +309,7 @@ async function downvoteCButton(id){
   }
   
   async function displayPost(input){
+    console.log(currentUser.email);
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",input))
     const snapshot = await getDocs(q);
@@ -329,14 +333,35 @@ async function downvoteCButton(id){
       let newCommentLikes = result.likes
       let newCommentID = result.id
       let user = result.user
+      let email = result.email
       counter++;
-      commentsArray.push({newComment,newCommentID,newCommentLikes,user});
+      commentsArray.push({newComment,newCommentID,newCommentLikes,user,email});
     });
     setcCounter(counter);
     console.log(cCounter)
     setComments(commentsArray)
   }
 
+//Deleting Comments
+
+async function deleteComment(e){
+  const cID = e.target.id;
+  const postID = selected[0].id;
+  const  q = collection(db,"Comments",postID,"Comment-Nest");
+  const snapshot = await getDocs(q,"Comment-Nest");
+  const results = snapshot.docs.map(doc=> ({...doc.data()}));
+    results.forEach(async (result) => {
+      if (result.id===cID){
+        const docRef = doc(db,"Comments",postID,"Comment-Nest",cID)
+        await deleteDoc(docRef).then(deleteCFeelings(cID).then(displayComments(postID)));
+      }
+    });
+}
+async function deleteCFeelings(id){
+  const cID = id;
+  const docRef = doc(db,"CFeelings",cID)
+  await deleteDoc(docRef);
+}
 //Updating state when necessary
 
   useEffect(() => {
@@ -530,6 +555,8 @@ async function downvoteCButton(id){
                       <span className = "Selected-Body-Comment-Post-Username">{index.user}</span>
                       <p className = "Selected-Body-Comment-Post">{index.newComment}</p>
                       <div className = "Selected-Body-Comment-Posts-Like-Parent" id = {index.newCommentID}>
+                        
+                        {/* Comment Likes Button*/}
                         {currentUser!==null && cLikes.includes(index.newCommentID)==true&&
                         <img src = {upVoteArrow} id = {index.newCommentID} className = "Selected-Body-Comment-Posts-Like Selected-Body-Comment-Posts-Like-Selected"></img>
                         }
@@ -542,7 +569,7 @@ async function downvoteCButton(id){
 
                           <span>{index.newCommentLikes}</span>
 
-
+                        {/* Comment Dislikes Button*/}
                         {currentUser!==null && cDislikes.includes(index.newCommentID)==true&&
                         <img src = {downVoteArrow} id = {index.newCommentID} className = "Selected-Body-Comment-Posts-Dislike Selected-Body-Comment-Posts-Dislike-Selected"></img>
                         }
@@ -552,6 +579,13 @@ async function downvoteCButton(id){
                         {currentUser==null&&
                         <img src = {downVoteArrow} onClick = {logIntoAccount}className = "Selected-Body-Comment-Posts-Dislike"></img>
                         }
+
+
+                        {currentUser!==null&&index.email==currentUser.email&&
+                        <img onClick = {deleteComment}id = {index.newCommentID} src = {trash} className = "Selected-Body-Comment-Posts-Trash"></img>
+                        }
+                        
+                        
                       </div>
                     </div>
                   )))}

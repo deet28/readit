@@ -7,7 +7,7 @@ export default function Main() {
 
   return (
     <>
-    <div className = "Main-Div-Outer">
+    <div className = "Main-Div-Outer MainBody-Test">
       <div className = "Main-Div">
         <MainNav></MainNav>
         <MainBody></MainBody>

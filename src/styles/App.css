@@ -7,6 +7,7 @@
 @import 'Post.css';
 @import 'Login.css';
 @import 'SelectedPost.css';
+@import 'DarkMode.css';
 
 .App {
   text-align: center;
@@ -46,7 +47,10 @@
 }
 
 .Main-Div-Outer{
-  background-color: rgb(224, 221, 221);
+  background-color: rgb(211, 211, 211);
+  min-height:100vh !important;
+  min-height:100% !important;
+  margin:0;
 }
 
 .Opaque{
