@@ -309,7 +309,6 @@ async function downvoteCButton(id){
   }
   
   async function displayPost(input){
-    console.log(currentUser.email);
     const collectionRef = collection(db,"Posts");
     const q = query(collectionRef,where("id","==",input))
     const snapshot = await getDocs(q);
@@ -580,7 +579,7 @@ async function deleteCFeelings(id){
                         <img src = {downVoteArrow} onClick = {logIntoAccount}className = "Selected-Body-Comment-Posts-Dislike"></img>
                         }
 
-
+                        
                         {currentUser!==null&&index.email==currentUser.email&&
                         <img onClick = {deleteComment}id = {index.newCommentID} src = {trash} className = "Selected-Body-Comment-Posts-Trash"></img>
                         }
