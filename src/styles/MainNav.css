@@ -21,6 +21,7 @@
   align-items: center;
   background-color: white;
   margin-top:1rem;
+  z-index: 1;
 }
 
 
@@ -61,7 +62,7 @@
 }
 
 .Main-Header-Hot-Button-Menu{
-  position:fixed;
+  position:absolute;
   height:2.5rem;
   width:12rem;
   border:1px solid lightgray;

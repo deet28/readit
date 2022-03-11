@@ -4,6 +4,7 @@
   flex-direction: column;
   min-height:100vh;
   background-color: lightgray;
+  
 }
 .Main-Body-Div{
   margin-top:0.5rem;
@@ -28,6 +29,7 @@
   border-top-left-radius: 0px;
   border-bottom-left-radius:0px;
   border-left:transparent;
+  z-index:1;
 }
 .Main-Body-Card:hover{
   cursor: pointer;

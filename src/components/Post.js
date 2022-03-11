@@ -199,8 +199,8 @@ export default function Post() {
  
   return (
   <>
-<div>
-{checkLoggedIn()}
+  <div>
+  {checkLoggedIn()}
   {currentUser == null && loading == true &&
     <div className = "Stop">
     <h1 className = "Stop-Loading"></h1>
@@ -222,7 +222,7 @@ export default function Post() {
   {currentUser!==null&&loading==false&&
 
   <div className = "Post-Main-Div">
-
+ 
   <div className = "Post-Submitted Hidden">
     <h2>Post Submitted Successfully!</h2> 
     <Link to = "/">

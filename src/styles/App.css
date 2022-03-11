@@ -43,7 +43,7 @@
 }
 
 .Background{
-  z-index: -1!important;
+  z-index: 1 !important;
 }
 
 .Main-Div-Outer{
@@ -63,7 +63,11 @@
   background-color: white;
   height:50rem;
   margin-top:5vh;
-  z-index:9999;
+  z-index:9998;
+}
+
+.Important{
+  z-index: 9999 !important;
 }
 
 .Stop-Link{

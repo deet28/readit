@@ -18,6 +18,7 @@ import logIn from '../media/log-in.png'
 import post from '../media/post.png'
 import { v4 as uuidv4} from 'uuid'
 import { logIntoAccount,closeLogIn } from './Helpers'
+import { useLocation } from 'react-router-dom';
 
 export default function Nav() {
 
@@ -28,10 +29,12 @@ export default function Nav() {
   const displayRef = useRef();
   const currentUser = useAuth();
   const [userName, setUserName] = useState([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [darkMode, darkModeSet] = useState('false')
+
+  let darkModeResult;
 
   
-  async function testUsername(){
+async function testUsername(){
     let userArr =[];
     let displayName = displayRef.current.value;
     let display = displayName.toLowerCase();
@@ -77,7 +80,8 @@ async function handleUsername(){
     const payload = {
       userName:user,
       email:email,
-      id:uid
+      id:uid,
+      darkMode:'false'
     }
     await setDoc(doc(db,"Users",uid),payload);
 }
@@ -127,6 +131,7 @@ async function handleLogin(){
 
 function showMenu(e){
   e.preventDefault();
+  const main = document.querySelector('.Main-Div')
   const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
   if(navMenu.classList.contains("Hidden")===true){
     navMenu.classList.remove("Hidden");
@@ -144,13 +149,33 @@ function closeMenu(e){
   }
 }
 
-function darkSwitch(e){
+//setting dark mode with switch
+
+async function darkSwitch(e){
   e.preventDefault()
   if(e.target.previousSibling.checked){
+    setDarkMode('false')
+    darkModeSet('false')
     e.target.previousSibling.checked = false;
     } else {
+    setDarkMode('true')
+    darkModeSet('true')
     e.target.previousSibling.checked = true;
-    }
+  } 
+}
+async function setDarkMode(input){
+  const email = currentUser.email;
+  const q = collection(db,"Users");
+  const snapshot = await getDocs(q);
+  const results = snapshot.docs.map(doc=> ({...doc.data()}));
+  results.forEach(async (result) => {
+    if (result.email == email){
+      let id = result.id;
+      result.darkMode = input;
+      let payload = result;
+      await setDoc(doc(db,"Users",id),payload)
+      }
+    })
 }
 
 React.useEffect(() => {
@@ -158,20 +183,46 @@ React.useEffect(() => {
    return () => {
      window.removeEventListener('click', closeMenu);
    };
- }, []);
+ },[]);
 
-
-  useEffect(() => {
-      if (currentUser==null){
-        return;
-      } else {
-        let email = currentUser.email;
-        getUsername(email)
+useEffect(()=>{
+  const darkModeSlider = document.querySelector('.Dark-Mode-Slider')
+  if (currentUser==null){
+    return 
+  } else {
+  const getDark = async () => {
+    const email = currentUser.email;
+    const q = collection(db,"Users");
+    const snapshot = await getDocs(q);
+    const results = snapshot.docs.map(doc=> ({...doc.data()}));
+    results.forEach(async (result) => {
+      if (result.email == email){
+        let dark = result.darkMode;
+        darkModeResult = dark;
       }
-  },[currentUser])
-  return (
-    
-      <>
+      if (darkModeResult == 'false'){
+        darkModeSlider.previousSibling.checked = false;
+      } else {
+        darkModeSlider.previousSibling.checked = true;
+      }
+      darkModeSet(darkModeResult)
+    })
+    }
+  getDark();
+}
+},[currentUser])
+
+useEffect(() => {
+  if (currentUser==null){
+    return;
+  }else{
+  let email = currentUser.email;
+    getUsername(email)
+  }
+},[currentUser])
+
+return (
+    <>
       <div className = "Log-In-Modal Hidden">
         <div className = "Log-In-Sidebar"></div>
         <div className = "Log-In-Main">
@@ -190,7 +241,7 @@ React.useEffect(() => {
         </div>
         </div>
     
-    <div className = "Nav-Header  Nav-Bar-Test">
+    <div className = "Nav-Header">
       <Link to = "/"> 
         <img className = "Nav-Icon"src = {Icon}></img>
       </Link>

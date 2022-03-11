@@ -1,10 +1,19 @@
 .Nav-Bar-Test{
+  filter:invert(95%)saturate(109%)hue-rotate(190deg) brightness(200%)contrast(80%);
+}
+
+.Nav-Drop-Test{
 }
 
 .MainBody-Test{
   /*filter:invert(90%) sepia(30%) saturate(180%) hue-rotate(180deg) brightness(190%) contrast(100%)*/
+  background-color: black !important;
+}
+
+.MainBody-Card-Test{
+  filter:invert(95%)saturate(109%)hue-rotate(190deg) brightness(200%)contrast(80%);
 }
 
 .Nav-Drop-Down-Test{
-  filter:invert(90%)hue-rotate(180deg)
+  filter:invert(90%)hue-rotate(180deg);
 }
