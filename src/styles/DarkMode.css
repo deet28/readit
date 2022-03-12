@@ -6,7 +6,6 @@
 }
 
 .MainBody-Test{
-  /*filter:invert(90%) sepia(30%) saturate(180%) hue-rotate(180deg) brightness(190%) contrast(100%)*/
   background-color: black !important;
 }
 

@@ -13,12 +13,10 @@ import Icon from '../media/readit.png'
 import magGlass from '../media/mag-glass.png'
 import dropDown from '../media/drop-down.png'
 import downArrow from '../media/down-arrow.png'
-import moon from '../media/moon.png'
 import logIn from '../media/log-in.png'
 import post from '../media/post.png'
 import { v4 as uuidv4} from 'uuid'
 import { logIntoAccount,closeLogIn } from './Helpers'
-import { useLocation } from 'react-router-dom';
 
 export default function Nav() {
 
@@ -29,15 +27,12 @@ export default function Nav() {
   const displayRef = useRef();
   const currentUser = useAuth();
   const [userName, setUserName] = useState([]);
-  const [darkMode, darkModeSet] = useState('false')
-
-  let darkModeResult;
 
   
 async function testUsername(){
     let userArr =[];
     let displayName = displayRef.current.value;
-    let display = displayName.toLowerCase();
+    let display = displayName.toLowerCase().split('').join("").replace(/\s/g, '');
     let emailName = emailRef.current.value;
     let email = emailName.toLowerCase();
     console.log(display)
@@ -81,7 +76,6 @@ async function handleUsername(){
       userName:user,
       email:email,
       id:uid,
-      darkMode:'false'
     }
     await setDoc(doc(db,"Users",uid),payload);
 }
@@ -149,68 +143,12 @@ function closeMenu(e){
   }
 }
 
-//setting dark mode with switch
-
-async function darkSwitch(e){
-  e.preventDefault()
-  if(e.target.previousSibling.checked){
-    setDarkMode('false')
-    darkModeSet('false')
-    e.target.previousSibling.checked = false;
-    } else {
-    setDarkMode('true')
-    darkModeSet('true')
-    e.target.previousSibling.checked = true;
-  } 
-}
-async function setDarkMode(input){
-  const email = currentUser.email;
-  const q = collection(db,"Users");
-  const snapshot = await getDocs(q);
-  const results = snapshot.docs.map(doc=> ({...doc.data()}));
-  results.forEach(async (result) => {
-    if (result.email == email){
-      let id = result.id;
-      result.darkMode = input;
-      let payload = result;
-      await setDoc(doc(db,"Users",id),payload)
-      }
-    })
-}
-
 React.useEffect(() => {
     window.addEventListener('click', closeMenu);
    return () => {
      window.removeEventListener('click', closeMenu);
    };
  },[]);
-
-useEffect(()=>{
-  const darkModeSlider = document.querySelector('.Dark-Mode-Slider')
-  if (currentUser==null){
-    return 
-  } else {
-  const getDark = async () => {
-    const email = currentUser.email;
-    const q = collection(db,"Users");
-    const snapshot = await getDocs(q);
-    const results = snapshot.docs.map(doc=> ({...doc.data()}));
-    results.forEach(async (result) => {
-      if (result.email == email){
-        let dark = result.darkMode;
-        darkModeResult = dark;
-      }
-      if (darkModeResult == 'false'){
-        darkModeSlider.previousSibling.checked = false;
-      } else {
-        darkModeSlider.previousSibling.checked = true;
-      }
-      darkModeSet(darkModeResult)
-    })
-    }
-  getDark();
-}
-},[currentUser])
 
 useEffect(() => {
   if (currentUser==null){
@@ -272,14 +210,6 @@ return (
       <div className = "Nav-Drop-Down-Menu Hidden">
         <h3 className = "Nav-Drop-Down-Header">View Options</h3>
         
-        <form className = "Nav-Menu-Form">
-          <img className = "Nav-Drop-Down-Moon" src = {moon}></img>
-          <button className = "Nav-Drop-Down-Button">Dark Mode</button>
-          <label className = "Dark-Mode-Switch">
-            <input type = "checkbox"  className = "Slider-Input" ></input>
-              <span onClick = {darkSwitch} className = "Dark-Mode-Slider"></span>
-            </label>
-          </form>
         <form className = "Nav-Menu-Form-Empty"></form>
         {currentUser!==null &&
          <form className = "Nav-Menu-Form Logs-Out">

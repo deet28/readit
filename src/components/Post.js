@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { app,useAuth } from '../firebase';
 import { storage } from '../firebase';
-import { getFirestore,doc,setDoc } from 'firebase/firestore';
+import { getFirestore,doc,setDoc, getDocs,collection } from 'firebase/firestore';
 import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { useState,useEffect } from 'react';
@@ -57,6 +57,7 @@ export default function Post() {
       }
     }
   }
+
   async function createLikes(id){
     const likes = [];
     const dislikes = [];
@@ -147,12 +148,12 @@ export default function Post() {
 
   function checkLoggedIn(){
     setTimeout(()=>{
-      'hello';
-    },1000)
+     
+    },500)
   }
   
 
-  function changeSelected(e){
+function changeSelected(e){
     let name = getButtonName(e);
     const postContentButtons = document.querySelectorAll('.Post-Content-Button');
     const postContentIcons = document.querySelectorAll('.Post-Content-Icon');
@@ -188,14 +189,17 @@ export default function Post() {
         embedBody.classList.add('Hidden');
       }
     }
-  }
-  const [loading,setLoading] = useState(true)
-  useEffect(()=>{
-    const loadScreen = setTimeout(() => {
-      setLoading(false)
-    },500);
-      return () => clearTimeout(loadScreen)
-    },[loading]);
+}
+
+const [loading,setLoading] = useState(true)
+ 
+
+useEffect(()=>{
+  const loadScreen = setTimeout(() => {
+  setLoading(false)
+  },500);
+  return () => clearTimeout(loadScreen)
+},[loading]);
  
   return (
   <>
@@ -214,11 +218,12 @@ export default function Post() {
       </Link>
     </div>
   }
-  {currentUser!==null&& loading == true &&
+  {currentUser!==null&& loading==true&&
     <div className = "Stop">
       <h1></h1>
     </div>
   }
+  
   {currentUser!==null&&loading==false&&
 
   <div className = "Post-Main-Div">
@@ -287,7 +292,6 @@ export default function Post() {
     </div>
     </div>
     }
-
   </div>
   </>
   )

@@ -279,7 +279,15 @@ async function downvoteCButton(id){
 
 //Selecting and displaying post and comment information.
   
-  async function selectPost(e){
+  function selectPost(e){
+    if (e.target.classList.value=='Main-Body-Card-Url'){
+      window.open(e.target.textContent,'_blank')
+    } else {
+      console.log(false)
+      handleSelect(e);
+    }
+  }
+  async function handleSelect(e){
     let id = e.target.id;
     await displayPost(id);
     const selectedPost = document.querySelector('.Selected-Post-Card');
@@ -339,6 +347,12 @@ async function downvoteCButton(id){
     setcCounter(counter);
     console.log(cCounter)
     setComments(commentsArray)
+  }
+
+  function urlSelected(e){
+    if (e.target.classList.value == 'Selected-Body-Card-Url'){
+      window.open(e.target.textContent,'_blank')
+    }
   }
 
 //Deleting Comments
@@ -525,7 +539,7 @@ async function deleteCFeelings(id){
                       <p className = "Selected-Body-Card-Text" id = {index.id}>{index.text}</p>
                     }
                     {index.url.length > 0 && 
-                      <p className = "Selected-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
+                      <a className = "Selected-Body-Card-Url" onClick = {urlSelected}href = {index.url}>{index.url}</a>
                     } 
                 </div>
                 
@@ -629,10 +643,12 @@ async function deleteCFeelings(id){
               <img className = "Main-Body-Dislike-Button" id = {index.id} src = {downVoteArrow} onClick = {checkLikes}></img>
             }
           </div>
-
-        <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
-           <div id = {index.id} className = "Main-Body-Card-User-Name-Div"><span id = {index.id} className = "Main-Body-Card-User-Name">Posted by u/{index.user}</span></div>
-            
+        <div>
+          <div className = "Main-Body-Card"  onClick = {selectPost} id = {index.id}>
+           <div id = {index.id} className = "Main-Body-Card-User-Name-Div">
+              <span id = {index.id} className = "Main-Body-Card-User-Name">Posted by u/{index.user}
+              </span>
+            </div>
             <h2 className = "Main-Body-Card-Title" id = {index.id}>{index.title}</h2>
             <div className = "Main-Body-Card-Body" id = {index.id}>
               {index.picture.length > 0 &&
@@ -642,7 +658,8 @@ async function deleteCFeelings(id){
                 <ReactPlayer controls = {true} className = "React-Player" url = {index.embed}></ReactPlayer>
               }
               <p className = "Main-Body-Card-Text" id = {index.id}>{index.text}</p>
-              <p className = "Main-Body-Card-Url"><a href = {index.url}target = "_blank">{index.url}</a></p>
+              <a id = {index.id}className = "Main-Body-Card-Url"href = {index.url}>{index.url}</a>
+              </div>
               </div>
             </div>
           </div>
