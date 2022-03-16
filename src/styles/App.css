@@ -8,6 +8,7 @@
 @import 'Login.css';
 @import 'SelectedPost.css';
 @import 'DarkMode.css';
+@import 'Search.css';
 
 .App {
   text-align: center;

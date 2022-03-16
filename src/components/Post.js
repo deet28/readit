@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { app,useAuth } from '../firebase';
 import { storage } from '../firebase';
-import { getFirestore,doc,setDoc, getDocs,collection } from 'firebase/firestore';
+import { getFirestore,doc,setDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { useState,useEffect } from 'react';

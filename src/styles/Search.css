@@ -1,0 +1,15 @@
+.Search-Div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Search-Bar-Modal{
+  position:absolute;
+  background-color: white;
+  color:red;
+  text-align: left;
+  margin-top:2rem;
+  width:50vw;
+  margin-left:5vw;
+}

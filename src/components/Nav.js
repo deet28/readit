@@ -27,6 +27,7 @@ export default function Nav() {
   const displayRef = useRef();
   const currentUser = useAuth();
   const [userName, setUserName] = useState([]);
+  const [searchQuery,setSearchQuery] = useState("")
 
   
 async function testUsername(){
@@ -143,12 +144,53 @@ function closeMenu(e){
   }
 }
 
+function closeSearch (e){
+  e.preventDefault()
+  console.log(e.target)
+  const searchInput = document.querySelector('.Nav-Search');
+  const searchModal = document.querySelector('.Search-Bar-Modal');
+  if (e.target.classList.contains('Nav-Search')==false
+      &&e.target.classList.contains('Search-Bar-Modal')==false
+      &&e.target.classList.contains('Nav-Search-Form')==false
+      &&e.target.classList.contains("Nav-Search-Image")==false){
+      
+        searchModal.classList.add('Hidden');
+        searchInput.value = '';
+  } else {
+    return;
+  }
+}
+
+function searchBar(e){
+  const cards = document.querySelectorAll('.Main-Body-Card');
+  const searchModal = document.querySelector('.Search-Bar-Modal')
+  const searchInput = document.querySelector('.Nav-Search');
+  if (searchInput.value.length > 0){
+    searchModal.classList.remove('Hidden');
+  } else if (searchInput.value.length < 1){
+    searchModal.classList.add('Hidden');
+  }
+  
+  for(let i = 0; i< cards.length; i++){
+    if (e.target.value == cards[i].firstChild.nextSibling.textContent){
+      console.log(cards[i]);
+    }
+  }
+}
+
 React.useEffect(() => {
     window.addEventListener('click', closeMenu);
    return () => {
      window.removeEventListener('click', closeMenu);
    };
  },[]);
+ 
+ React.useEffect(() => {
+  window.addEventListener('click', closeSearch);
+ return () => {
+   window.removeEventListener('click', closeSearch);
+ };
+},[]);
 
 useEffect(() => {
   if (currentUser==null){
@@ -184,10 +226,13 @@ return (
         <img className = "Nav-Icon"src = {Icon}></img>
       </Link>
       <Link to = "/" className = "Title-Link"><h1 className = "Nav-Title">readit</h1></Link>
+      <div className = "Search-Div">
       <form className = "Nav-Search-Form">
         <img src = {magGlass} className = "Nav-Search-Image"></img>
-        <input className = "Nav-Search" placeholder = "Search Readit" />
+        <input className = "Nav-Search" placeholder = "Search Readit" onChange = {searchBar}/>
       </form>
+      <div className = "Search-Bar-Modal Hidden">Word</div>
+      </div>
         {currentUser!==null &&
         <div className = "Nav-Menu-Logged-In">
           <span className = "Nav-Menu-Logged-In-Name">/u{userName}</span>
