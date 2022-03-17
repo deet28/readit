@@ -27,11 +27,13 @@ export default function Nav() {
   
   const emailRef = useRef();
   const passwordRef = useRef();
-  const displayRef = useRef();
+  const displayRef = useRef(); 
+  const searchQuery = useRef();
+  
   const currentUser = useAuth();
+  
   const [userName, setUserName] = useState([]);
   const [posts,setPosts] = useState([]);
-  const searchQuery = useRef();
   const [matched, setMatched] = useState([]);
 
   let array = [];
@@ -265,6 +267,9 @@ return (
         <input className = "Nav-Search" placeholder = "Search Readit" onChange = {searchBar} ref={searchQuery}/>
       </form>
       <div className = "Search-Bar-Modal Hidden">
+        {matched.length < 1 && 
+          <h3 className = "Search-Bar-Modal-Text">No Results Found</h3>
+        }
         {matched.map((index)=>(
          <h3 className = "Search-Bar-Modal-Text" onClick = {selectSearch}>{index.title}</h3>
         ))}
