@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useRef,useState,useEffect }from'react'
+import { useSelector,useDispatch } from 'react-redux'
+import {bindActionCreators } from 'redux'
+import { actionCreators } from '../state/index'
 import { app,signup,useAuth,login,logout } from '../firebase'
 import {
   getFirestore,
@@ -33,6 +36,10 @@ export default function Nav() {
 
   let array = [];
 
+  const select = useSelector((state)=>state.select);
+  const dispatch = useDispatch()
+
+  const { selectCard } = bindActionCreators(actionCreators,dispatch)
 
   
 async function testUsername(){
@@ -151,7 +158,6 @@ function closeMenu(e){
 
 function closeSearch (e){
   e.preventDefault()
-  console.log(e.target)
   const searchInput = document.querySelector('.Nav-Search');
   const searchModal = document.querySelector('.Search-Bar-Modal');
   if (e.target.classList.contains('Nav-Search')==false
@@ -159,14 +165,13 @@ function closeSearch (e){
       &&e.target.classList.contains('Nav-Search-Form')==false
       &&e.target.classList.contains("Nav-Search-Image")==false){
       
-        searchModal.classList.add('Hidden');
+      searchModal.classList.add('Hidden');
   } else {
     return;
   }
 }
 
 function searchBar(e){
-  //const cards = document.querySelectorAll('.Main-Body-Card');
   const searchModal = document.querySelector('.Search-Bar-Modal')
   const searchInput = document.querySelector('.Nav-Search');
   if (searchQuery.current.value.length > 0){
@@ -178,6 +183,13 @@ function searchBar(e){
   setMatched(posts.filter(post=>{
     return post.title.includes(search);
   }))
+}
+
+function selectSearch(e){
+  e.preventDefault();
+  let title = e.target.textContent;
+  selectCard(title);
+  searchQuery.current.value = '';
 }
 
 useEffect(() => {
@@ -196,7 +208,7 @@ useEffect(() => {
 },[])
 
 useEffect(()=>{
-  console.log(matched)
+  return matched;
 },[matched])
 
 React.useEffect(() => {
@@ -254,7 +266,7 @@ return (
       </form>
       <div className = "Search-Bar-Modal Hidden">
         {matched.map((index)=>(
-         <h3 className = "Search-Bar-Modal-Text">{index.title}</h3>
+         <h3 className = "Search-Bar-Modal-Text" onClick = {selectSearch}>{index.title}</h3>
         ))}
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { app,useAuth } from '../firebase';
+import { useSelector } from 'react-redux'
 import { storage } from '../firebase';
 import { getFirestore,doc,setDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable,getDownloadURL } from 'firebase/storage';
@@ -21,6 +22,8 @@ export default function Post() {
   let image;
 
   const db = getFirestore(app);
+
+  const state = useSelector((state)=>state);
 
   async function pushToFirebase(){
     const title = document.querySelector('.Post-Content-Title');
@@ -153,7 +156,7 @@ export default function Post() {
   }
   
 
-function changeSelected(e){
+  function changeSelected(e){
     let name = getButtonName(e);
     const postContentButtons = document.querySelectorAll('.Post-Content-Button');
     const postContentIcons = document.querySelectorAll('.Post-Content-Icon');
@@ -189,10 +192,18 @@ function changeSelected(e){
         embedBody.classList.add('Hidden');
       }
     }
-}
+  }
+
 
 const [loading,setLoading] = useState(true)
  
+useEffect(()=>{
+  const button = document.querySelector('.Button-Link');
+  if (state.select.length > 0){
+    return button.click();
+  }
+},[state])
+  
 
 useEffect(()=>{
   const loadScreen = setTimeout(() => {
@@ -203,6 +214,7 @@ useEffect(()=>{
  
   return (
   <>
+  <Link to = "/"><button className = "Button-Link Hidden"></button></Link>
   <div>
   {checkLoggedIn()}
   {currentUser == null && loading == true &&

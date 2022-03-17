@@ -1,6 +1,8 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector,useDispatch } from 'react-redux'
+import {bindActionCreators } from 'redux'
+import { actionCreators } from '../state/index'
 import { app,useAuth } from '../firebase'
 import { 
   likePost,
@@ -55,11 +57,13 @@ export default function MainBody() {
   const db = getFirestore(app)
   
   //redux
-  const state = useSelector((state)=>state);
+  const state = useSelector((state)=>state)
+  const dispatch = useDispatch()
+  const { selectCard } = bindActionCreators(actionCreators,dispatch)
   useSelector (state => {
     if(state.sort == 'New'){
-        posts.sort((t1,t2)=>
-        t2.timestamp-t1.timestamp);
+      posts.sort((t1,t2)=>
+      t2.timestamp-t1.timestamp);
     } else if (state.sort == 'Top'){
       posts.sort((t1,t2)=>
       t2.likes-t1.likes);
@@ -279,11 +283,24 @@ async function downvoteCButton(id){
 
 //Selecting and displaying post and comment information.
   
+  async function selectFromSearch(input){
+    let id = input;
+    await displayPost(id);
+    const selectedPost = document.querySelector('.Selected-Post-Card');
+    const mainBody = document.querySelector('.Main-Body-Div');
+    const smallHeader = document.querySelector(".Main-Header-Bar-Small");
+    const largeHeader = document.querySelector(".Main-Header-Bar-Large");
+    const rightCard = document.querySelector(".Right-Card-Div");
+    selectedPost.classList.remove('Hidden');
+    mainBody.classList.add('Hidden');
+    smallHeader.classList.add('Hidden');
+    largeHeader.classList.add('Hidden')
+    rightCard.classList.add('Hidden');
+  }
   function selectPost(e){
     if (e.target.classList.value=='Main-Body-Card-Url'){
       window.open(e.target.textContent,'_blank')
     } else {
-      console.log(false)
       handleSelect(e);
     }
   }
@@ -327,6 +344,7 @@ async function downvoteCButton(id){
     setSelected([payload])
     })
     displayComments(input);
+    selectCard('');
   }
 
   async function displayComments(input){
@@ -345,7 +363,6 @@ async function downvoteCButton(id){
       commentsArray.push({newComment,newCommentID,newCommentLikes,user,email});
     });
     setcCounter(counter);
-    console.log(cCounter)
     setComments(commentsArray)
   }
 
@@ -377,7 +394,7 @@ async function deleteCFeelings(id){
 }
 //Updating state when necessary
 
-  useEffect(() => {
+useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db,'Posts'));
       querySnapshot.forEach((doc)=>{
@@ -399,65 +416,85 @@ async function deleteCFeelings(id){
       setPosts(array);
     }
     getData('Posts');
-  },[state])
+},[state])
+
+useEffect(()=>{
+  console.log(state.select)
+},[state])
+  
+useEffect(()=>{
+  let id;
+  const getData = async () => {
+    const querySnapshot = await getDocs(collection(db,'Posts'));
+    querySnapshot.forEach((doc)=>{
+      let post = (doc.id, "=>",doc.data())
+      if(post.title == state.select){
+        id = post.id;
+      }
+      return selectFromSearch(id);
+    })
+    
+  }
+  getData('Posts');
+},[state])
 
  useEffect(() => {
   if (currentUser == null){
     return 
   } else {
     let email = currentUser.email;
-      const getList = async () => {
-      const querySnapshot = await getDocs(collection(db,'PFeelings'));
-      querySnapshot.forEach((doc)=>{
-        let user = (doc.id, "=>",doc.data())
-        let test = user.id; 
-        let likes = user.likes;
-        let dislikes = user.dislikes;
-        for(let i = 0; i < likes.length; i++){
-          if (likes[i]==email)
-          likesArray.push(test)
+    const getList = async () => {
+    const querySnapshot = await getDocs(collection(db,'PFeelings'));
+    querySnapshot.forEach((doc)=>{
+      let user = (doc.id, "=>",doc.data())
+      let test = user.id; 
+      let likes = user.likes;
+      let dislikes = user.dislikes;
+      for(let i = 0; i < likes.length; i++){
+        if (likes[i]==email)
+        likesArray.push(test)
+      }
+      for(let i = 0; i < dislikes.length;i++){
+        if(dislikes[i]==email){
+          dislikesArray.push(test);
         }
-        for(let i = 0; i < dislikes.length;i++){
-          if(dislikes[i]==email){
-            dislikesArray.push(test);
-          }
-        }
-      })
-      setLikes(likesArray);
-      setDislikes(dislikesArray);
-    }
-    getList('PFeelings')
-    }
-  },[currentUser]);
+      }
+    })
+    setLikes(likesArray);
+    setDislikes(dislikesArray);
+  }
+  getList('PFeelings')
+  }
+},[currentUser]);
 
   useEffect(() => {
-    if (currentUser == null){
-      return 
-    } else {
-      let email = currentUser.email;
-        const getList = async () => {
-        const querySnapshot = await getDocs(collection(db,'CFeelings'));
-        querySnapshot.forEach((doc)=>{
-          let user = (doc.id, "=>",doc.data())
-          let test = user.id; 
-          let likes = user.likes;
-          let dislikes = user.dislikes;
-          for(let i = 0; i < likes.length; i++){
-            if (likes[i]==email)
-            cLikesArray.push(test)
-          }
-          for(let i = 0; i < dislikes.length;i++){
-            if(dislikes[i]==email){
-              cDislikesArray.push(test);
-            }
-          }
-        })
-        setcLikes(cLikesArray);
-        setcDislikes(cDislikesArray);
+  if (currentUser == null){
+    return 
+  } else {
+    let email = currentUser.email;
+      const getList = async () => {
+      const querySnapshot = await getDocs(collection(db,'CFeelings'));
+      querySnapshot.forEach((doc)=>{
+      let user = (doc.id, "=>",doc.data())
+      let test = user.id; 
+      let likes = user.likes;
+      let dislikes = user.dislikes;
+      for(let i = 0; i < likes.length; i++){
+        if (likes[i]==email)
+        cLikesArray.push(test)
       }
-      getList('CFeelings')
+      for(let i = 0; i < dislikes.length;i++){
+        if(dislikes[i]==email){
+          cDislikesArray.push(test);
+        }
       }
-  },[currentUser]);
+      })
+      setcLikes(cLikesArray);
+      setcDislikes(cDislikesArray);
+    }
+    getList('CFeelings')
+    }
+},[currentUser]);
 
   useEffect(()=>{
     console.log(likes);
