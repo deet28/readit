@@ -27,7 +27,12 @@ export default function Nav() {
   const displayRef = useRef();
   const currentUser = useAuth();
   const [userName, setUserName] = useState([]);
-  const [searchQuery,setSearchQuery] = useState("")
+  const [posts,setPosts] = useState([]);
+  const searchQuery = useRef();
+  const [matched, setMatched] = useState([]);
+
+  let array = [];
+
 
   
 async function testUsername(){
@@ -155,28 +160,44 @@ function closeSearch (e){
       &&e.target.classList.contains("Nav-Search-Image")==false){
       
         searchModal.classList.add('Hidden');
-        searchInput.value = '';
   } else {
     return;
   }
 }
 
 function searchBar(e){
-  const cards = document.querySelectorAll('.Main-Body-Card');
+  //const cards = document.querySelectorAll('.Main-Body-Card');
   const searchModal = document.querySelector('.Search-Bar-Modal')
   const searchInput = document.querySelector('.Nav-Search');
-  if (searchInput.value.length > 0){
+  if (searchQuery.current.value.length > 0){
     searchModal.classList.remove('Hidden');
   } else if (searchInput.value.length < 1){
     searchModal.classList.add('Hidden');
   }
-  
-  for(let i = 0; i< cards.length; i++){
-    if (e.target.value == cards[i].firstChild.nextSibling.textContent){
-      console.log(cards[i]);
-    }
-  }
+  let search = searchQuery.current.value.trim();
+  setMatched(posts.filter(post=>{
+    return post.title.includes(search);
+  }))
 }
+
+useEffect(() => {
+  const getData = async () => {
+    const querySnapshot = await getDocs(collection(db,'Posts'));
+    querySnapshot.forEach((doc)=>{
+      let post = (doc.id, "=>",doc.data())
+      let result = {
+        title:post.title,
+      }
+      array.push(result)
+    })
+    setPosts(array);
+  }
+  getData('Posts');
+},[])
+
+useEffect(()=>{
+  console.log(matched)
+},[matched])
 
 React.useEffect(() => {
     window.addEventListener('click', closeMenu);
@@ -229,9 +250,13 @@ return (
       <div className = "Search-Div">
       <form className = "Nav-Search-Form">
         <img src = {magGlass} className = "Nav-Search-Image"></img>
-        <input className = "Nav-Search" placeholder = "Search Readit" onChange = {searchBar}/>
+        <input className = "Nav-Search" placeholder = "Search Readit" onChange = {searchBar} ref={searchQuery}/>
       </form>
-      <div className = "Search-Bar-Modal Hidden">Word</div>
+      <div className = "Search-Bar-Modal Hidden">
+        {matched.map((index)=>(
+         <h3 className = "Search-Bar-Modal-Text">{index.title}</h3>
+        ))}
+        </div>
       </div>
         {currentUser!==null &&
         <div className = "Nav-Menu-Logged-In">

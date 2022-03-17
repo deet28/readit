@@ -9,7 +9,18 @@
   background-color: white;
   color:red;
   text-align: left;
-  margin-top:2rem;
+  margin-top:9rem;
   width:50vw;
+  height:15rem;
   margin-left:5vw;
+  text-align: left;
+  border:1px solid black;
+  overflow-y: hidden;
+}
+
+.Search-Bar-Modal-Text{
+
+}
+.Search-Bar-Modal-Text:hover{
+  cursor:pointer;
 }
