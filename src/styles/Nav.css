@@ -109,6 +109,7 @@
   padding:0.5rem;
   border:1px solid transparent;
   padding:5px;
+
 }
 
 .Nav-Icon-Drop-Down{
@@ -275,6 +276,198 @@ input:checked + .Dark-Mode-Slider:before {
   margin-left:2rem;
 }
 
+/* Queries */
+
+@media screen and (max-width:400px){
+  .Nav-Header{
+  }
+  .Nav-Icon{
+    max-height:1.5rem;
+    max-width:2rem;
+    padding:0.3rem;
+    background-color: rgb(252, 169, 121);
+    border-radius: 30px;
+    margin-right:0.3rem;
+    margin-left:0.5rem;
+    margin-top:0.4rem;
+  }
+  .Nav-Search-Form{
+    display:flex;
+    flex-direction: row;
+    background-color: white;
+    justify-content: left;
+    align-items: center;
+    border-radius:5px;
+    margin-left:1.7rem;
+    margin-right:0.5rem;
+    height:1.8rem;
+    width:63vw;
+    background-color: rgb(240, 236, 236);
+  }
+  .Nav-Search-Image{
+    max-height:1.1rem;
+    max-width:1.2rem;
+    margin-right:1rem !important;
+    margin-left:0.7rem;
+    
+  }
+  .Nav-Search{
+    max-height:1.4rem;
+    width:100%;
+    border-radius:5px;
+    font-size:0.9rem;
+    border:transparent;
+    outline:none;
+    background-color:rgb(240, 236, 236);
+  }
+  .Nav-Drop-Down-Form{
+    display: flex;
+    flex-direction: row;
+    margin-left:2rem;
+    margin-right:0rem;
+    padding:0.5rem;
+    border:1px solid transparent;
+    padding:5px;
+  }
+}
+
+@media screen and (min-width:400px) and (max-width:530px){
+  .Nav-Header{
+  }
+  .Nav-Icon{
+    max-height:1.5rem;
+    width:1.6rem;
+    padding:0.3rem;
+    background-color: rgb(252, 169, 121);
+    border-radius: 30px;
+    margin-right:2rem;
+    margin-left:0.5rem;
+    margin-top:0.4rem;
+  }
+  .Nav-Search-Form{
+    display:flex;
+    flex-direction: row;
+    background-color: white;
+    justify-content: left;
+    align-items: center;
+    border-radius:5px;
+    margin-left:1.3rem;
+    margin-right:1.8rem;
+    height:1.8rem;
+    width:63vw;
+    background-color: rgb(240, 236, 236);
+  }
+  .Nav-Search-Image{
+    max-height:1.1rem;
+    max-width:1.2rem;
+    margin-right:1rem !important;
+    margin-left:0.7rem;
+    
+  }
+  .Nav-Search{
+    max-height:1.8rem;
+    min-width:100%;
+    border-radius:5px;
+    font-size:0.9rem;
+    border:transparent;
+    outline:none;
+    background-color:rgb(240, 236, 236);
+  }
+  .Nav-Drop-Down-Form{
+    display: flex;
+    flex-direction: row;
+    margin-left:2rem;
+    margin-right:0rem;
+    padding:0.5rem;
+    border:1px solid transparent;
+    padding:5px;
+  }
+}
+
+@media screen and (min-width:530px) and (max-width:613px){
+  .Nav-Drop-Down-Form{
+    margin-left:4.5rem;
+  }
+  .Search-Image{
+    max-height:1.1rem;
+    max-width:1.2rem;
+    margin-right:1rem !important;
+    margin-left:0.7rem;
+    
+  }
+  .Nav-Search-Form{
+    display:flex;
+    flex-direction: row;
+    background-color: white;
+    justify-content: left;
+    align-items: center;
+    border-radius:5px;
+    margin-left:2rem;
+    margin-right:3.5rem;
+    height:1.8rem;
+    width:63vw;
+    background-color: rgb(240, 236, 236);
+  }
+  .Nav-Search{
+    max-height:1.8rem;
+    min-width:100%;
+    border-radius:5px;
+    font-size:0.9rem;
+    border:transparent;
+    outline:none;
+    background-color:rgb(240, 236, 236);
+  }
+  .Nav-Drop-Down-Form{
+    display: flex;
+    flex-direction: row;
+    margin-left:2rem;
+    margin-right:0rem;
+    padding:0.5rem;
+    border:1px solid transparent;
+    padding:5px;
+  }
+
+}
+
+@media(max-width:613px){
+  .Nav-Button{
+    display:none;
+  }
+  .Nav-Menu-Logged-In-Name{
+    display:none;
+  }
+  .Nav-Search-Form{
+    width:70vw;
+  }
+}
+
+@media screen and (min-width:613px) and (max-width:680px){
+  .Button-One{
+    font-size:0.7rem;
+    font-weight: bolder;
+  }
+  .Button-Two{
+    font-size: 0.7rem;
+  }
+}
+
+@media(max-width:930px){
+
+  .Nav-Title{
+    display:none;
+  }
+  .Nav-Search-Form{
+    width:50vw;
+  }
+  .Nav-Button{
+    width:12%;
+  }
+}
+
+@media screen and (min-width:800px) and (max-width:930px){
+
+}
+
 @media(min-width:1100px){
   .Nav-Drop-Down-Form{
     position:absolute;
@@ -291,29 +484,7 @@ input:checked + .Dark-Mode-Slider:before {
   }
 }
 
-@media(max-width:799px){
-  .Nav-Title{
-    display:none;
-  }
-  .Nav-Search-Form{
-    width:50vw;
-  }
-  .Nav-Button{
-    width:12%;
-  }
-}
 
 
-@media(max-width:613px){
-  .Nav-Button{
-    display:none;
-  }
-  .Nav-Menu-Logged-In-Name{
-    display:none;
-  }
-  .Nav-Search-Form{
-    width:70vw;
-  }
-}
 
 

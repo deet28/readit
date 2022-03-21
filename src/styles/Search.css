@@ -9,7 +9,7 @@
   background-color: white;
   color:red;
   text-align: left;
-  margin-top:9rem;
+  margin-top:15rem;
   width:50vw;
   height:12rem;
   margin-left:5vw;
@@ -23,4 +23,11 @@
 }
 .Search-Bar-Modal-Text:hover{
   cursor:pointer;
+}
+
+@media screen and (max-width:1000px){
+  .Search-Bar-Modal{
+    margin-top:15rem;
+    margin-left:2.1rem;
+  }
 }
