@@ -127,3 +127,39 @@ input:enabled{
   cursor: pointer;
   color: rgb(110, 110, 207);
 }
+
+@media screen and (max-width:400px){
+  .Log-In-Modal{
+    max-width: 75%;
+  }
+  .Log-In-Username{
+    height:1.5rem;
+    width:10rem;
+  }
+  .Log-In-Email{
+    height:1.5rem;
+    width:10rem;
+  }
+  .Log-In-Password{
+    height:1.5rem;
+    width:10rem;
+  }
+}
+
+@media screen and (max-width:599px){
+  .Log-In-Close-Modal{
+    margin-left:85%;
+  }
+  .Log-In-Username{
+    height:1.5rem;
+    width:10rem;
+  }
+  .Log-In-Email{
+    height:1.5rem;
+    width:10rem;
+  }
+  .Log-In-Password{
+    height:1.5rem;
+    width:10rem;
+  }
+}

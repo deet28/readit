@@ -301,10 +301,19 @@ return (
           <button className = "Nav-Button Button-Two" onClick = {logIntoAccount}>Sign Up</button>
         }  
       
-      <form className = "Nav-Drop-Down-Form" onClick = {showMenu}>
+      {currentUser == null &&
+       <form className = "Nav-Drop-Down-Form Nav-Logged-Drop-Down" onClick = {showMenu}>
         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>
       </form>
+      }
+      {currentUser!==null&&
+         <form className = "Nav-Drop-Down-Form" onClick = {showMenu}>
+         <img src = {dropDown} className = "Nav-Icon-Drop-Down"></img>
+         <img src = {downArrow} className = "Nav-Icon-Drop-Down"></img>
+       </form>
+      }
+     
       <div className = "Nav-Drop-Down-Menu Hidden">
         <h3 className = "Nav-Drop-Down-Header">View Options</h3>
         
