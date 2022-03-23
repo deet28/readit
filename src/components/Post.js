@@ -79,7 +79,6 @@ export default function Post() {
     await setDoc(doc(db,"Comments",id),payload)
   }
 
-
   function returnHome(){
     let postAlert = document.querySelector('.Post-Submitted');
     let postContentHeader = document.querySelector('.Post-Header');

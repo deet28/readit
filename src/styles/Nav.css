@@ -193,71 +193,11 @@
   cursor:pointer;
 }
 
-.Log-In-Button{
-}
-
 .Nav-Menu-Form-Empty{
   height:10px;
   border-bottom:1px solid lightgray
 }
 
-/* Drop Down Menu */
-
-/* Slider on Drop Down Menu */
-
-.Slider-Input{
-  visibility: hidden;
-}
-
-.Dark-Mode-Switch{
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 20px;
-  border-radius: 20px;
-  margin-top:-0.2rem;
-}
-
-.Dark-Mode-Slider{
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius:100px;
-  background-color: lightgray;
-  height:23px;
-  width:40px;
-  margin-left:-1rem;
-}
-
-
-.Dark-Mode-Slider:before{
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 4px;
-  background-color: black;
-  border-radius: 34px;
-}
-:checked + .Dark-Mode-Slider {
-  background-color: #2196F3;
-}
-
-input:focus + .Dark-Mode-Slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .Dark-Mode-Slider:before {
-  -webkit-transform: translateX(16px);
-  -ms-transform: translateX(16px);
-  transform: translateX(16px);
-}
-
-/* ^ Slider on Drop Down Menu ^ */ 
 
 .Nav-Menu-Logged-In{
   display:flex;
@@ -279,7 +219,8 @@ input:checked + .Dark-Mode-Slider:before {
 /* Queries */
 
 @media screen and (max-width:400px){
-  .Nav-Header{
+  .Post-Image{
+    margin-left:0 !important;
   }
   .Nav-Icon{
     max-height:1.5rem;
@@ -287,7 +228,7 @@ input:checked + .Dark-Mode-Slider:before {
     padding:0.3rem;
     background-color: rgb(252, 169, 121);
     border-radius: 30px;
-    margin-right:0.3rem;
+    margin-right:-1rem;
     margin-left:0.5rem;
     margin-top:0.4rem;
   }
@@ -332,7 +273,8 @@ input:checked + .Dark-Mode-Slider:before {
 }
 
 @media screen and (min-width:400px) and (max-width:530px){
-  .Nav-Header{
+  .Post-Image{
+    margin-left:0.9rem !important;
   }
   .Nav-Icon{
     max-height:1.5rem;
@@ -340,7 +282,7 @@ input:checked + .Dark-Mode-Slider:before {
     padding:0.3rem;
     background-color: rgb(252, 169, 121);
     border-radius: 30px;
-    margin-right:2rem;
+    margin-right:-1rem;
     margin-left:0.5rem;
     margin-top:0.4rem;
   }
@@ -376,8 +318,8 @@ input:checked + .Dark-Mode-Slider:before {
   .Nav-Drop-Down-Form{
     display: flex;
     flex-direction: row;
-    margin-left:2rem;
-    margin-right:0rem;
+    margin-left:1.5rem;
+    margin-right:0.5rem;
     padding:0.5rem;
     border:1px solid transparent;
     padding:5px;
@@ -387,6 +329,19 @@ input:checked + .Dark-Mode-Slider:before {
 @media screen and (min-width:530px) and (max-width:613px){
   .Nav-Drop-Down-Form{
     margin-left:4.5rem;
+  }
+  .Post-Image{
+    margin-left:0.9rem !important;
+  }
+  .Nav-Icon{
+    max-height:1.5rem;
+    width:1.6rem;
+    padding:0.3rem;
+    background-color: rgb(252, 169, 121);
+    border-radius: 30px;
+    margin-right:-1rem;
+    margin-left:0.5rem;
+    margin-top:0.4rem;
   }
   .Search-Image{
     max-height:1.1rem;

@@ -290,7 +290,7 @@ return (
         <div className = "Nav-Menu-Logged-In">
           <span className = "Nav-Menu-Logged-In-Name">/u{userName}</span>
           <Link to = "/Post">
-            <img className = "Nav-Menu-Logged-In-Image" src = {post}></img>
+            <img className = "Nav-Menu-Logged-In-Image Post-Image" src = {post}></img>
           </Link>
           </div>
         }

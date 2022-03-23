@@ -419,7 +419,7 @@ useEffect(() => {
 },[state])
 
 useEffect(()=>{
-  console.log(state.select)
+  return state.select;
 },[state])
   
 useEffect(()=>{
@@ -497,19 +497,19 @@ useEffect(()=>{
 },[currentUser]);
 
   useEffect(()=>{
-    console.log(likes);
+    return likes;
   },[likes]);
   
   useEffect(()=>{
-    console.log(dislikes);
+    return dislikes;
   },[dislikes]);
 
   useEffect(()=>{
-    console.log(cLikes);
+    return cLikes;
   },[cLikes]);
 
   useEffect(()=>{
-    console.log(cDislikes);
+    return cDislikes;
   },[cDislikes]);
   
 
