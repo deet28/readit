@@ -50,7 +50,6 @@ async function testUsername(){
     let display = displayName.toLowerCase().split('').join("").replace(/\s/g, '');
     let emailName = emailRef.current.value;
     let email = emailName.toLowerCase();
-    console.log(display)
     const querySnapshot = await getDocs(collection(db,'Users'));
       querySnapshot.forEach((doc)=>{
         let user = (doc.id, "=>",doc.data())
@@ -59,15 +58,27 @@ async function testUsername(){
         userArr.push(userName);
         userArr.push(userEmail)
       })
-      console.log(userArr)
      if (userArr.includes(display)){
         return alert('Username taken!');
       } else if(userArr.includes(email)) {
         return alert ('Email already in use.')
+      }else if (handleBlank(displayName)==true){
+        return alert('Username cannot be blank')
+      }else if (display.length > 20){
+        return alert('Name cannot be greater than 20 characters long.')
       } else {
         handleSignUp();
       }
 }
+
+  function handleBlank(input){
+  let testBlank = input.trim();
+  if (testBlank == 0){
+    return true;
+  } else {
+    return false;
+  }
+  }
   
 async function handleSignUp(){
     if (passwordRef.current.value.length < 6){

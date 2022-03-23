@@ -10,8 +10,10 @@ import {
 } from 'firebase/auth';
 
 const firebaseConfig = { 
-  apiKey: `${process.env.REACT_APP_API_KEY}`,
-  authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
+  //apiKey: `${process.env.REACT_APP_API_KEY}`,
+  //authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
+  apiKey:"AIzaSyCrn1AYQfGg-Cavjc8JctS8DPbpyGLIJaY",
+  authDomain:'readit-10a97.firebaseapp.com',
   projectId: "readit-10a97",
   storageBucket: "readit-10a97.appspot.com",
   messagingSenderId: "840175739296",
