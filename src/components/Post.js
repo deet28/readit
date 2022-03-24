@@ -14,10 +14,8 @@ import linkIcon from '../media/link.png';
 
 export default function Post() {
   
-
-
   const imageButton = `Images & Video`;
-  const [images, setImages] = useState([null])
+  const [images, setImages] = useState([])
   const [loading,setLoading] = useState(true) 
   
   const currentUser = useAuth();
@@ -93,7 +91,7 @@ export default function Post() {
 
   //image upload
 
-  const uploadHandler=(e)=>{
+  const uploadHandler = (e) =>{
     e.preventDefault();
     const file = e.target.files[0];
     image = file.name;
@@ -116,10 +114,10 @@ export default function Post() {
       .then(url => {
         image = url.toString();
         setImages(image);
-        }
-      )
-    }
-  );
+          }
+        )
+      }
+    );
   };
   
   function removeUpload(){
@@ -193,16 +191,15 @@ function changeBody(name){
     embedBody.classList.add('Hidden');
   }
 }
-function hello(){
-  console.log('hello')
-}
+
 
 useEffect(()=>{
   const loadScreen = setTimeout(() => {
   setLoading(false)
   },500);
+  console.log(loading);
   return () => clearTimeout(loadScreen)
-},[loading]);
+},[]);
  
 useEffect(()=>{
   const button = document.querySelector('.Button-Link');
@@ -218,24 +215,32 @@ useEffect(()=>{
 },[currentUser])
  
 return (
-  <>
-  <Link to = "/"><button className = "Button-Link Hidden"></button></Link>
+<>
+
+<Link to = "/"><button className = "Button-Link Hidden"></button></Link>
   <div>
   {checkLoggedIn()}
+    
     {currentUser == null && loading == true &&
+      
       <div className = "Stop">
         <h1 className = "Stop-Loading"></h1>
       </div>
+    
     }
+    
     {currentUser == null && loading == false &&
+      
       <div className = "Stop">
         <h1>hey, you need to log in to post content!</h1>
           <Link to = "/" className = "Stop-Link">
           <h2>Go home</h2>
           </Link>
       </div>
+    
     }
     {currentUser!==null&& loading==true&&
+      
       <div className = "Stop">
         <h1></h1>
       </div>
@@ -245,58 +250,62 @@ return (
 
     <div className = "Post-Main-Div">
  
-    <div className = "Post-Submitted Hidden">
-      <h2>Post Submitted Successfully!</h2> 
-      <Link to = "/">
-       <button className = "Success-Button">Home</button> 
-      </Link>
-      
-    </div> 
+      <div className = "Post-Submitted Hidden">
+        <h2>Post Submitted Successfully!</h2> 
+        <Link to = "/">
+          <button className = "Success-Button">Home</button> 
+        </Link>
+      </div> 
     
-    <div className = "Post-Header">
-      <h3>Create a post</h3>
-    </div>
-  
-  <div className = "Post-Content-Section">
-      
-      <div className = "Post-Content-Button-Nav">
-        
-        <button className = "Post-Content-Button Post-Content-Button-Clicked" onClick = {changeSelected}>
-          <img src = {docIcon} className = "Post-Content-Icon Post-Content-Icon-Clicked"></img>
-          <span>Post</span>
-        </button>
-        <button className = "Post-Content-Button" onClick = {changeSelected}>
-          <img src = {picIcon} className = "Post-Content-Icon"></img>
-          <span>{imageButton}</span>
-        </button>
-        <button className = "Post-Content-Button" onClick = {changeSelected}>
-          <img src = {linkIcon} className = "Post-Content-Icon"></img>
-          <span>Link</span>
-        </button>
-      
+      <div className = "Post-Header">
+       <h3>Create a post</h3>
       </div>
-      
-      <div className = "Post-Content-Body">
+  
+      <div className = "Post-Content-Section">
         
-        <div className = "Post-Content-Title-Parent">
-          <textarea className = "Post-Content-Title" maxLength = {300} placeholder = "Title">
-          </textarea>
+        <div className = "Post-Content-Button-Nav">
+          
+          <button className = "Post-Content-Button Post-Content-Button-Clicked" onClick = {changeSelected}>
+            <img src = {docIcon} className = "Post-Content-Icon Post-Content-Icon-Clicked"></img>
+            <span>Post</span>
+          </button>
+          
+          <button className = "Post-Content-Button" onClick = {changeSelected}>
+            <img src = {picIcon} className = "Post-Content-Icon"></img>
+            <span>{imageButton}</span>
+          </button>
+        
+          <button className = "Post-Content-Button" onClick = {changeSelected}>
+            <img src = {linkIcon} className = "Post-Content-Icon"></img>
+            <span>Link</span>
+          </button>
+        
         </div>
+      
+        <div className = "Post-Content-Body">
         
-        <div className = "Post-Content-Text-Parent">
-            <textarea className = "Post-Content-Text" placeholder = "Text(Optional)"></textarea>
-            <div className = "Post-Content-Media Hidden"> 
-            <div className = "Image-Test">
-              <img className = "Upload-Image-Display"src = {images}></img>
-              <button className = "Remove-Image" onClick = {removeUpload}>Remove</button>
-            </div>
-            <label for ="file">
-              <input type="file" onChange={uploadHandler}></input>
-              <span className = "Upload-Button" onChange = {uploadHandler}>Upload</span>
-            </label>
+          <div className = "Post-Content-Title-Parent">
+            <textarea className = "Post-Content-Title" maxLength = {300} placeholder = "Title">
+            </textarea>
           </div>
-          <textarea className = "Post-Content-Url Hidden" placeholder = "Url"></textarea>
-          <textarea className = "Post-Content-Embed Hidden" placeholder = "Embed Youtube"></textarea>
+        
+          <div className = "Post-Content-Text-Parent">
+            
+            <textarea className = "Post-Content-Text" placeholder = "Text(Optional)"></textarea>
+            
+            <div className = "Post-Content-Media Hidden"> 
+            
+              <div className = "Image-Test">
+                <img className = "Upload-Image-Display"src = {images}></img>
+                <button className = "Remove-Image" onClick = {removeUpload}>Remove</button>
+              </div>
+              <label>
+                <input className = "Hidden" type="file" onChange={uploadHandler}></input>
+                <span className = "Upload-Button">Upload</span>
+              </label>
+            </div>
+            <textarea className = "Post-Content-Url Hidden" placeholder = "Url"></textarea> 
+            <textarea className = "Post-Content-Embed Hidden" placeholder = "Embed Youtube"></textarea>
         </div>    
 
         <div className = "Post-Content-Footer-Buttons">
@@ -304,10 +313,10 @@ return (
           <button className = "Footer-Button">Cancel</button>
           </Link>
           <button className = "Footer-Button" onClick = {pushToFirebase}>Post</button>
-        </div>    
+            </div>    
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
     }
   </div>
   </>
