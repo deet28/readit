@@ -2,6 +2,8 @@
 import React from 'react'
 
 export default function RightCard() {
+
+
   return (
     <div className = "Right-Card-Div">
       <h1>Readit</h1>

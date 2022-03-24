@@ -71,14 +71,14 @@ async function testUsername(){
       }
 }
 
-  function handleBlank(input){
+function handleBlank(input){
   let testBlank = input.trim();
   if (testBlank == 0){
     return true;
   } else {
     return false;
   }
-  }
+}
   
 async function handleSignUp(){
     if (passwordRef.current.value.length < 6){
@@ -185,6 +185,7 @@ function closeSearch (e){
 }
 
 function searchBar(e){
+  e.preventDefault();
   const searchModal = document.querySelector('.Search-Bar-Modal')
   const searchInput = document.querySelector('.Nav-Search');
   if (searchQuery.current.value.length > 0){
@@ -221,7 +222,7 @@ useEffect(() => {
 },[])
 
 useEffect(()=>{
-  return matched;
+  console.log(matched);
 },[matched])
 
 React.useEffect(() => {

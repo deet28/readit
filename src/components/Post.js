@@ -14,9 +14,11 @@ import linkIcon from '../media/link.png';
 
 export default function Post() {
   
+
+
   const imageButton = `Images & Video`;
-  const [images, setImages] = useState([
-  ]) 
+  const [images, setImages] = useState([null])
+  const [loading,setLoading] = useState(true) 
   
   const currentUser = useAuth();
   let image;
@@ -91,10 +93,10 @@ export default function Post() {
 
   //image upload
 
-  const uploadHandler = (e) => {
+  const uploadHandler=(e)=>{
     e.preventDefault();
     const file = e.target.files[0];
-    let image = file.name;
+    image = file.name;
     uploadImages(file);
   };
 
@@ -103,9 +105,7 @@ export default function Post() {
     const storageRef = ref(storage,`/files/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef,file)
     
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
+    uploadTask.on("state_changed",(snapshot) => {
       const progress = Math.round(
         (snapshot.bytesTransferred/snapshot.totalBytes) * 100
         );
@@ -121,10 +121,11 @@ export default function Post() {
     }
   );
   };
+  
   function removeUpload(){
-    const imageDiv = document.querySelector('.Upload-Image-Display');
-    imageDiv.src = null;
-    return setImages([]);
+  const imageDiv = document.querySelector('.Upload-Image-Display');
+  imageDiv.src = null;
+  return setImages([]);
   }
 
   //ui button changer
@@ -154,8 +155,7 @@ export default function Post() {
     },500)
   }
   
-
-  function changeSelected(e){
+function changeSelected(e){
     let name = getButtonName(e);
     const postContentButtons = document.querySelectorAll('.Post-Content-Button');
     const postContentIcons = document.querySelectorAll('.Post-Content-Icon');
@@ -163,46 +163,39 @@ export default function Post() {
       if (postContentButtons[i].textContent !== name){
         postContentButtons[i].classList.remove('Post-Content-Button-Clicked');
         postContentIcons[i].classList.remove('Post-Content-Icon-Clicked');
-        } else{
+      } else{
         postContentButtons[i].classList.add('Post-Content-Button-Clicked');
         postContentIcons[i].classList.add('Post-Content-Icon-Clicked');
-        }
-      changeBody(name);
       }
-    function changeBody(name){
-      const postBody = document.querySelector('.Post-Content-Text');
-      const imageBody = document.querySelector('.Post-Content-Media');
-      const urlBody = document.querySelector('.Post-Content-Url');
-      const embedBody = document.querySelector('.Post-Content-Embed');
-      if (name == 'Post'){
-        postBody.classList.remove('Hidden');
-        imageBody.classList.add('Hidden');
-        urlBody.classList.add('Hidden');
-        embedBody.classList.add('Hidden');
-      } else if (name == 'Link'){
-        urlBody.classList.remove('Hidden');
-        embedBody.classList.remove('Hidden');
-        postBody.classList.add('Hidden');
-        imageBody.classList.add('Hidden')
-      } else {
-        imageBody.classList.remove('Hidden');
-        postBody.classList.add('Hidden');
-        urlBody.classList.add('Hidden');
-        embedBody.classList.add('Hidden');
-      }
-    }
+    changeBody(name);
   }
+}
 
-
-const [loading,setLoading] = useState(true)
- 
-useEffect(()=>{
-  const button = document.querySelector('.Button-Link');
-  if (state.select.length > 0){
-    return button.click();
+function changeBody(name){
+  const postBody = document.querySelector('.Post-Content-Text');
+  const imageBody = document.querySelector('.Post-Content-Media');
+  const urlBody = document.querySelector('.Post-Content-Url');
+  const embedBody = document.querySelector('.Post-Content-Embed');
+  if (name == 'Post'){
+    postBody.classList.remove('Hidden');
+    imageBody.classList.add('Hidden');
+    urlBody.classList.add('Hidden');
+    embedBody.classList.add('Hidden');
+  } else if (name == 'Link'){
+    urlBody.classList.remove('Hidden');
+    embedBody.classList.remove('Hidden');
+    postBody.classList.add('Hidden');
+    imageBody.classList.add('Hidden')
+  } else {
+    imageBody.classList.remove('Hidden');
+    postBody.classList.add('Hidden');
+    urlBody.classList.add('Hidden');
+    embedBody.classList.add('Hidden');
   }
-},[state])
-  
+}
+function hello(){
+  console.log('hello')
+}
 
 useEffect(()=>{
   const loadScreen = setTimeout(() => {
@@ -211,41 +204,54 @@ useEffect(()=>{
   return () => clearTimeout(loadScreen)
 },[loading]);
  
-  return (
+useEffect(()=>{
+  const button = document.querySelector('.Button-Link');
+  if (state.select.length>0){
+    return button.click();
+  } else {
+    return state;
+  }
+},[state])
+  
+useEffect(()=>{
+  return currentUser;
+},[currentUser])
+ 
+return (
   <>
   <Link to = "/"><button className = "Button-Link Hidden"></button></Link>
   <div>
   {checkLoggedIn()}
-  {currentUser == null && loading == true &&
-    <div className = "Stop">
-    <h1 className = "Stop-Loading"></h1>
-  </div>
-  }
-  {currentUser == null && loading == false &&
-    <div className = "Stop">
-      <h1>hey, you need to log in to post content!</h1>
-      <Link to = "/" className = "Stop-Link">
-        <h2>Go home</h2>
-      </Link>
-    </div>
-  }
-  {currentUser!==null&& loading==true&&
-    <div className = "Stop">
-      <h1></h1>
-    </div>
-  }
+    {currentUser == null && loading == true &&
+      <div className = "Stop">
+        <h1 className = "Stop-Loading"></h1>
+      </div>
+    }
+    {currentUser == null && loading == false &&
+      <div className = "Stop">
+        <h1>hey, you need to log in to post content!</h1>
+          <Link to = "/" className = "Stop-Link">
+          <h2>Go home</h2>
+          </Link>
+      </div>
+    }
+    {currentUser!==null&& loading==true&&
+      <div className = "Stop">
+        <h1></h1>
+      </div>
+    }
   
-  {currentUser!==null&&loading==false&&
+    {currentUser!==null&& loading==false&&
 
-  <div className = "Post-Main-Div">
+    <div className = "Post-Main-Div">
  
-  <div className = "Post-Submitted Hidden">
-    <h2>Post Submitted Successfully!</h2> 
-    <Link to = "/">
-      <button className = "Success-Button">Home</button> 
-    </Link>
-    
-  </div> 
+    <div className = "Post-Submitted Hidden">
+      <h2>Post Submitted Successfully!</h2> 
+      <Link to = "/">
+       <button className = "Success-Button">Home</button> 
+      </Link>
+      
+    </div> 
     
     <div className = "Post-Header">
       <h3>Create a post</h3>
@@ -284,11 +290,11 @@ useEffect(()=>{
               <img className = "Upload-Image-Display"src = {images}></img>
               <button className = "Remove-Image" onClick = {removeUpload}>Remove</button>
             </div>
-            <label>
-              <input className = "Hidden" type = "file"onChange = {uploadHandler}></input>
-              <span className = "Upload-Button" >Upload</span>
+            <label for ="file">
+              <input type="file" onChange={uploadHandler}></input>
+              <span className = "Upload-Button" onChange = {uploadHandler}>Upload</span>
             </label>
-            </div>
+          </div>
           <textarea className = "Post-Content-Url Hidden" placeholder = "Url"></textarea>
           <textarea className = "Post-Content-Embed Hidden" placeholder = "Embed Youtube"></textarea>
         </div>    

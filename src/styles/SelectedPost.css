@@ -397,6 +397,76 @@
 
 /*Queries */
 
+@media screen and (max-width:400px){
+  .Selected-React-Player{
+    min-height:20rem !important;
+    max-height:20rem !important;
+    min-width:120%;
+    max-width:120%;
+  }
+  .Selected-Post-Card{
+    margin-left:20%;
+    min-width:90vw;
+  }
+  .Selected-Card-Close-Button{
+    margin-left:80%;
+  }
+  .Selected-Body-Post-Comment-Div{
+    max-height:20rem;
+  }
+  .Selected-Body-Post-Comment{
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width:401px) and (max-width:600px){
+  .Selected-Post-Card{
+    max-width: 100%;
+    margin-left:17%;
+  }
+  .Selected-React-Player{
+    min-height:20rem !important;
+    max-height:20rem !important;
+    min-width:120%;
+    max-width:120%;
+  }
+  .Selected-Card-Close-Button{
+    margin-left:85%;
+  }
+}
+
+@media screen and (min-width:601px) and (max-width:699px){
+  .Selected-Post-Card{
+    max-width: 100%;
+    margin-left:10%;
+  }
+  .Selected-React-Player{
+    min-height:20rem !important;
+    max-height:20rem !important;
+    min-width:120%;
+    max-width:120%;
+  }
+  .Selected-Card-Close-Button{
+    margin-left:85%;
+  }
+}
+@media screen and (min-width:701px) and (max-width:799px){
+  .Selected-Post-Card{
+    max-width: 100%;
+    margin-left:5%;
+  }
+  .Selected-React-Player{
+    min-height:20rem !important;
+    max-height:20rem !important;
+    min-width:120%;
+    max-width:120%;
+  }
+  .Selected-Card-Close-Button{
+    margin-left:85%;
+  }
+}
+
+
 @media(max-width:800px){
   .Selected-Body-Card-Picture{
     height:30rem;

@@ -284,7 +284,9 @@ async function downvoteCButton(id){
 //Selecting and displaying post and comment information.
   
   async function selectFromSearch(input){
+    try {
     let id = input;
+    console.log(Date.now());
     await displayPost(id);
     const selectedPost = document.querySelector('.Selected-Post-Card');
     const mainBody = document.querySelector('.Main-Body-Div');
@@ -296,7 +298,11 @@ async function downvoteCButton(id){
     smallHeader.classList.add('Hidden');
     largeHeader.classList.add('Hidden')
     rightCard.classList.add('Hidden');
+    } catch (error){
+      console.log(error);
+    }
   }
+  
   function selectPost(e){
     if (e.target.classList.value=='Main-Body-Card-Url'){
       window.open(e.target.textContent,'_blank')
@@ -334,17 +340,18 @@ async function downvoteCButton(id){
   }
   
   async function displayPost(input){
+    let id = input;
     const collectionRef = collection(db,"Posts");
-    const q = query(collectionRef,where("id","==",input))
+    const q = query(collectionRef,where("id","==",id))
     const snapshot = await getDocs(q);
-    const results = snapshot.docs.map(doc=> ({...doc.data(),id:input}));
+    const results = snapshot.docs.map(doc=> ({...doc.data(),id}));
     results.forEach(async (result) => {
     const payload = result;
     window.scroll(0,0);
     setSelected([payload])
     })
-    displayComments(input);
-    selectCard('');
+    displayComments(id);
+    return selectCard('');
   }
 
   async function displayComments(input){
@@ -423,20 +430,24 @@ useEffect(()=>{
 },[state])
   
 useEffect(()=>{
-  let id;
-  const getData = async () => {
+  if (state.select == ''){
+    return;
+  } else {
+    let id;
+    const getData = async () => {
     const querySnapshot = await getDocs(collection(db,'Posts'));
     querySnapshot.forEach((doc)=>{
       let post = (doc.id, "=>",doc.data())
       if(post.title == state.select){
         id = post.id;
       }
-      return selectFromSearch(id);
     })
-    
+    return selectFromSearch(id);
+    }
+    getData('Posts');
   }
-  getData('Posts');
-},[state])
+  
+},[state.select])
 
  useEffect(() => {
   if (currentUser == null){
@@ -509,7 +520,7 @@ useEffect(()=>{
   },[cLikes]);
 
   useEffect(()=>{
-    return cDislikes;
+  return cDislikes;
   },[cDislikes]);
   
 

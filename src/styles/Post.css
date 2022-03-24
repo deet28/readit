@@ -341,6 +341,49 @@
 
 /* Queries */ 
 
+@media screen and (max-width:400px){
+  .Post-Content-Section{
+    min-height:75vh;
+    max-height:75vh;
+  }
+  .Post-Content-Icon{
+    height:0.7rem;
+    width:0.7rem;
+  }
+  .Post-Content-Button{
+    font-size: 0.4rem;
+  }
+  .Post-Content-Footer-Buttons{
+    margin-top:0.5rem;
+  }
+  .Post-Content-Title-Parent{
+    margin-left:-1rem;
+    max-width:95%;
+  }
+  .Post-Content-Text-Parent{
+    margin-left:-1rem;
+    max-width:95%;
+  }
+}
+
+@media screen and (min-width:401px) and (max-width:510px){
+
+  .Post-Content-Section{
+    min-height:75vh;
+    max-height:75vh;
+  }
+  .Post-Content-Icon{
+    height:1rem;
+    width:1rem;
+  }
+  .Post-Content-Button{
+    font-size: 0.6rem;
+  }
+  .Post-Content-Footer-Buttons{
+    margin-top:1.5rem;
+  }
+}
+
 @media (min-width:700px){
   .Post-Content-Footer-Buttons{
     width:90%;

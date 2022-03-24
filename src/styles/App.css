@@ -38,6 +38,9 @@
   visibility: hidden;
   display:none;
 }
+.hiding{
+  display:none;
+}
 .disabled{
   pointer-events:none;
 }
