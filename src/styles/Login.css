@@ -57,10 +57,6 @@
   margin-top:1rem;
 }
 
-input:enabled{
-  outline:none
-}
-
 
 .Log-In-Login{
   background-color: rgb(91, 91, 173);
