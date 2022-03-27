@@ -1,161 +1,163 @@
-.Log-In-Modal{
+.Log-In-Modal {
   min-height: 85vh;
-  min-width:80vw;
-  position:absolute;
+  min-width: 80vw;
+  position: absolute;
   border: 1px solid lightgrey;
   background-color: white;
   box-shadow: 1px 1px 10px 2px black;
   z-index: 9998;
-  margin-top:3rem;
-  margin-left:10%;
-  display:grid;
+  margin-top: 3rem;
+  margin-left: 10%;
+  display: grid;
   grid-template-columns: 0.5fr 2.5fr;
 }
 
-.Log-In-Sidebar{
-  border:1px solid lightgrey;
- background-image: linear-gradient(red, yellow);
-  margin-right:1rem;
+.Log-In-Sidebar {
+  border: 1px solid lightgrey;
+  background-image: linear-gradient(red, yellow);
+  margin-right: 1rem;
 }
 
-.Log-In-Main{
+.Log-In-Main {
   text-align: left;
-
+  display: flex;
+  flex-direction: column;
 }
 
-.Log-In-Title{
-  margin-top:5rem;
+.Log-In-Title {
+  margin-top: 5rem;
   font-weight: 600;
 }
 
-.Log-In-Inputs{
-  display:flex;
+.Log-In-Inputs {
+  display: flex;
   flex-direction: column;
   align-items: left;
 }
 
-.Log-In-Email{
-  width:50%;
-  height:2rem;
-  margin-top:2rem;
-  margin-bottom:2rem;
-  border:1px solid gray;
-  font-size:1.2rem;
-}
-.Log-In-Password{
-  width:50%;
-  height:2rem;
+.Log-In-Email {
+  width: 50%;
+  height: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   border: 1px solid gray;
-  font-size:1.2rem;
+  font-size: 1.2rem;
 }
-
-.Log-In-Username{
-  width:50%;
-  height:2rem;
+.Log-In-Password {
+  width: 50%;
+  height: 2rem;
   border: 1px solid gray;
-  font-size:1.2rem;
-  margin-top:1rem;
+  font-size: 1.2rem;
 }
 
+.Log-In-Username {
+  width: 50%;
+  height: 2rem;
+  border: 1px solid gray;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
 
-.Log-In-Login{
+.Log-In-Login {
   background-color: rgb(91, 91, 173);
-  color:white;
-  font-size:0.9rem;
+  color: white;
+  font-size: 0.9rem;
   font-weight: bold;
-  height:36px;
-  width:40%;
-  border-radius:20px;
-  border:transparent;
-  margin-top:2rem;
+  height: 36px;
+  width: 40%;
+  border-radius: 20px;
+  border: transparent;
+  margin-top: 2rem;
 }
 
-.Log-In-Login:hover{
+.Log-In-Login:hover {
   cursor: pointer;
   background-color: rgb(110, 110, 207);
 }
 
-
-.Log-In-Signup{
+.Log-In-Signup {
   background-color: rgb(91, 91, 173);
-  color:white;
-  font-size:0.9rem;
+  color: white;
+  font-size: 0.9rem;
   font-weight: bold;
-  height:36px;
-  width:40%;
-  border-radius:20px;
-  border:transparent;
-  margin-top:2rem;
+  height: 36px;
+  width: 40%;
+  border-radius: 20px;
+  border: transparent;
+  margin-top: 2rem;
 }
 
-.Log-In-Signup:hover{
+.Log-In-Signup:hover {
   cursor: pointer;
   background-color: rgb(110, 110, 207);
 }
 
-.Log-In-Close-Modal{
-  height:2rem;
-  width:2rem;
+.Log-In-Close-Modal {
+  height: 2rem;
+  width: 2rem;
   font-size: 1.5rem;
   background-color: transparent;
-  color:black;
-  border:none;  
-  margin-left:93%;
-  margin-top:1.1rem;
+  color: black;
+  border: none;
+  margin-left: 93%;
+  margin-top: 1.1rem;
 }
 
-.Log-In-Close-Modal:hover{
+.Log-In-Close-Modal:hover {
   cursor: pointer;
 }
 
-.Log-In-Change-Modal{
-  height:2rem;
-  border:transparent;
+.Log-In-Change-Modal {
+  height: 2rem;
+  border: transparent;
   background-color: transparent;
-  font-size:1rem;
-  margin-left:0;
-  line-height:0.5rem;
+  font-size: 1rem;
+  margin-left: 0;
+  line-height: 0.5rem;
   color: rgb(91, 91, 173);
-  font-weight:bold;
+  font-weight: bold;
 }
 
-.Log-In-Change-Modal:hover{
+.Log-In-Change-Modal:hover {
   cursor: pointer;
   color: rgb(110, 110, 207);
 }
 
-@media screen and (max-width:400px){
-  .Log-In-Modal{
+@media screen and (max-width: 670px) {
+  .Log-In-Title {
+    margin-top: 2rem;
+  }
+  .Log-In-Change-Modal-Text{
+    font-size: 0.9rem;
+  }
+  .Log-In-Change-Modal{
+    font-size: 0.8rem;
+  }
+  .Log-In-Input-Forms {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+  }
+  .Log-In-Main {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+  }
+  .Log-In-Modal {
     max-width: 75%;
+    font-size: 1rem;
   }
-  .Log-In-Username{
-    height:1.5rem;
-    width:10rem;
+  .Log-In-Close-Modal {
+    margin-left: 84%;
+    font-size: 1rem;
   }
-  .Log-In-Email{
-    height:1.5rem;
-    width:10rem;
+  .Log-In-Username {
+    font-size: 0.8rem;
   }
-  .Log-In-Password{
-    height:1.5rem;
-    width:10rem;
+  .Log-In-Email {
+    font-size: 0.8rem;
   }
-}
-
-@media screen and (max-width:599px){
-  .Log-In-Close-Modal{
-    margin-left:85%;
-  }
-  .Log-In-Username{
-    height:1.5rem;
-    width:10rem;
-  }
-  .Log-In-Email{
-    height:1.5rem;
-    width:10rem;
-  }
-  .Log-In-Password{
-    height:1.5rem;
-    width:10rem;
+  .Log-In-Password {
+    font-size: 0.8rem;
   }
 }
