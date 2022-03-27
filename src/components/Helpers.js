@@ -64,6 +64,7 @@ export function clearComment(){
 }
 
 export function logIntoAccount(e){
+  e.preventDefault();
   window.scrollTo(0, 0);
   const logInModal = document.querySelector('.Log-In-Modal');
   const modalTitle = document.querySelector('.Log-In-Title');

@@ -161,8 +161,11 @@ export default function Nav() {
 
   function closeMenu(e) {
     const navMenu = document.querySelector(".Nav-Drop-Down-Menu");
-    if (e.target.classList.contains("Nav-Icon-Drop-Down") == false) {
+    if (e.target.classList.contains("Nav-Icon-Drop-Down") == false
+    && e.target.classList.contains("Nav-Drop-Down-Button")==false) {
       navMenu.classList.add("Hidden");
+    } else {
+      return;
     }
   }
 
