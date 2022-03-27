@@ -181,8 +181,10 @@
 }
 
 .Selected-Body-Card-Picture{
-  height:30rem;
-  width:100%;
+  min-height:25rem;
+  max-height:25rem;
+  min-width:120%;
+  max-width: 120%;
 }
 
 .Selected-Body-Card-Embed-Parent{

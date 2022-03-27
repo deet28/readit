@@ -33,6 +33,7 @@ export default function MainNav() {
     let name;
     if (e.target.textContent.length !== 3) {
       name = e.target.nextSibling.textContent;
+      sortFeed(name);
     } else if (e.target.textContent.length === 3) {
       name = e.target.parentNode.textContent;
       sortFeed(name);
