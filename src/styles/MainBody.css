@@ -64,10 +64,11 @@
   align-items: left;
 }
 .Main-Body-Card-Picture{
-  min-height:30rem;
-  max-height:30rem;
-  min-width:75%;
-  max-width:75%;
+  min-height:28rem;
+  max-height:28rem;
+  min-width:85%;
+  max-width:85%;
+  margin-left: -2rem;
   align-self: center;
 }
 
